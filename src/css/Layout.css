@@ -10,7 +10,12 @@ Header{
     background-color: gray;
     height: 20%;
 }
+.bookIcon{
+    height: 100%;
+    border-right: 1px solid black;
+}
 .nav{
+    height: 5%;
     display: none;
     background-color: lightgray;
 }
@@ -19,12 +24,18 @@ Header{
     flex-direction: row;
     list-style-type: none;
     position: relative;
-    top: 5px;
+    align-items: flex-start;
+    
 
 }
-.navlistItem{
-    margin-right: 12%;
-    
+
+button {
+    background: none;
+    border: none;
+}
+button:hover{
+    border-radius: 20px;
+    background-color: white;
 }
 
 main{
