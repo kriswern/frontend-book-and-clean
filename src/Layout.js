@@ -8,7 +8,7 @@ export default function Layout ({children}){
         <div className = "pageLayout">
             
                 <Header/>
-                <Navbar className = "navbar"/>
+                <Navbar/>
                 <main>
                     {children}
                 </main>
