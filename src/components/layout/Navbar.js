@@ -1,4 +1,4 @@
-import '../css/Layout.css';
+import '../../css/Layout.css';
 
 export default function Navbar (){
    
@@ -11,17 +11,17 @@ export default function Navbar (){
             <ul className = "navList">
                  <li className = "link-primary navlistItem">
                      <button>
-                         <a class="nav-link">home</a>
+                         <a className="nav-link">home</a>
                     </button>
                 </li>
                 <li className = "link-primary navlistItem">
                     <button>
-                        <a class="nav-link test">admin</a>
+                        <a className="nav-link test">admin</a>
                     </button>
                 </li>
                 <li className = "link-primary navlistItem">
                     <button>
-                        <a class="nav-link">placeholder</a>
+                        <a className="nav-link">placeholder</a>
                     </button>
                 </li>
              </ul>
