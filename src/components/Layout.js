@@ -2,7 +2,7 @@ import Header from './layout/Header';
 import Navbar from './layout/Navbar';
 import Footer from './layout/Footer';
 import { useState, useEffect } from 'react';
-import './css/Layout.css';
+import '../css/Layout.css';
 
 export default function Layout ({children}){
     function getWindowDimensions() {

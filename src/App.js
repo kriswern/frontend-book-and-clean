@@ -1,11 +1,12 @@
 
 import './App.css';
-import Layout from './Layout';
+import Booking from './components/Booking';
+import Layout from './components/Layout';
 
 function App() {
   return (
    <Layout>
-     <h2>future login page</h2>
+     <Booking/>
    </Layout>
   );
 }
