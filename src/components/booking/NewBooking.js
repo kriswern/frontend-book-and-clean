@@ -1,6 +1,6 @@
-import BookingService from "../services/BookingService";
+import BookingService from "../../services/BookingService";
 import { useState } from "react";
-import "../css/booking.css";
+import "../../css/booking.css";
 
 export default function Booking() {
   const initialState = {
@@ -22,12 +22,12 @@ export default function Booking() {
   };
 
   return (
-    <div className="booking-container">
+    <div className="newbooking-form-container">
       <form
-        className="booking-form d-flex flex-column align-content-center"
+        className="newbooking-form d-flex flex-column align-content-center"
         onSubmit={handleSubmit}
       >
-        <h4 className="booking-header">Book cleaning</h4>
+        <h4 className="newbooking-header">Book cleaning</h4>
 
         <div className="form-group p-2">
           <input

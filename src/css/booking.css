@@ -1,4 +1,5 @@
-.booking-container {
+/*NEWBOOKING*/
+.newbooking-form-container {
   display: flex;
   height: 100%;
   justify-content: center;
@@ -6,10 +7,25 @@
   padding-top: 2rem;
 }
 
-.booking-form {
+.newbooking-form {
   max-width: 500px;
 }
 
-.booking-header {
+.newbooking-header {
   text-align: center;
+}
+
+
+/*BOOKINGS*/
+.bookings-container {
+  display:flex;
+  gap: 1rem;
+}
+
+/*BOOKING*/
+.booking-container {
+  background-color: white;
+  border-radius: .5rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
 }
