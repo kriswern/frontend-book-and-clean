@@ -1,16 +1,13 @@
 
 import './App.css';
-import NewBooking from './components/booking/NewBooking';
+
 import Layout from './components/Layout';
-import Bookings from './components/booking/Bookings';
+import CustomerPage from './components/customerPage/CustomerPage';
 
 function App() {
   return (
    <Layout>
-
-     <NewBooking/>
-     <Bookings/>
-     
+     <CustomerPage/>
    </Layout>
   );
 }
