@@ -6,7 +6,7 @@ import AddBookingTab from "./AddBookingTab";
 
 export default function CustomerPage (){
 
-    const tabsRoute = new Map([
+    const tabsRoute = new Map([ // add new tabs here 
         ["ALL_BOOKINGS",AllBookings],
         ["ADD_BOOKING",AddBookingTab],
     ]);
