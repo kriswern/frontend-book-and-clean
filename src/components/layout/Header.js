@@ -2,7 +2,7 @@
 
 export default function Header (){
     return(
-        <header className="masthead">
+        <header className="masthead p-2">
             <div className="container h-100">
                 <div className="row h-100 align-items-center">
                      <div className="col-12 text-center">

@@ -6,7 +6,7 @@ export default function Navbar (){
     return(
         
 
-        <nav className = "nav">
+        <nav className = "nav p-2">
             <h2 className  ="bookIcon">Book</h2>
             <ul className = "navList">
                  <li className = "link-primary navlistItem">

@@ -1,12 +1,16 @@
 
 import './App.css';
-import Booking from './components/Booking';
+import NewBooking from './components/booking/NewBooking';
 import Layout from './components/Layout';
+import Bookings from './components/booking/Bookings';
 
 function App() {
   return (
    <Layout>
-     <Booking/>
+
+     <NewBooking/>
+     <Bookings/>
+     
    </Layout>
   );
 }
