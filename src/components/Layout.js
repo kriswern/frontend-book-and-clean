@@ -5,7 +5,13 @@ import '../css/Layout.css';
 import { useState } from 'react';
 
 export default function Layout ({children}){// we can remove the currentheader if we want
-    const pageName = children.type.name;
+    let pageName;
+    try {
+         pageName = children.type.name;
+    } catch (error) {
+        pageName = "BOOK";
+    }
+
     const currentHeader = useState(pageName);
          
     return(

@@ -1,12 +1,7 @@
-.pageWrapper{
-    display: flex;
-    flex-direction: row;
-    background-color: whitesmoke;
-    height: 500px;
-}
+
 
 .customerNav{
-    width: 11%;
+    width: 20%;
     height: 20%;
     position: absolute;
     
@@ -45,14 +40,11 @@ li button{
     
 }
 
-.activeTabWindow{
-    background-color: tomato;
-    width: 100%;
-}
+
 
 
 @media only screen and (max-width: 736px) {
     .customerNav{
-        width: 28%;
+        width: 50%;
     }
   }
