@@ -1,16 +1,17 @@
 import { useState } from "react";
-import "../../css/customerPage.css";
-import CustomerPageNav from "./CustomerPageNav";
+import "../../../css/userPage.css";
+import CustomerPageNav from "../userNav";
 import AllBookings from "./AllBookingsTab"
 import AddBookingTab from "./AddBookingTab";
 
 export default function CustomerPage (){
 
     const tabsRoute = new Map([ // add new tabs here 
-        ["ALL_BOOKINGS",AllBookings],
-        ["ADD_BOOKING",AddBookingTab],
+        ["all Bookings",AllBookings],
+        ["add Booking",AddBookingTab],
     ]);
- 
+   
+   
     const [navOpen, setNavOpen] = useState(false);
     const [activeTab, setActiveTab] = useState(AllBookings);
 
@@ -19,6 +20,7 @@ export default function CustomerPage (){
         
     }
     function changeTab (tab){
+        console.log(tab);
         (tabsRoute.has(tab)) ? setActiveTab(tabsRoute.get(tab)) : setActiveTab(AllBookings); // all bookings are default
    }
    
@@ -28,6 +30,7 @@ export default function CustomerPage (){
         navOpen = {navOpen}
         openOrCloseNav = {openOrCloseNav}
         changeTab = {changeTab}
+        tabsRoute = {tabsRoute}
         />
         <div className = "activeTabWindow">
          {activeTab}

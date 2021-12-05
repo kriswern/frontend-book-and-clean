@@ -1,0 +1,21 @@
+.pageWrapper{
+    display: flex;
+    flex-direction: row;
+    background-color: whitesmoke;
+    height: 500px;
+}
+
+
+
+
+
+
+
+
+
+.activeTabWindow{
+    background-color: tomato;
+    width: 100%;
+}
+
+
