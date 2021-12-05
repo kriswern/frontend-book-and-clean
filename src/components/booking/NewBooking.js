@@ -1,8 +1,9 @@
 import BookingService from "../../services/BookingService";
 import { useState } from "react";
 import "../../css/booking.css";
+import date from 'date-and-time';
 
-export default function Booking() {
+export default function NewBooking() {
   const initialState = {
     name: "",
     address: "",
@@ -11,13 +12,18 @@ export default function Booking() {
   };
 
   const [formData, setFormData] = useState(initialState);
+  const now = new Date();
+
+  
 
   // We need the customer here
   // const customerId =
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    BookingService.registerBooking(formData);
+    if(BookingService.registerBooking(formData)) {
+      
+    };
     setFormData(initialState);
   };
 
@@ -61,6 +67,7 @@ export default function Booking() {
             type="date"
             id="date"
             className="form-control timepicker"
+            min={date.format(now, 'YYYY-MM-DD')}
             required
           />
         </div>
@@ -76,7 +83,7 @@ export default function Booking() {
         </div>
         <div className="d-flex p-2 justify-content-center">
           <button type="submit" className="btn btn-primary align-center">
-            Submit
+            Confirm booking
           </button>
         </div>
       </form>
