@@ -12,7 +12,7 @@ export default function Layout ({children}){// we can remove the currentheader i
         pageName = "BOOK";
     }
 
-    const currentHeader = useState(pageName);
+    const currentHeader = pageName;
          
     return(
         <div className = "pageLayout container-fluid">
