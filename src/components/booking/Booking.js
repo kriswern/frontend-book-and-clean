@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import BookingService from "../../services/BookingService";
+import "../../css/booking.css";
 
 //We need to know what type of user (cleaner/admin/customer)
 
