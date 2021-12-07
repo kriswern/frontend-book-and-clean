@@ -30,7 +30,7 @@ Header {
   height: 100%;
 }
 
-button {
+.menu-button {
   background: none;
   border: none;
 }
@@ -41,11 +41,13 @@ main {
 Footer {
   height: fit-content;
   background-color: gray;
+  text-align: center;
 }
 
 @media only screen and (max-width: 400px) {
   .bookIcon {
     width: 10%;
+    min-width: 110px;
 
     border: none;
   }
