@@ -13,7 +13,14 @@ class BookingService {
   }
 
   getAllBookings() {
-    return axios.get(GET_ALL_BOOKINGS_REST_API_URL)
+    const token = localStorage.getItem("token");
+
+    return axios.get(GET_ALL_BOOKINGS_REST_API_URL, { 
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+    console.log("something went wrong")
   }
 
 

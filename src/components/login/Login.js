@@ -22,8 +22,7 @@ const handleSubmit = (e) => {
   })
   .then(function (response) {
     console.log(response);
-    setUsername("")
-    setPassword("")
+    localStorage.setItem("token", response.data.jwt)
   })
   .catch(function (error) {
     console.log(error);
