@@ -2,48 +2,33 @@ import "../../css/login.css";
 import { useEffect, useState, createContext, useContext } from "react";
 import LoginService from "../../services/LoginService";
 export default function Login(props) {
-
-  const [formData, setFormData] = useState() 
-  const [success, setSuccess] = useState();
+  const [formData, setFormData] = useState();
   const [userData, setUserData] = useState();
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    const email = document.getElementById("inputEmail").value;
+    const password = document.getElementById("inputPassword").value;
+    setFormData({ email: email, password: password });
+  }
+  useEffect(() => {
+    if (formData !== undefined) {
+      getLoginResponse();
+    }
+  }, [formData]);
 
-
-function handleSubmit (e) {
-  e.preventDefault();
-  const email = document.getElementById("inputEmail").value;
-  const password = document.getElementById("inputPassword").value;
-  setFormData({email:email,password:password})
-  //props.handleUserChange();
- // s et form data here should work
-  
-   
- }
-useEffect(() => {
-  
-  if(formData !== undefined){
-    alert("change form data");
-    getLoginResponse();
-   } 
  
-}, [formData]);
+  useEffect(() => {
+    if (userData !== undefined) {
+      props.handleUserChange(userData);
+    }
+  }, [userData]);
 
-function getLoginResponse() {
-  LoginService.verifyLogin(formData).then((response) =>{
-    alert("inside response");
-    setUserData(response.data);
-    
-  })
-}
-useEffect(() => {
-  
-  if(userData !== undefined){
-    props.handleUserChange(userData)
-   
-    } 
- 
-}, [userData]);
-console.log(success);
+  function getLoginResponse() {
+    LoginService.verifyLogin(formData).then((response) => {
+      setUserData(response.data);
+    });
+  }
   return (
     <div class="login-form-container">
       <div class="card w-25 align-self-center">
@@ -56,8 +41,6 @@ console.log(success);
               class="form-control"
               id="inputEmail"
               aria-describedby="emailHelp"
-              
-              
             />
             <small id="emailHelp" class="form-text text-muted">
               We'll never share your email with anyone else.
@@ -73,8 +56,11 @@ console.log(success);
               required
             />
           </div>
-          <button  class="
-          " onClick = {(e) => handleSubmit(e)}>
+          <button
+            class="
+          "
+            onClick={(e) => handleSubmit(e)}
+          >
             Submit
           </button>
         </form>
