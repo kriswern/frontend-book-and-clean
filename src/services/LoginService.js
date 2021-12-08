@@ -6,7 +6,7 @@ const LOGIN_REST_API_URL = 'http://localhost:8080/api/login'
 class LoginService {
 
     verifyLogin(userData){
-        return axios.get(LOGIN_REST_API_URL,userData)
+        return axios.post(LOGIN_REST_API_URL,{userData})
     }
  
 

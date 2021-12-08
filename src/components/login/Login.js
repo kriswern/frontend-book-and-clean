@@ -1,9 +1,8 @@
 import "../../css/login.css";
 import { useEffect, useState, createContext, useContext } from "react";
 import LoginService from "../../services/LoginService";
-import { UserContext } from "../UserContext";
 export default function Login(props) {
-  const message = useContext(UserContext);
+
   const [formData, setFormData] = useState() 
   const [success, setSuccess] = useState();
   const [userData, setUserData] = useState();
@@ -11,7 +10,10 @@ export default function Login(props) {
 
 
 function handleSubmit () {
-  props.handleUserChange("customer");
+  const email = document.getElementById("inputEmail").value;
+  const password = document.getElementById("inputPassword").value;
+  setFormData({email:email,password:password})
+  //props.handleUserChange();
  // s et form data here should work
   
    
@@ -19,20 +21,24 @@ function handleSubmit () {
 useEffect(() => {
   
   if(formData !== undefined){
-    alert(formData);
-    
-    LoginService.verifyLogin(formData).then((Response) =>{
-      setUserData(Response)
-      
-    })} 
+    alert("change form data");
+    getLoginResponse();
+   } 
  
 }, [formData]);
 
+function getLoginResponse() {
+  LoginService.verifyLogin(formData).then((response) =>{
+    alert("inside response");
+    setUserData(response.data);
+    
+  })
+}
 useEffect(() => {
   
   if(userData !== undefined){
-    
-    alert(userData)
+    props.handleUserChange(userData)
+   
     } 
  
 }, [userData]);
