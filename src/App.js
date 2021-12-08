@@ -8,6 +8,7 @@ import CleanerPage from './components/Pages/cleanerPage/CleanerPage';
 import Login from './components/login/Login';
 import { useEffect, useState } from 'react/cjs/react.development';
 import { UserContext } from './components/UserContext';
+import AdminPage from './components/Pages/adminPage/AdminPage';
 
 // should proberly be activeuser
 
@@ -17,6 +18,7 @@ export default function App() {
     login: <Login handleUserChange = {handleUserChange}/>,
     cleaner: <CleanerPage/>,
     customer: <CustomerPage/>,
+    admin: <AdminPage/>,
   }
  
   const [activeUser, setActiveUser] = useState()
