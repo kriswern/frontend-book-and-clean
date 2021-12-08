@@ -1,5 +1,5 @@
 import Login from "./login/Login";
-import CleanerPage from "../components/Pages/cleanerPage/CleanerPage"
+import CleanerPage from "./Pages/cleanerPage/CleanerPage"
 import CustomerPage from "./Pages/customerPage/CustomerPage";
 import AdminPage from "./Pages/adminPage/AdminPage";
 import { useEffect, useState } from 'react/cjs/react.development';
@@ -9,7 +9,7 @@ export default function HandlePages() {
         login: Login,
         cleaner: <CleanerPage/>,
         customer: <CustomerPage/>,
-        admin: AdminPage,
+        admin: <AdminPage/>,
       }
      
       const [activeUser, setActiveUser] = useState()
@@ -19,25 +19,13 @@ export default function HandlePages() {
       
       useEffect (() => { 
         if (activeUser !== undefined){
-          alert(activeUser.type);
-        
-         if (activeUser.type in pageComponents){
-           alert("in true")
-          
-          setActivePage(pageComponents[activeUser.type])
-         }else{
-           alert("in false");
-          setActivePage((<Login handleUserChange = {handleUserChange}/>))
-         }
-          
-         
-          
-        
+            (activeUser.type in pageComponents) ? 
+                setActivePage(pageComponents[activeUser.type]) :
+                setActivePage((<Login handleUserChange = {handleUserChange}/>))
         }
       },[activeUser])
     
       function handleUserChange(userData){
-        // should be gotten from repsonse
        setActiveUser({type: userData});
       }
       
