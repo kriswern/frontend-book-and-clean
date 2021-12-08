@@ -8,7 +8,7 @@ export default function Booking(props) {
   console.log("item:" + props.item)
 
   const deleteBooking = () => {
-    BookingService.deleteBooking(props.item.id)
+    BookingService.deleteBooking(props.item.id, props.role)
     props.deleteBooking(props.item.id)
   }
 
@@ -29,7 +29,7 @@ export default function Booking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
-      <button className="btn btn-primary" onClick={deleteBooking}>Delete booking</button>
+      {props.role !== "cleaner" && <button className="btn btn-primary" onClick={deleteBooking}>Delete booking</button>}
     </div>
   );
 }

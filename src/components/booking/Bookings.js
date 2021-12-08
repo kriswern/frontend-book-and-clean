@@ -2,30 +2,49 @@ import { useEffect, useState } from "react";
 import BookingService from "../../services/BookingService";
 import Booking from "./Booking";
 import "../../css/booking.css";
+import Adminservice from "../../services/Adminservice";
+import CustomerService from "../../services/CustomerService";
+import CleanerService from "../../services/CleanerService";
 
 export default function Bookings() {
   const [bookings, setBookings] = useState();
-  const [update, setUpdate] = useState(0);
+  const [role, setRole] = useState("customer");
 
   useEffect(() => {
+    const getBookings = () => {
+      switch (role) {
+        case "admin":
+          Adminservice.getAllBookings().then((response) => {
+            setBookings(response.data);
+            console.log(response.data);
+          });
+          break;
+        case "customer":
+          //WE NEED THE CUSTOMER ID HERE TO PASS IN getMyBookings
+          CustomerService.getMyBookings(1).then((response) => {
+            setBookings(response.data);
+            console.log(response.data);
+          });
+          break;
+        case "cleaner":
+          //WE NEED THE CLEANER ID HERE TO PASS IN getMyBookings
+          CleanerService.getMyBookings(1).then((response) => {
+            setBookings(response.data);
+            console.log(response.data);
+          });
+          break;
+
+        default:
+          break;
+      }
+    };
     getBookings();
   }, []);
-
-  useEffect(() => {
-    getBookings();
-  }, [update]);
 
   const updateBookings = (id) => {
     console.log(id);
     const updatedBookings = bookings.filter((booking) => booking.id !== id);
     setBookings(updatedBookings);
-  };
-
-  const getBookings = () => {
-    BookingService.getAllBookings().then((response) => {
-      setBookings(response.data);
-      console.log(response.data);
-    });
   };
 
   return (
@@ -39,6 +58,7 @@ export default function Bookings() {
               key={index}
               item={booking}
               deleteBooking={updateBookings}
+              role={role}
             />
           ))}
       </div>
