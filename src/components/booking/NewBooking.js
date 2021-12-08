@@ -1,7 +1,8 @@
 import BookingService from "../../services/BookingService";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../css/booking.css";
 import date from "date-and-time";
+import Adminservice from "../../services/Adminservice";
 
 export default function NewBooking() {
   const initialState = {
@@ -9,17 +10,27 @@ export default function NewBooking() {
     address: "",
     date: "",
     time: "",
+    customerId: "", //Hard coded for now. Will be the id of the customer you send in or Admin selects
   };
 
   const [formData, setFormData] = useState(initialState);
+  const [role, setRole] = useState("admin"); //Hard-coded for now
+  const [customers, setCustomers] = useState();
+
   const now = new Date();
 
-  // We need the customer here
-  // const customerId =
+  useEffect(() => {
+    if (role === "admin") {
+      Adminservice.getAllCustomers().then((response) => {
+        setCustomers(response.data);
+        console.log(response.data);
+      });
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (BookingService.registerBooking(formData)) {
+    if (Adminservice.registerBooking(formData)) {
     }
     setFormData(initialState);
   };
@@ -78,9 +89,31 @@ export default function NewBooking() {
             required
           />
         </div>
+
+        {role === "admin" && (
+          <div className="select-container">
+            <label>Select customer:</label>
+              <select
+                onChange={(e) =>
+                  setFormData({ ...formData, customerId: e.target.value })
+                }
+                className="custom-select"
+                required
+              >
+                {customers &&
+                  customers.map((customer, index) => (
+                    <option key={index} value={customer.id}>
+                      {customer.name}
+                    </option>
+                  ))}
+              </select>
+            
+          </div>
+        )}
+
         <div className="d-flex p-2 justify-content-center">
           <button type="submit" className="btn btn-primary align-center">
-            Confirm booking
+            Add booking
           </button>
         </div>
       </form>
