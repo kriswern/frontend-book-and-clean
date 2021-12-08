@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "../../css/booking.css";
 import date from "date-and-time";
 import Adminservice from "../../services/Adminservice";
+import Bookings from "./Bookings";
 
 export default function NewBooking() {
   const initialState = {
@@ -30,7 +31,7 @@ export default function NewBooking() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Adminservice.registerBooking(formData)) {
+    if (BookingService.registerBooking(formData, role)) {
     }
     setFormData(initialState);
   };
@@ -93,21 +94,21 @@ export default function NewBooking() {
         {role === "admin" && (
           <div className="select-container">
             <label>Select customer:</label>
-              <select
-                onChange={(e) =>
-                  setFormData({ ...formData, customerId: e.target.value })
-                }
-                className="custom-select"
-                required
-              >
-                {customers &&
-                  customers.map((customer, index) => (
-                    <option key={index} value={customer.id}>
-                      {customer.name}
-                    </option>
-                  ))}
-              </select>
-            
+            <select
+              onChange={(e) =>
+                setFormData({ ...formData, customerId: e.target.value })
+              }
+              className="custom-select"
+              required
+            >
+              <option defaultValue=""></option>
+              {customers &&
+                customers.map((customer, index) => (
+                  <option key={index} value={customer.id}>
+                    {customer.name}
+                  </option>
+                ))}
+            </select>
           </div>
         )}
 

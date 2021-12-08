@@ -1,27 +1,22 @@
 import axios from "axios";
 
-const NEW_BOOKING_REST_API_URL = 'http://localhost:8080/api/addbookings'
-const GET_ALL_BOOKINGS_REST_API_URL = 'http://localhost:8080/api/bookings'
-const DELETE_BOOKING_REST_API_URL = 'http://localhost:8080/api/deletebookings'
+const BASE_URL = 'http://localhost:8080/api/'
 
 class BookingService {
 
-  registerBooking(booking) {
+  registerBooking(booking, role) {
     console.log(booking)
-    axios.post(NEW_BOOKING_REST_API_URL, booking).then((response) => {
+    axios.post(`${BASE_URL}${role}/addbooking`, booking).then((response) => {
       if(response.status === 200) {
         return true;
       }
     });
   }
 
-  getAllBookings() {
-    return axios.get(GET_ALL_BOOKINGS_REST_API_URL)
-  }
 
-  deleteBooking(id) {
+  deleteBooking(id, role) {
     console.log(id)
-    axios.delete(DELETE_BOOKING_REST_API_URL, {data: id}).then((response) => {
+    axios.delete(`http://localhost:8080/api/${role}/deletebookings`, {data: id}).then((response) => {
       console.log(response)
     })
 
