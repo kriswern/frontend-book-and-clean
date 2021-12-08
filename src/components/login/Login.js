@@ -1,6 +1,42 @@
 import "../../css/login.css";
+import { useEffect, useState, createContext, useContext } from "react";
+import LoginService from "../../services/LoginService";
+import { UserContext } from "../UserContext";
+export default function Login(props) {
+  const message = useContext(UserContext);
+  const [formData, setFormData] = useState() 
+  const [success, setSuccess] = useState();
+  const [userData, setUserData] = useState();
 
-export default function Login() {
+
+
+function handleSubmit () {
+  props.handleUserChange("customer");
+ // s et form data here should work
+  
+   
+ }
+useEffect(() => {
+  
+  if(formData !== undefined){
+    alert(formData);
+    
+    LoginService.verifyLogin(formData).then((Response) =>{
+      setUserData(Response)
+      
+    })} 
+ 
+}, [formData]);
+
+useEffect(() => {
+  
+  if(userData !== undefined){
+    
+    alert(userData)
+    } 
+ 
+}, [userData]);
+console.log(success);
   return (
     <div class="login-form-container">
       <div class="card w-25 align-self-center">
@@ -13,7 +49,8 @@ export default function Login() {
               class="form-control"
               id="inputEmail"
               aria-describedby="emailHelp"
-              placeholder="Enter email"
+              
+              
             />
             <small id="emailHelp" class="form-text text-muted">
               We'll never share your email with anyone else.
@@ -29,7 +66,8 @@ export default function Login() {
               required
             />
           </div>
-          <button type="submit" class="btn btn-primary mt-2">
+          <button  class="
+          " onClick = {() => handleSubmit()}>
             Submit
           </button>
         </form>
