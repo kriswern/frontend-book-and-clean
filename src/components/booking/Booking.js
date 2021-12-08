@@ -8,7 +8,7 @@ export default function Booking(props) {
   console.log("item:" + props.item)
 
   const deleteBooking = () => {
-    BookingService.deleteBooking(props.item.id)
+    BookingService.deleteBooking(props.item.id, props.role)
     props.deleteBooking(props.item.id)
   }
 

@@ -9,7 +9,7 @@ import AdminPage from './components/Pages/adminPage/AdminPage'
 function App() {
   return (
    <Layout>
-    <AdminPage/>
+    <CustomerPage/>
 
    </Layout>
   );
