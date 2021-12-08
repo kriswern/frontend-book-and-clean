@@ -9,7 +9,8 @@ export default function Login(props) {
 
 
 
-function handleSubmit () {
+function handleSubmit (e) {
+  e.preventDefault();
   const email = document.getElementById("inputEmail").value;
   const password = document.getElementById("inputPassword").value;
   setFormData({email:email,password:password})
@@ -73,7 +74,7 @@ console.log(success);
             />
           </div>
           <button  class="
-          " onClick = {() => handleSubmit()}>
+          " onClick = {(e) => handleSubmit(e)}>
             Submit
           </button>
         </form>
