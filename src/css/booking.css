@@ -46,3 +46,9 @@
   margin-bottom: .5rem;
 }
 
+/*ADMIN BOOKING*/
+.select-cleaner-container {
+  display: flex;
+  justify-content: space-between;
+}
+
