@@ -2,6 +2,7 @@ import Login from "./login/Login";
 import CleanerPage from "./Pages/cleanerPage/CleanerPage"
 import CustomerPage from "./Pages/customerPage/CustomerPage";
 import AdminPage from "./Pages/adminPage/AdminPage";
+import TokenService from "../services/TokenService"
 import { useEffect, useState } from 'react/cjs/react.development';
 import jwt from 'jwt-decode';
 
@@ -16,7 +17,12 @@ export default function HandlePages() {
       const [activeUser, setActiveUser] = useState()
       const [activePage, setActivePage] = useState(<Login handleUserChange = {handleUserChange}/>);
     
-     
+     useEffect(() => {
+         const role = TokenService.getRoleFromToken()
+         if(role !== undefined) {
+             setActiveUser({type: role})
+         }
+     },[])
       
       useEffect (() => { 
         if (activeUser !== undefined){
@@ -30,7 +36,6 @@ export default function HandlePages() {
           const token = userData.jwt
           localStorage.setItem('access_token', token);
           const decodedToken = jwt(token);
-          console.log(decodedToken.sub)
        setActiveUser({type: decodedToken.roles[0]});
       }
       

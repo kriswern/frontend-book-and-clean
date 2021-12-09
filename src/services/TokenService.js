@@ -3,16 +3,25 @@ import jwt from "jwt-decode";
 class TokenService {
   getToken() {
     const token = localStorage.getItem("access_token");
+    if(token !== null){
+        return token;
+    }
   }
 
   getNameFromToken() {
-    const decodedToken = jwt(this.getToken);
-    return decodedToken.sub;
+    const token = this.getToken()
+    if(token !== undefined){
+        const decodedToken = jwt(token);
+        return decodedToken.sub;
+    }
   }
 
-  getDecodedToken() {
-    const decodedToken = jwt(this.getToken);
-    return decodedToken;
+  getRoleFromToken() {
+    const token = this.getToken()
+    if(token !== undefined){
+        const decodedToken = jwt(token);
+        return decodedToken.roles[0];
+    }
   }
 
   getTokenHeader() {
@@ -22,6 +31,10 @@ class TokenService {
       },
     };
     return header;
+  }
+
+  deleteToken() {
+      localStorage.removeItem("access_token")
   }
 }
 
