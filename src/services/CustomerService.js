@@ -1,4 +1,5 @@
 import axios from "axios";
+import TokenService from "../services/TokenService"
 
 
 const GET_MY_BOOKINGS_REST_API_URL =
@@ -6,9 +7,12 @@ const GET_MY_BOOKINGS_REST_API_URL =
 
 class CustomerService {
   getMyBookings(customerId) {
-    return axios.get(GET_MY_BOOKINGS_REST_API_URL, {
-      params: { id: customerId },
-    });
+    const header = TokenService.getTokenHeader()
+    if(header !== undefined){
+      return axios.get(GET_MY_BOOKINGS_REST_API_URL, {
+        params: { id: customerId },
+      }, header);
+    }
   }
 }
 

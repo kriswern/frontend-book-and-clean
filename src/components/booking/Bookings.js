@@ -5,10 +5,18 @@ import "../../css/booking.css";
 import Adminservice from "../../services/Adminservice";
 import CustomerService from "../../services/CustomerService";
 import CleanerService from "../../services/CleanerService";
+import TokenService from "../../services/TokenService";
 
 export default function Bookings() {
   const [bookings, setBookings] = useState();
-  const [role, setRole] = useState("admin");
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+   const role = TokenService.getRoleFromToken()
+   if(role !== undefined){
+     setRole(role)
+   }
+  }, [])
 
   useEffect(() => {
     const getBookings = () => {
@@ -39,7 +47,7 @@ export default function Bookings() {
       }
     };
     getBookings();
-  }, []);
+  }, [role]);
 
   const updateBookings = (id) => {
     console.log(id);

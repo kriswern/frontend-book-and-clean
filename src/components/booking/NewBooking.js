@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "../../css/booking.css";
 import date from "date-and-time";
 import Adminservice from "../../services/Adminservice";
+import TokenService from "../../services/TokenService";
 
 export default function NewBooking() {
   const initialState = {
@@ -14,10 +15,17 @@ export default function NewBooking() {
   };
 
   const [formData, setFormData] = useState(initialState);
-  const [role, setRole] = useState("admin"); //Hard-coded for now
+  const [role, setRole] = useState(""); //Hard-coded for now
   const [customers, setCustomers] = useState();
 
   const now = new Date();
+
+  useEffect(() => {
+    const role = TokenService.getRoleFromToken()
+    if(role !== undefined){
+      setRole(role)
+    }
+   }, [])
 
   useEffect(() => {
     if (role === "admin") {
@@ -26,7 +34,7 @@ export default function NewBooking() {
         console.log(response.data);
       });
     }
-  }, []);
+  }, [role]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
