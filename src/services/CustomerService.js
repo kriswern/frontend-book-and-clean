@@ -8,10 +8,10 @@ const GET_MY_BOOKINGS_REST_API_URL =
 class CustomerService {
   getMyBookings(customerId) {
     const header = TokenService.getTokenHeader()
+    
     if(header !== undefined){
-      return axios.get(GET_MY_BOOKINGS_REST_API_URL, {
-        params: { id: customerId },
-      }, header);
+      //get requests needs to be a parameter in the url, or axios wont send the header
+      return axios.get(GET_MY_BOOKINGS_REST_API_URL + `?id=${customerId}`, header);
     }
   }
 }

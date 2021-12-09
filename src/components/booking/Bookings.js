@@ -30,8 +30,14 @@ export default function Bookings() {
         case "customer":
           //WE NEED THE CUSTOMER ID HERE TO PASS IN getMyBookings
           CustomerService.getMyBookings(1).then((response) => {
+            console.log(response)
             setBookings(response.data);
             console.log(response.data);
+          }).catch((error) => {
+            if(error.toJSON().status > 400){
+              console.log(error.toJSON().status)
+              //We need to delete token and force a refresh
+            }
           });
           break;
         case "cleaner":

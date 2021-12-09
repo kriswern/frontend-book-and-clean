@@ -8,9 +8,8 @@ class CleanerService {
   getMyBookings(cleanerId) {
     const header = TokenService.getTokenHeader()
     if(header !== undefined){
-      return axios.get(GET_MY_BOOKINGS_REST_API_URL, {
-        params: { id: cleanerId },
-      }, header);
+      //get requests needs to be a parameter in the url, or axios wont send the header
+      return axios.get(GET_MY_BOOKINGS_REST_API_URL+ `?id=${cleanerId}`, header);
     }
   }
 }

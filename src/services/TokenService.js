@@ -23,7 +23,7 @@ class TokenService {
         return decodedToken.roles[0];
     }
   }
-  
+
   getTokenHeader() {
     const header = {
       headers: {
@@ -31,6 +31,10 @@ class TokenService {
       },
     };
     return header;
+  }
+
+  deleteToken() {
+      localStorage.removeItem("access_token")
   }
 }
 
