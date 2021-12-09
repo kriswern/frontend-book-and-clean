@@ -8,7 +8,7 @@ import CleanerService from "../../services/CleanerService";
 
 export default function Bookings() {
   const [bookings, setBookings] = useState();
-  const [role, setRole] = useState("customer");
+  const [role, setRole] = useState("admin");
 
   useEffect(() => {
     const getBookings = () => {
