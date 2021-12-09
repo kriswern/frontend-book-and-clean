@@ -9,7 +9,7 @@ export default function Login(props) {
     e.preventDefault();
     const email = document.getElementById("inputEmail").value;
     const password = document.getElementById("inputPassword").value;
-    setFormData({ email: email, password: password });
+    setFormData({ username: email, password: password });
   }
   useEffect(() => {
     if (formData !== undefined) {

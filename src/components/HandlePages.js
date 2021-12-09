@@ -3,6 +3,7 @@ import CleanerPage from "./Pages/cleanerPage/CleanerPage"
 import CustomerPage from "./Pages/customerPage/CustomerPage";
 import AdminPage from "./Pages/adminPage/AdminPage";
 import { useEffect, useState } from 'react/cjs/react.development';
+import jwt from 'jwt-decode';
 
 export default function HandlePages() {
     const pageComponents = {
@@ -26,7 +27,11 @@ export default function HandlePages() {
       },[activeUser])
     
       function handleUserChange(userData){
-       setActiveUser({type: userData});
+          const token = userData.jwt
+          localStorage.setItem('access_token', token);
+          const decodedToken = jwt(token);
+          console.log(decodedToken.sub)
+       setActiveUser({type: decodedToken.roles[0]});
       }
       
       
