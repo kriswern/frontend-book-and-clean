@@ -1,6 +1,34 @@
 import "../../css/login.css";
+import { useEffect, useState, createContext, useContext } from "react";
+import LoginService from "../../services/LoginService";
+export default function Login(props) {
+  const [formData, setFormData] = useState();
+  const [userData, setUserData] = useState();
 
-export default function Login() {
+  function handleSubmit(e) {
+    e.preventDefault();
+    const email = document.getElementById("inputEmail").value;
+    const password = document.getElementById("inputPassword").value;
+    setFormData({ username: email, password: password });
+  }
+  useEffect(() => {
+    if (formData !== undefined) {
+      getLoginResponse();
+    }
+  }, [formData]);
+
+ 
+  useEffect(() => {
+    if (userData !== undefined) {
+      props.handleUserChange(userData);
+    }
+  }, [userData]);
+
+  function getLoginResponse() {
+    LoginService.verifyLogin(formData).then((response) => {
+      setUserData(response.data);
+    });
+  }
   return (
     <div class="login-form-container">
       <div class="card w-25 align-self-center">
@@ -13,7 +41,6 @@ export default function Login() {
               class="form-control"
               id="inputEmail"
               aria-describedby="emailHelp"
-              placeholder="Enter email"
             />
             <small id="emailHelp" class="form-text text-muted">
               We'll never share your email with anyone else.
@@ -29,7 +56,11 @@ export default function Login() {
               required
             />
           </div>
-          <button type="submit" class="btn btn-primary mt-2">
+          <button
+            class="
+          "
+            onClick={(e) => handleSubmit(e)}
+          >
             Submit
           </button>
         </form>
