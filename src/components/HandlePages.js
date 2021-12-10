@@ -5,36 +5,26 @@ import AdminPage from "./Pages/adminPage/AdminPage";
 import TokenService from "../services/TokenService"
 import { useEffect, useState } from 'react/cjs/react.development';
 import jwt from 'jwt-decode';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
+import { useHistory } from "react-router-dom"
+import { BrowserRouter as Router,Switch,Route,} from "react-router-dom";
 
 export default function HandlePages() {
-    const pageComponents = {
-        login: Login,
-        cleaner: <CleanerPage/>,
-        customer: <CustomerPage/>,
-        admin: <AdminPage/>,
-      }
+    const history = useHistory()
+   
      
       const [activeUser, setActiveUser] = useState()
-      const [activePage, setActivePage] = useState(<Login handleUserChange = {handleUserChange}/>);
     
      useEffect(() => {
          const role = TokenService.getRoleFromToken()
          if(role !== undefined) {
              setActiveUser({type: role})
+         }else{
+            history.push("/login");
          }
      },[])
-      
       useEffect (() => { 
         if (activeUser !== undefined){
-            (activeUser.type in pageComponents) ? 
-                setActivePage(pageComponents[activeUser.type]) :
-                setActivePage((<Login handleUserChange = {handleUserChange}/>))
+            history.push("/" + activeUser.type)
         }
       },[activeUser])
     
@@ -46,15 +36,15 @@ export default function HandlePages() {
       }
       
       
-
+     
       return(
         
               <div>
                 <Switch>
-                  <Route path = "/login" component = {Login}/>  
-                  <Route path = "/adminPage" component = {AdminPage}/>  
-                  <Route path = "/customerPage" component = {CustomerPage}/>  
-                  <Route path = "/cleanerPage" component = {CleanerPage}/>  
+                  <Route path = "/login" render = {() => <Login handleUserChange= {handleUserChange}/>}/>  
+                  <Route path = "/admin" component = {AdminPage}/>  
+                  <Route path = "/customer" component = {CustomerPage}/>  
+                  <Route path = "/cleaner" component = {CleanerPage}/>  
                 </Switch>
                 
               </div>
