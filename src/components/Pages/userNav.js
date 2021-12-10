@@ -1,10 +1,14 @@
-export default function UserNav({
-  navOpen,
-  openOrCloseNav,
-  changeTab,
-  tabsRoute,
-}) {
-  //will map a array of values to buttons
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import "../../css/userNav.css"
+
+export default function UserNav({ routes }) {
+  
+  const [navOpen, setNavOpen] = useState(false);
+ 
+  function openOrCloseNav() {
+    navOpen === false ? setNavOpen(true) : setNavOpen(false);
+  }
 
   if (navOpen) {
     return (
@@ -17,18 +21,9 @@ export default function UserNav({
           -
         </button>
         <ul className="customerNavList">
-          {Array.from(tabsRoute.keys()).map((key, value) => (
-            <li className="listItem">
-              <button
-              className="menu-button"
-                onClick={() => {
-                  changeTab(key);
-                  openOrCloseNav();
-                }}
-              >
-                {key}
-              </button>
-            </li>
+          {routes && routes.map((route, index) => (
+            <Link key={index} to={route}>{route.substring(7)}</Link>
+            
           ))}
         </ul>
       </aside>

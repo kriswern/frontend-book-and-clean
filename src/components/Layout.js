@@ -13,7 +13,6 @@ export default function Layout ({children}){// we can remove the currentheader i
         <div className = "pageLayout container-fluid">
             
                 <Header/>
-                <Navbar/>
                 <main className="p-2">
                     {children}
                 </main>
