@@ -7,8 +7,11 @@ const GET_ALL_CUSTOMERS_REST_API_URL =
   "http://localhost:8080/api/admin/customers";
 const GET_ALL_CLEANERS_REST_API_URL =
   "http://localhost:8080/api/admin/cleaners";
-const POST_ASSIGN_CLEANER_REST_API_URL =
+const PUT_ASSIGN_CLEANER_REST_API_URL =
   "http://localhost:8080/api/admin/assigncleaner";
+const GET_CLEANER_NAME_REST_API_URL = "http://localhost:8080/api/admin/cleanername";
+const PUT_REMOVE_CLEANER_REST_API_URL =
+  "http://localhost:8080/api/admin/removecleaner";
 
 class AdminService {
   getAllBookings() {
@@ -31,12 +34,16 @@ class AdminService {
     return axios.get(GET_ALL_CLEANERS_REST_API_URL, header);
   }
 
-  assignCleaner(formData) {
+  getCleanerName(id) {
     const header = TokenService.getTokenHeader()
 
-    console.log("Axios", formData)
+    return axios.get(GET_CLEANER_NAME_REST_API_URL + `?id=${id}`, header)
+  }
+
+  assignCleaner(formData) {
+    const header = TokenService.getTokenHeader()
     
-    axios.put(POST_ASSIGN_CLEANER_REST_API_URL, formData, header).then((response) => {
+    axios.put(PUT_ASSIGN_CLEANER_REST_API_URL, formData, header).then((response) => {
       if(response.status === 200) {
         
         console.log(response.data);
@@ -45,6 +52,21 @@ class AdminService {
       .catch(error => {
         console.log(error.response.data.error)
      });
+  }
+
+  removeCleaner(bookingId) {
+    const header = TokenService.getTokenHeader()
+
+    axios.put(PUT_REMOVE_CLEANER_REST_API_URL, {id: bookingId}, header).then((response) => {
+      if(response.status === 200) {
+        
+        console.log(response.data);
+      }
+    })
+      .catch(error => {
+        console.log(error.response.data.error)
+     });
+
   }
 }
 
