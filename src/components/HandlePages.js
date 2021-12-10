@@ -5,6 +5,12 @@ import AdminPage from "./Pages/adminPage/AdminPage";
 import TokenService from "../services/TokenService"
 import { useEffect, useState } from 'react/cjs/react.development';
 import jwt from 'jwt-decode';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 
 export default function HandlePages() {
     const pageComponents = {
@@ -42,9 +48,17 @@ export default function HandlePages() {
       
 
       return(
-          <div>
-              {activePage}
-          </div>
+        
+              <div>
+                <Switch>
+                  <Route path = "/login" component = {Login}/>  
+                  <Route path = "/adminPage" component = {AdminPage}/>  
+                  <Route path = "/customerPage" component = {CustomerPage}/>  
+                  <Route path = "/cleanerPage" component = {CleanerPage}/>  
+                </Switch>
+                
+              </div>
+          
          
       )
 
