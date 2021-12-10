@@ -17,8 +17,8 @@ export default function App() {
  
   return (
    <Layout>
-     <HandlePages/>
-    
+     <HandlePages/>    
+
    </Layout>
   );
 }
