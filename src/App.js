@@ -63,7 +63,7 @@ export default function App() {
                 <Route path="/customer/bookings" component={Bookings} />
                 <Route path="/customer/newbooking" component={NewBooking} />
 
-                <Route path="/cleaner/bookings" render = {Bookings} />
+                <Route path="/cleaner/bookings" component = {Bookings} />
                 </Switch>
    </Layout>
   );
