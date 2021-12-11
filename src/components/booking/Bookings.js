@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import Booking from "./Booking";
+import Booking from "./CleanerBooking";
 import "../../css/booking.css";
 import Adminservice from "../../services/Adminservice";
 import CustomerService from "../../services/CustomerService";
 import CleanerService from "../../services/CleanerService";
 import TokenService from "../../services/TokenService";
 import AdminBooking from "./AdminBooking";
+import CleanerBooking from "./CleanerBooking";
+import CustomerBooking from "./CustomerBooking";
 
 export default function Bookings() {
   const [bookings, setBookings] = useState();
@@ -13,40 +15,42 @@ export default function Bookings() {
   const [update, setUpdate] = useState(false);
 
   useEffect(() => {
-    console.log("in booking state")
-   const role = TokenService.getRoleFromToken()
-   if(role !== undefined){
-     setRole(role)
-   }
-  }, [])
+    console.log("in booking state");
+    const role = TokenService.getRoleFromToken();
+    if (role !== undefined) {
+      setRole(role);
+    }
+  }, []);
 
   useEffect(() => {
     const getBookings = () => {
       switch (role) {
         case "admin":
-          console.log("in admin bookings")
+          console.log("in admin bookings");
           Adminservice.getAllBookings().then((response) => {
             setBookings(response.data);
           });
           break;
         case "customer":
-          console.log("in costumer bookings")
-          //WE NEED THE CUSTOMER ID HERE TO PASS IN getMyBookings
-          CustomerService.getMyBookings().then((response) => {
-            console.log(response)
-            setBookings(response.data);
-            console.log(response.data);
-          }).catch((error) => {
-            if(error.toJSON().status > 400){
-              console.log("Access denied, error code: ", error.toJSON().status)
-              //We need to delete token and force a refresh
-            }
-
-          });
+          console.log("in costumer bookings");
+          CustomerService.getMyBookings()
+            .then((response) => {
+              console.log(response);
+              setBookings(response.data);
+              console.log(response.data);
+            })
+            .catch((error) => {
+              if (error.toJSON().status > 400) {
+                console.log(
+                  "Access denied, error code: ",
+                  error.toJSON().status
+                );
+                //We need to delete token and force a refresh
+              }
+            });
           break;
         case "cleaner":
-          //WE NEED THE CLEANER ID HERE TO PASS IN getMyBookings
-          console.log("im here")
+          console.log("im here");
           CleanerService.getMyBookings().then((response) => {
             setBookings(response.data);
           });
@@ -67,16 +71,30 @@ export default function Bookings() {
   };
 
   useEffect(() => {
-    console.log(update);
-    setTimeout(() => {
-      update &&
-        Adminservice.getAllBookings().then((response) => {
-          setBookings(response.data);
-          console.log(response.data);
-        });
+    update && setTimeout(() => {
+      switch (role) {
+        case "admin":
+          Adminservice.getAllBookings().then((response) => {
+            setBookings(response.data);
+            console.log(response.data);
+          });
+          break;
+          case "cleaner":
+            CleanerService.getMyBookings().then((response) => {
+              setBookings(response.data)
+            })
+          break;
+          case "customer":
+            CustomerService.getMyBookings().then((response) => {
+              setBookings(response.data)
+            })
+            break;
+        default:
+          break;
+      }
     }, 500);
-    setUpdate(false)
-  }, [update]);
+    setUpdate(false);
+  }, [update, role]);
 
   const updateBookings = (bool) => {
     setUpdate(bool);
@@ -88,25 +106,37 @@ export default function Bookings() {
 
       <div className="bookings-container p-2">
         {bookings &&
-          bookings.map((booking, index) =>
-            role && role !== "admin" ? (
-              <Booking
-                key={index}
-                item={booking}
-                deleteBooking={deleteBooking}
-                updateBookings={updateBookings}
-                role={role}
-              />
-            ) : (
-              <AdminBooking
-                key={index}
-                item={booking}
-                deleteBooking={deleteBooking}
-                updateBookings={updateBookings}
-                role={role}
-              />
-            )
-          )}
+          role &&
+          bookings.map((booking, index) => {
+            switch (role) {
+              case "admin":
+                return <AdminBooking
+                  key={index}
+                  item={booking}
+                  deleteBooking={deleteBooking}
+                  updateBookings={updateBookings}
+                  role={role}
+                />;
+              case "customer":
+               return <CustomerBooking
+                  key={index}
+                  item={booking}
+                  deleteBooking={deleteBooking}
+                  updateBookings={updateBookings}
+                  role={role}
+                />;
+              case "cleaner":
+               return <CleanerBooking
+                  key={index}
+                  item={booking}
+                  deleteBooking={deleteBooking}
+                  updateBookings={updateBookings}
+                  role={role}
+                />;
+              default:
+                break;
+            }
+          })}
       </div>
     </div>
   );

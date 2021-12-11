@@ -5,9 +5,10 @@ const USER_REGISTER_REST_API_URL = "http://localhost:8080/register";
 
 class RegisterService {
     registerUser(registerForm) {
+      const header = TokenService.getTokenHeader();
         console.log(registerForm);
         axios
-            .post(USER_REGISTER_REST_API_URL, registerForm)
+            .post(USER_REGISTER_REST_API_URL, registerForm, header)
             .then((response) => {
                 if (response.status === 201) {
                     alert(

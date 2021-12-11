@@ -4,6 +4,7 @@ import "../../css/booking.css";
 import date from "date-and-time";
 import Adminservice from "../../services/Adminservice";
 import TokenService from "../../services/TokenService";
+import CustomerService from "../../services/CustomerService";
 
 export default function NewBooking() {
   const initialState = {
@@ -21,17 +22,20 @@ export default function NewBooking() {
   const now = new Date();
 
   useEffect(() => {
-    const role = TokenService.getRoleFromToken()
-    if(role !== undefined){
-      setRole(role)
+    const role = TokenService.getRoleFromToken();
+    if (role !== undefined) {
+      setRole(role);
     }
-   }, [])
+  }, []);
 
   useEffect(() => {
     if (role === "admin") {
       Adminservice.getAllCustomers().then((response) => {
         setCustomers(response.data);
-        console.log(response.data);
+      });
+    } else if (role === "customer") {
+      CustomerService.getMyID().then((response) => {
+        setFormData({ ...formData, customerId: response.data })
       });
     }
   }, [role]);
@@ -40,7 +44,7 @@ export default function NewBooking() {
     e.preventDefault();
 
     if (BookingService.registerBooking(formData, role)) {
-
+      alert("Booking made");
     }
     setFormData(initialState);
   };
@@ -119,7 +123,6 @@ export default function NewBooking() {
                   </option>
                 ))}
             </select>
-
           </div>
         )}
 

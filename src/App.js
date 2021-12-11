@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import jwt from 'jwt-decode';
 import { useHistory } from "react-router-dom"
 import { BrowserRouter as Router,Switch,Route, Link} from "react-router-dom";
-import Booking from './components/booking/Booking';
+import Booking from './components/booking/CleanerBooking';
 import Bookings from './components/booking/Bookings';
 import NewBooking from './components/booking/NewBooking';
 import Login from './components/login/Login';
 import Layout from "./components/Layout"
 import UserNav from "./components/Pages/userNav"
 import RegisterForm from './components/register/RegisterForm';
+import CleanerBooking from './components/booking/CleanerBooking';
 
 
 export default function App() {
@@ -60,9 +61,9 @@ export default function App() {
                 <Route path="/admin/register" component={RegisterForm} />
 
                 <Route path="/customer/bookings" component={Bookings} />
-                <Route path="/customer/newbooking" component={RegisterForm} />
+                <Route path="/customer/newbooking" component={NewBooking} />
 
-                <Route path="/cleaner/bookings" render = {() => <Bookings/>} />
+                <Route path="/cleaner/bookings" render = {Bookings} />
                 </Switch>
    </Layout>
   );
