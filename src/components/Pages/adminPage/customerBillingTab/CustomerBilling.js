@@ -5,60 +5,52 @@ import Adminservice from "../../../../services/Adminservice";
 
 export default function CustomerBilling() {
   const [allCustomers, setAllCustomers] = useState([]);
-  const priceList = new Map([
-    ["floorCleaning", 100],
-    ["houseCleaning", 359],
-  ]);
   const [pricetest, setPriceTest] = useState();
   const [searchInput, setSearchInput] = useState();
   const [cartBookings, setCartBookings] = useState({ bookings: [] });
   const [totalPrice, setTotalPrice] = useState(0);
   const [activeCustomer, setActiveCustomer] = useState();
+  const [activeBookings, setActiveBookings] = useState();
   const [activeCustomerFinishedBookings, setActiveCustomerFinishedBookings] =
     useState([
       {
         description: "Clean mansion",
         date: "15/22",
         time: "13:00",
-        cleaner: "john alliway",
         status: "confirmed",
-        cleaningType: "floorCleaning",
+       
         id: 1,
       },
       {
         description: "Clean mansion",
         date: "15/22",
         time: "13:00",
-        cleaner: "john alliway",
         status: "confirmed",
-        cleaningType: "houseCleaning",
+       
         id: 2,
       },
       {
         description: "Clean mansion",
         date: "15/22",
         time: "13:00",
-        cleaner: "john alliway",
         status: "confirmed",
-        cleaningType: "floorCleaning",
+       
         id: 3,
       },
       {
         description: "Clean mansion",
         date: "15/22",
         time: "13:00",
-        cleaner: "john alliway",
         status: "confirmed",
-        cleaningType: "houseCleaning",
+      
         id: 4,
       },
       {
         description: "Clean mansion",
         date: "15/22",
         time: "13:00",
-        cleaner: "john alliway",
         status: "confirmed",
-        cleaningType: "houseCleaning",
+      
         id: 5,
       },
     ]);
@@ -82,14 +74,20 @@ export default function CustomerBilling() {
     console.log(pricetest)
     cartBookings.bookings.map((booking) => {
      
-      total += getBookingPrice(booking.cleaningType);
+      total += getBookingPrice(booking.priceList);
     });
 
     setTotalPrice(total);
   }, [cartBookings]);
 
-  useEffect(() =>{//get customers bookings 
-
+  useEffect(() =>{//get customers bookings and filters out done
+    if(activeCustomer !== undefined){
+    Adminservice.getAllBookings().then((response) =>{
+      let data = response.data;
+      data = (data.filter((data) => data.customerId === activeCustomer.id && data.status === "done"));
+     setActiveBookings(data);
+    
+    })}
   },[activeCustomer])
   function changeActiveCustomer(user) {
     setSearchInput(""); // resets input when customer is selected
@@ -124,13 +122,18 @@ export default function CustomerBilling() {
     setActiveCustomerFinishedBookings();
   }
 
-  function getBookingPrice (bookingType) {
+  function getBookingPrices(){
+
+  }
+
+  function getBookingPrice (bookingType) { // can get price from booking
 
     const price = pricetest.filter((priceType) =>priceType.type === bookingType )
     return price[0].price;
 
   }
-  
+  console.log(activeCustomerFinishedBookings)
+  console.log(activeBookings)
   return (
     <div className="mainWindow">
       <div className="test">
@@ -168,13 +171,11 @@ export default function CustomerBilling() {
                   <p>
                     {data.date} : {data.time}
                   </p>
-                  <p>
-                    Cleaner:{data.cleaner} Status:{data.status}
-                  </p>
+                  
                 </div>
                 <div>
                   <button onClick={() => addToCart(data.id)}>
-                    {getBookingPrice(data.cleaningType)}:->
+                    {}:->
                   </button>
                 </div>
               </div>

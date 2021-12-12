@@ -68,6 +68,7 @@ class AdminService {
      });
 
   }
+  
   getPriceList() {
     const header = TokenService.getTokenHeader()
     return axios.get(GET_PRICE_LIST, header)
