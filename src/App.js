@@ -44,6 +44,12 @@ export default function App() {
        const decodedToken = jwt(token);
     setActiveUser({type: decodedToken.roles[0]});
    }
+
+   function logout() {
+     setActiveUser()
+     localStorage.removeItem("access_token")
+     history.push("/login")
+   }
  
    if (!activeUser) return <Layout><Login handleUserChange= {handleUserChange}/> </Layout>
 
@@ -51,6 +57,7 @@ export default function App() {
    <Layout>
       <UserNav
         routes={userRoutes.get(activeUser.type)}
+        logout={logout}
       />  
      <Switch>
                 <Route path = "/login" render = {() => <Login handleUserChange= {handleUserChange}/>}/>  
