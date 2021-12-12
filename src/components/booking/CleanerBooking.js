@@ -4,13 +4,8 @@ import "../../css/booking.css";
 
 //We need to know what type of user (cleaner/admin/customer)
 
-export default function Booking(props) {
-  console.log("item:" + props.item)
-
-  const deleteBooking = () => {
-    BookingService.deleteBooking(props.item.id, props.role)
-    props.deleteBooking(props.item.id)
-  }
+export default function CleanerBooking(props) {
+  console.log("item:" + props.item);
 
   return (
     <div className="booking-container">
@@ -29,7 +24,9 @@ export default function Booking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
-      {props.role !== "cleaner" && <button className="btn btn-primary" onClick={deleteBooking}>Delete booking</button>}
+      {props.item.staus === "pending" && (
+        <button className="btn btn-primary">Accept booking</button>
+      )}
     </div>
   );
 }

@@ -25,6 +25,9 @@ export default function AdminBooking(props) {
     Adminservice.getCleanerName(props.item.cleanerId).then((response) => {
       setCleanerName(response.data)
     })
+    Adminservice.getAllCleaners().then((response) => {
+      setCleaners(response.data);
+    });
   }, [props]);
 
   const deleteBooking = () => {
