@@ -12,6 +12,7 @@ import Layout from "./components/Layout"
 import UserNav from "./components/Pages/userNav"
 import RegisterForm from './components/register/RegisterForm';
 import CleanerBooking from './components/booking/CleanerBooking';
+import CustomerBilling from './components/Pages/adminPage/customerBillingTab/CustomerBilling';
 
 
 export default function App() {
@@ -20,7 +21,7 @@ export default function App() {
   const [activeUser, setActiveUser] = useState()
 
    const userRoutes = new Map([
-     ["admin", ["/admin/bookings", "/admin/newbooking", "/admin/register" ]],
+     ["admin", ["/admin/bookings", "/admin/newbooking", "/admin/register", "admin/customerBilling" ]],
      ["customer", ["/customer/bookings", "/customer/newbooking"]],
      ["cleaner", ["/cleaner/bookings"]],
    ]);
@@ -59,6 +60,7 @@ export default function App() {
                 <Route path="/admin/bookings" exact component={Bookings} />
                 <Route path="/admin/newbooking" component={NewBooking} />
                 <Route path="/admin/register" component={RegisterForm} />
+                <Route path="/admin/customerBilling" component={CustomerBilling} />
 
                 <Route path="/customer/bookings" component={Bookings} />
                 <Route path="/customer/newbooking" component={NewBooking} />
