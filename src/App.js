@@ -54,7 +54,7 @@ export default function App() {
       />  
      <Switch>
                 <Route path = "/login" render = {() => <Login handleUserChange= {handleUserChange}/>}/>  
-                <Route path="/admin/bookings" exact component={Bookings} />
+                <Route path="/admin/bookings" component={Bookings}/>
                 <Route path="/admin/newbooking" component={NewBooking} />
                 <Route path="/admin/register" component={RegisterForm} />
 

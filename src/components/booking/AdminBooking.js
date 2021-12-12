@@ -6,13 +6,15 @@ import {AiOutlineClose} from "react-icons/ai"
 
 export default function AdminBooking(props) {
   const inititalState = {
-    bookingId: props.item.id,
+    bookingId: "",
     cleanerId: "",
   };
 
   const [cleaners, setCleaners] = useState();
   const [formData, setFormData] = useState(inititalState);
   const [cleanerName, setCleanerName] = useState("")
+  const [id, setId] = useState("")
+
 
   useEffect(() => {
     Adminservice.getAllCleaners().then((response) => {
@@ -25,10 +27,16 @@ export default function AdminBooking(props) {
     Adminservice.getCleanerName(props.item.cleanerId).then((response) => {
       setCleanerName(response.data)
     })
+    setId(props.item.id)
   }, [props]);
 
+
+  useEffect(() => {
+    id !== "" && setFormData({...formData, bookingId: id}) 
+  }, [id]);
+
   const deleteBooking = () => {
-    BookingService.deleteBooking(props.item.id, props.role);
+    BookingService.deleteBooking(id, props.role);
     props.updateBookings(true);
   };
 
@@ -38,14 +46,14 @@ export default function AdminBooking(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log("Formdata: ",formData)
     Adminservice.assignCleaner(formData);
     props.updateBookings(true);
   };
 
   const removeCleaner = () => {
-    Adminservice.removeCleaner(props.item.id);
-    props.updateBookings(true)
+    Adminservice.removeCleaner(id);
+    props.updateBookings(true);
   }
 
   return (
