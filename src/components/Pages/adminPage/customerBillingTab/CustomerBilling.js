@@ -7,9 +7,7 @@ export default function CustomerBilling({
 
   
 }) {
-  const [allCustomers, setAllCustomers] = ([
-    "fredrik","emil"
-  ])
+  const [allCustomers, setAllCustomers] = useState(["fredrik","linus","emil","test","emilio","daniel","david","rod","flod","daniel","david","rod","flod"]);
   const priceList = new Map([
     ["floorCleaning", 100],
     ["houseCleaning", 359],
