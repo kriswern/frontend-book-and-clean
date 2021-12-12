@@ -14,7 +14,7 @@ export default function UserNav({ routes }) {
     return (
       <aside className="customerNav">
         <button
-          className="menu-button"
+          className="custNavButton"
           type="button"
           onClick={() => openOrCloseNav()}
         >
@@ -22,7 +22,7 @@ export default function UserNav({ routes }) {
         </button>
         <ul className="customerNavList">
           {routes && routes.map((route, index) => (
-            <Link key={index} to={route}>{route.substring(7)}</Link>
+            <Link key={index} to={route.path} className="list-item"><button className="menu-button list-item" onClick={() => openOrCloseNav()}>{route.name}</button></Link>
             
           ))}
         </ul>

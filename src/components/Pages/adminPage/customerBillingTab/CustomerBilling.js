@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react/cjs/react.development";
 
 import "../../../../css/customerBilling.css";
+import Adminservice from "../../../../services/Adminservice";
 
-
-export default function CustomerBilling({
-
-  
-}) {
-  const [allCustomers, setAllCustomers] = useState(["fredrik","linus","emil","test","emilio","daniel","david","rod","flod","daniel","david","rod","flod"]);
+export default function CustomerBilling() {
+  const [allCustomers, setAllCustomers] = useState([]);
   const priceList = new Map([
     ["floorCleaning", 100],
     ["houseCleaning", 359],
-  ])
-
+  ]);
+  const [pricetest, setPriceTest] = useState();
   const [searchInput, setSearchInput] = useState();
   const [cartBookings, setCartBookings] = useState({ bookings: [] });
   const [totalPrice, setTotalPrice] = useState(0);
@@ -65,16 +62,35 @@ export default function CustomerBilling({
         id: 5,
       },
     ]);
-  useEffect(() => { // keeps cart price updated
+    useEffect (() =>{
+      Adminservice.getPriceList().then((response) => {
+        setPriceTest(response.data);
+        
+      }).then(console.log(pricetest))
+    },[])
+  useEffect(() => {
+    //get all customers here name / id ? whateever is needed to get  bookings
+    Adminservice.getAllCustomers().then((response) => {
+      // gets all customers
+      setAllCustomers(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    // keeps cart price updated
     let total = 0;
+    console.log(pricetest)
     cartBookings.bookings.map((booking) => {
-      total += priceList.get(booking.cleaningType);
-      
      
+      total += getBookingPrice(booking.cleaningType);
     });
 
     setTotalPrice(total);
   }, [cartBookings]);
+
+  useEffect(() =>{//get customers bookings 
+
+  },[activeCustomer])
   function changeActiveCustomer(user) {
     setSearchInput(""); // resets input when customer is selected
     setActiveCustomer(user);
@@ -87,11 +103,9 @@ export default function CustomerBilling({
   }
 
   function addToCart(bookingId) {
-    const bookingToMove = activeCustomerFinishedBookings.find(
-      (booking) => {
-        return booking.id === bookingId;
-      }
-    );
+    const bookingToMove = activeCustomerFinishedBookings.find((booking) => {
+      return booking.id === bookingId;
+    });
     setActiveCustomerFinishedBookings(
       activeCustomerFinishedBookings.filter(
         (booking) => booking.id !== bookingId
@@ -109,6 +123,14 @@ export default function CustomerBilling({
     setActiveCustomer();
     setActiveCustomerFinishedBookings();
   }
+
+  function getBookingPrice (bookingType) {
+
+    const price = pricetest.filter((priceType) =>priceType.type === bookingType )
+    return price[0].price;
+
+  }
+  
   return (
     <div className="mainWindow">
       <div className="test">
@@ -135,6 +157,8 @@ export default function CustomerBilling({
           value={searchInput}
           onChange={() => handleSearchInput()}
         />
+
+        
         {activeCustomer ? (
           activeCustomerFinishedBookings.map((data) => {
             return (
@@ -150,7 +174,7 @@ export default function CustomerBilling({
                 </div>
                 <div>
                   <button onClick={() => addToCart(data.id)}>
-                    {priceList.get(data.cleaningType)}:->
+                    {getBookingPrice(data.cleaningType)}:->
                   </button>
                 </div>
               </div>
@@ -159,11 +183,11 @@ export default function CustomerBilling({
         ) : (
           <div className="nameListWindow">
             {allCustomers
-              .filter((name) => name.includes(searchInput))
-              .map((name) => {
+              .filter((customer) => customer.name.includes(searchInput))
+              .map((customer) => {
                 return (
-                  <button onClick={() => changeActiveCustomer(name)}>
-                    {name}
+                  <button onClick={() => changeActiveCustomer(customer)}>
+                    {customer.name}
                   </button>
                 );
               })}

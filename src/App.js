@@ -4,14 +4,12 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import jwt from 'jwt-decode';
 import { useHistory } from "react-router-dom"
 import { BrowserRouter as Router,Switch,Route, Link} from "react-router-dom";
-import Booking from './components/booking/CleanerBooking';
 import Bookings from './components/booking/Bookings';
 import NewBooking from './components/booking/NewBooking';
 import Login from './components/login/Login';
 import Layout from "./components/Layout"
 import UserNav from "./components/Pages/userNav"
 import RegisterForm from './components/register/RegisterForm';
-import CleanerBooking from './components/booking/CleanerBooking';
 import CustomerBilling from './components/Pages/adminPage/customerBillingTab/CustomerBilling';
 
 
@@ -21,9 +19,9 @@ export default function App() {
   const [activeUser, setActiveUser] = useState()
 
    const userRoutes = new Map([
-     ["admin", ["/admin/bookings", "/admin/newbooking", "/admin/register", "admin/customerBilling" ]],
-     ["customer", ["/customer/bookings", "/customer/newbooking"]],
-     ["cleaner", ["/cleaner/bookings"]],
+     ["admin", [{name: "Bookings", path: "/admin/bookings"}, {name: "New Booking", path: "/admin/newbooking"}, {name: "Register User", path: "/admin/register"}, {name: "Bill Customers", path: "/admin/customerBilling"} ]],
+     ["customer", [{name: "Bookings", path: "/customer/bookings"}, {name: "New Booking", path: "/customer/newbooking"}]],
+     ["cleaner", [{name: "Bookings", path: "/cleaner/bookings"}]],
    ]);
  
   useEffect(() => {
@@ -37,7 +35,7 @@ export default function App() {
 
    useEffect (() => { 
      if (activeUser !== undefined){
-         history.push("/" + activeUser.type)
+         history.push("/" + activeUser.type + "/bookings")
      }
    },[activeUser])
  
@@ -48,7 +46,7 @@ export default function App() {
     setActiveUser({type: decodedToken.roles[0]});
    }
  
-   if (!activeUser) return <Login handleUserChange= {handleUserChange}/> 
+   if (!activeUser) return <Layout><Login handleUserChange= {handleUserChange}/> </Layout>
 
   return (
    <Layout>
