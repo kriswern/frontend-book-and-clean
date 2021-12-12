@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Booking from "./CleanerBooking";
 import "../../css/booking.css";
 import Adminservice from "../../services/Adminservice";
 import CustomerService from "../../services/CustomerService";
@@ -13,6 +12,7 @@ export default function Bookings() {
   const [bookings, setBookings] = useState();
   const [role, setRole] = useState();
   const [update, setUpdate] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     console.log("in booking state");
@@ -21,6 +21,7 @@ export default function Bookings() {
       setRole(role);
     }
   }, []);
+
 
   useEffect(() => {
     const getBookings = () => {
@@ -92,7 +93,7 @@ export default function Bookings() {
         default:
           break;
       }
-    }, 500);
+    }, 300);
     setUpdate(false);
   }, [update, role]);
 
@@ -134,7 +135,7 @@ export default function Bookings() {
                   role={role}
                 />;
               default:
-                break;
+                return <div>Error...</div>
             }
           })}
       </div>

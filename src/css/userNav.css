@@ -16,28 +16,22 @@
 .custNavButton {
     background: none;
   border: none;
+  font-weight: bold;
+
 }
 
-.listItem {
+.menu-button {
+  position: relative;
+  color: white;
+  font-weight: bold;
+  border: none;
   background-color: #333431;
   width: 100%;
 
   box-shadow: 1px 1px 0px gray;
   margin-bottom: 0.5rem;
   border-radius: 0.2rem;
-  padding: 0.2rem;
-}
-
-li button {
-  position: relative;
-  color: white;
-  font-weight: bold;
-  border: none;
-}
-
-.menu-button {
-  background: none;
-  border: none;
+  padding: 0.35rem;
 }
 
 @media only screen and (max-width: 736px) {
