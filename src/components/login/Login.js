@@ -66,9 +66,11 @@ export default function Login(props) {
           >
             Submit
           </button>
-          <h5>OR</h5>
-          <button onClick={()=>history.push("/register")}> Register </button>
+          <h5>OR</h5>          
         </form>
+        <div>
+        <button onClick={()=>history.push("/register")}> Register </button>
+        </div>
       </div>
     </div>   
   );
