@@ -19,7 +19,8 @@ export default function NewBooking() {
   const [role, setRole] = useState(""); //Hard-coded for now
   const [customers, setCustomers] = useState();
 
-  const now = new Date();
+  let now = new Date();
+  now = date.addDays(now, 2)
 
   useEffect(() => {
     const role = TokenService.getRoleFromToken();
@@ -108,6 +109,8 @@ export default function NewBooking() {
             onChange={(e) => setFormData({ ...formData, time: e.target.value })}
             type="time"
             id="time"
+            min="07:00"
+            max="18:00"
             className="form-control datepicker"
             required
           />
