@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import "../../css/booking.css";
-import Adminservice from "../../services/Adminservice";
-import CustomerService from "../../services/CustomerService";
-import CleanerService from "../../services/CleanerService";
 import TokenService from "../../services/TokenService";
 import AdminBooking from "./AdminBooking";
 import CleanerBooking from "./CleanerBooking";
@@ -14,6 +11,7 @@ export default function Bookings() {
   const [role, setRole] = useState();
   const [update, setUpdate] = useState(false);
   const { response, loading, getBookings } = useGetBookings();
+  
 
   useEffect(() => {
     console.log("in booking state");
