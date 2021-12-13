@@ -6,6 +6,7 @@ import "../../css/booking.css";
 
 export default function CleanerBooking(props) {
   console.log("item:" + props.item);
+  
 
   return (
     <div className="booking-container">
@@ -24,7 +25,7 @@ export default function CleanerBooking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
-      {props.item.staus === "pending" && (
+      {props.item.status === "Confirmed" && (
         <button className="btn btn-primary">Accept booking</button>
       )}
     </div>
