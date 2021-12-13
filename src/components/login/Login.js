@@ -1,9 +1,12 @@
 import "../../css/login.css";
 import { useEffect, useState, createContext, useContext } from "react";
 import LoginService from "../../services/LoginService";
+import { useHistory } from "react-router-dom"
 export default function Login(props) {
   const [formData, setFormData] = useState();
   const [userData, setUserData] = useState();
+
+  const history = useHistory();
  
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,7 +32,7 @@ export default function Login(props) {
       setUserData(response.data);
     });
   }
-  return (
+  return (  
     <div class="login-form-container">
       <div class="card w-25 align-self-center">
         <div class="card-header text-center">Login</div>
@@ -63,8 +66,10 @@ export default function Login(props) {
           >
             Submit
           </button>
+          <h5>OR</h5>
+          <button onClick={()=>history.push("/register")}> Register </button>
         </form>
       </div>
-    </div>
+    </div>   
   );
 }

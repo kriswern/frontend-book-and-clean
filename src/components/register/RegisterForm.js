@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RegisterService from "../../services/RegisterService";
 import "../../css/registerForm.css";
+import TokenService from "../../services/TokenService";
+import { Link } from "react-router-dom";
 
 export default function RegisterForm() {
     const initialState = {
@@ -12,6 +14,14 @@ export default function RegisterForm() {
     };
 
     const [formData, setFormData] = useState(initialState);
+    const [role, setRole] = useState();
+
+    useEffect(() => {
+        const role = TokenService.getRoleFromToken();
+        if (role !== undefined) {
+          setRole(role);
+        }
+      }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,6 +31,8 @@ export default function RegisterForm() {
     };
 
     return (
+        <div>{role !=="admin" &&
+        <Link to="/Login"> Back </Link>}
         <div className="form-container">
             <form
                 onSubmit={handleSubmit}
@@ -130,7 +142,7 @@ export default function RegisterForm() {
                     <label class="form-check-label" for="exampleRadios1">
                         Cutomer
                     </label>
-                </div>
+                </div> {role === "admin" &&
                 <div class="form-check">
                     <input
                         class="form-check-input"
@@ -146,12 +158,13 @@ export default function RegisterForm() {
                     <label class="form-check-label" for="exampleRadios2">
                         Cleaner
                     </label>
-                </div>{" "}
+                </div>}
                 <br />
                 <button type="submit" class="btn btn-primary">
                     Register
                 </button>
             </form>
+        </div>
         </div>
     );
 }
