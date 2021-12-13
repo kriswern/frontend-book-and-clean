@@ -15,7 +15,6 @@ export default function AdminBooking(props) {
   const [cleanerName, setCleanerName] = useState("")
   const [id, setId] = useState("")
 
-
   useEffect(() => {
     Adminservice.getAllCleaners().then((response) => {
       setCleaners(response.data);

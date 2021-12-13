@@ -40,6 +40,14 @@ export default function NewBooking() {
     }
   }, [role]);
 
+ useEffect(() => {
+  if (role === "customer" && formData.customerId === "") {
+    CustomerService.getMyID().then((response) => {
+      setFormData({ ...formData, customerId: response.data })
+    });
+  }
+ }, [formData, role]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -47,6 +55,7 @@ export default function NewBooking() {
       alert("Booking made");
     }
     setFormData(initialState);
+    
   };
 
   return (
