@@ -60,6 +60,7 @@ export default function Bookings() {
                     key={index}
                     item={booking}
                     updateBookings={updateBookings}
+                    role={role}
                   />
                 );
               case "customer":
@@ -68,6 +69,8 @@ export default function Bookings() {
                     key={index}
                     item={booking}
                     updateBookings={updateBookings}
+                    role={role}
+
                   />
                 );
               case "cleaner":

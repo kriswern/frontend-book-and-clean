@@ -81,7 +81,7 @@ export default function AdminBooking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
-      {props.item.cleanerId === null && active && (
+      {props.item.cleanerId === null && active ? (
         <form className="select-cleaner-container" onSubmit={handleSubmit}>
           <label>
             <b>Cleaner: </b>
@@ -102,17 +102,17 @@ export default function AdminBooking(props) {
             </button>
           </div>
         </form>
+      ):(<div className="cleaner-name-container">
+      <p>
+        <b>Cleaner:</b> {cleanerName}
+      </p>
+      {active && (
+        <button className="btn-remove-cleaner" onClick={removeCleaner}>
+          <AiOutlineClose />
+        </button>
       )}
-      <div className="cleaner-name-container">
-        <p>
-          <b>Cleaner:</b> {cleanerName}
-        </p>
-        {active && (
-          <button className="btn-remove-cleaner" onClick={removeCleaner}>
-            <AiOutlineClose />
-          </button>
-        )}
-      </div>
+    </div>)}
+      
 
       {active && (
         <button className="btn btn-primary" onClick={deleteBooking}>
