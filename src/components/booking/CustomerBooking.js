@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
 import BookingService from "../../services/BookingService";
 import "../../css/booking.css";
-
-//We need to know what type of user (cleaner/admin/customer)
+import DateService from "../../services/DateService";
 
 export default function CustomerBooking(props) {
-  console.log("item:" + props.item)
+  const [booking, setBooking] = useState()
+  const [active, setActive] = useState();
+
+  useEffect(() => {
+
+    if(active === undefined && booking) {
+      setActive(DateService.isDateNewer(booking.date))
+    }}
+  , [booking, active]);
+
+  useEffect(() => {
+    setBooking(props.item)
+  }, [props]);
 
   const deleteBooking = () => {
     BookingService.deleteBooking(props.item.id, props.role)

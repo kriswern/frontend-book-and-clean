@@ -11,10 +11,8 @@ export default function Bookings() {
   const [role, setRole] = useState();
   const [update, setUpdate] = useState(false);
   const { response, loading, getBookings } = useGetBookings();
-  
 
   useEffect(() => {
-    console.log("in booking state");
     const role = TokenService.getRoleFromToken();
     if (role !== undefined) {
       setRole(role);
@@ -22,20 +20,13 @@ export default function Bookings() {
   }, []);
 
   useEffect(() => {
-    role && getBookings(role);
-    console.log(role)
-  }, [role]);
+    role && !bookings && getBookings(role);
+  }, [role, bookings, getBookings]);
 
   useEffect(() => {
     setBookings(response);
     console.log(response);
   }, [response]);
-
-  const deleteBooking = (id) => {
-    console.log(id);
-    const updatedBookings = bookings.filter((booking) => booking.id !== id);
-    setBookings(updatedBookings);
-  };
 
   useEffect(() => {
     if (update) {
@@ -47,7 +38,6 @@ export default function Bookings() {
         clearTimeout(timeOut);
       };
     }
-    
   }, [update, role, getBookings]);
 
   const updateBookings = (bool) => {
@@ -69,9 +59,7 @@ export default function Bookings() {
                   <AdminBooking
                     key={index}
                     item={booking}
-                    deleteBooking={deleteBooking}
                     updateBookings={updateBookings}
-                    role={role}
                   />
                 );
               case "customer":
@@ -79,9 +67,7 @@ export default function Bookings() {
                   <CustomerBooking
                     key={index}
                     item={booking}
-                    deleteBooking={deleteBooking}
                     updateBookings={updateBookings}
-                    role={role}
                   />
                 );
               case "cleaner":
@@ -89,9 +75,7 @@ export default function Bookings() {
                   <CleanerBooking
                     key={index}
                     item={booking}
-                    deleteBooking={deleteBooking}
                     updateBookings={updateBookings}
-                    role={role}
                   />
                 );
               default:

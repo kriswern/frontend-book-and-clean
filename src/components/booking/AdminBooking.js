@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import BookingService from "../../services/BookingService";
 import "../../css/booking.css";
 import Adminservice from "../../services/Adminservice";
-import {AiOutlineClose} from "react-icons/ai"
+import { AiOutlineClose } from "react-icons/ai";
+import DateService from "../../services/DateService";
 
 export default function AdminBooking(props) {
   const inititalState = {
@@ -12,8 +13,15 @@ export default function AdminBooking(props) {
 
   const [cleaners, setCleaners] = useState();
   const [formData, setFormData] = useState(inititalState);
-  const [cleanerName, setCleanerName] = useState("")
-  const [id, setId] = useState("")
+  const [cleanerName, setCleanerName] = useState("");
+  const [booking, setBooking] = useState();
+  const [active, setActive] = useState();
+
+  useEffect(() => {
+    if (active === undefined && booking) {
+      setActive(DateService.isDateNewer(booking.date));
+    }
+  }, [booking, active]);
 
   useEffect(() => {
     Adminservice.getAllCleaners().then((response) => {
@@ -23,19 +31,20 @@ export default function AdminBooking(props) {
 
   useEffect(() => {
     props.item.cleanerId &&
-    Adminservice.getCleanerName(props.item.cleanerId).then((response) => {
-      setCleanerName(response.data)
-    })
-    setId(props.item.id)
+      Adminservice.getCleanerName(props.item.cleanerId).then((response) => {
+        setCleanerName(response.data);
+      });
+    setBooking(props.item);
   }, [props]);
 
-
   useEffect(() => {
-    id !== "" && setFormData({...formData, bookingId: id}) 
-  }, [id]);
+    booking !== undefined &&
+      formData.bookingId === "" &&
+      setFormData({ ...formData, bookingId: booking.id });
+  }, [booking, formData]);
 
   const deleteBooking = () => {
-    BookingService.deleteBooking(id, props.role);
+    BookingService.deleteBooking(booking.id, props.role);
     props.updateBookings(true);
   };
 
@@ -45,15 +54,15 @@ export default function AdminBooking(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Formdata: ",formData)
+    console.log("Formdata: ", formData);
     Adminservice.assignCleaner(formData);
     props.updateBookings(true);
   };
 
   const removeCleaner = () => {
-    Adminservice.removeCleaner(id);
+    Adminservice.removeCleaner(booking.id);
     props.updateBookings(true);
-  }
+  };
 
   return (
     <div className="booking-container">
@@ -72,7 +81,7 @@ export default function AdminBooking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
-      {props.item.cleanerId === null ? (
+      {props.item.cleanerId === null && active && (
         <form className="select-cleaner-container" onSubmit={handleSubmit}>
           <label>
             <b>Cleaner: </b>
@@ -93,13 +102,23 @@ export default function AdminBooking(props) {
             </button>
           </div>
         </form>
-      ) : <div className="cleaner-name-container"><p>
-      <b>Cleaner:</b> {cleanerName}
-    </p><button className="btn-remove-cleaner" onClick={removeCleaner}><AiOutlineClose /></button></div>}
+      )}
+      <div className="cleaner-name-container">
+        <p>
+          <b>Cleaner:</b> {cleanerName}
+        </p>
+        {active && (
+          <button className="btn-remove-cleaner" onClick={removeCleaner}>
+            <AiOutlineClose />
+          </button>
+        )}
+      </div>
 
-      <button className="btn btn-primary" onClick={deleteBooking}>
-        Delete booking
-      </button>
+      {active && (
+        <button className="btn btn-primary" onClick={deleteBooking}>
+          Delete booking
+        </button>
+      )}
     </div>
   );
 }
