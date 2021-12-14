@@ -11,129 +11,81 @@ export default function CustomerBilling() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [activeCustomer, setActiveCustomer] = useState();
   const [activeBookings, setActiveBookings] = useState();
-  const [activeCustomerFinishedBookings, setActiveCustomerFinishedBookings] =
-    useState([
-      {
-        description: "Clean mansion",
-        date: "15/22",
-        time: "13:00",
-        status: "confirmed",
-       
-        id: 1,
-      },
-      {
-        description: "Clean mansion",
-        date: "15/22",
-        time: "13:00",
-        status: "confirmed",
-       
-        id: 2,
-      },
-      {
-        description: "Clean mansion",
-        date: "15/22",
-        time: "13:00",
-        status: "confirmed",
-       
-        id: 3,
-      },
-      {
-        description: "Clean mansion",
-        date: "15/22",
-        time: "13:00",
-        status: "confirmed",
-      
-        id: 4,
-      },
-      {
-        description: "Clean mansion",
-        date: "15/22",
-        time: "13:00",
-        status: "confirmed",
-      
-        id: 5,
-      },
-    ]);
-    useEffect (() =>{
-      Adminservice.getPriceList().then((response) => {
+
+  useEffect(() => { //fetches price lists
+    Adminservice.getPriceList()
+      .then((response) => {
         setPriceTest(response.data);
-        
-      }).then(console.log(pricetest))
-    },[])
-  useEffect(() => {
-    //get all customers here name / id ? whateever is needed to get  bookings
-    Adminservice.getAllCustomers().then((response) => {
-      // gets all customers
-      setAllCustomers(response.data);
-    });
+      })
+      .then(console.log(pricetest));
   }, []);
 
-  useEffect(() => {
-    // keeps cart price updated
-    let total = 0;
-    console.log(pricetest)
-    cartBookings.bookings.map((booking) => {
-     
-      total += getBookingPrice(booking.priceList);
-    });
+  useEffect(() => { // fetches all customers
+   
+    Adminservice.getAllCustomers().then((response) => {setAllCustomers(response.data);});
+  }, []);
 
-    setTotalPrice(total);
+  useEffect(() => {// handles updating carts total price
+    if (cartBookings !== undefined) {
+      let total = 0;
+      cartBookings.bookings.map((booking) => {
+        total += booking.priceList.price;
+      });
+
+      setTotalPrice(total);
+    }
   }, [cartBookings]);
 
-  useEffect(() =>{//get customers bookings and filters out done
-    if(activeCustomer !== undefined){
-    Adminservice.getAllBookings().then((response) =>{
-      let data = response.data;
-      data = (data.filter((data) => data.customerId === activeCustomer.id && data.status === "done"));
-     setActiveBookings(data);
-    
-    })}
-  },[activeCustomer])
+  useEffect(() => { // filters out customers bookings (id,status=done)
+    if (activeCustomer !== undefined) {
+      Adminservice.getAllBookings().then((response) => {
+        let data = response.data;
+        data = data.filter(
+          (data) =>
+            data.customerId === activeCustomer.id && data.status === "done"
+        );
+        setActiveBookings(data);
+      });
+    }
+  }, [activeCustomer]);
+  
   function changeActiveCustomer(user) {
     setSearchInput(""); // resets input when customer is selected
     setActiveCustomer(user);
   }
   function handleSearchInput() {
-    if (activeCustomer) setActiveCustomer(); //resets to searching if customer has been picket
+    if (activeCustomer) reseCustomerData(); //resets to searching if customer has been picket
 
     const currentInputVal = document.getElementById("searchInput").value;
     setSearchInput(currentInputVal);
   }
 
   function addToCart(bookingId) {
-    const bookingToMove = activeCustomerFinishedBookings.find((booking) => {
+    const bookingToMove = activeBookings.find((booking) => {
       return booking.id === bookingId;
     });
-    setActiveCustomerFinishedBookings(
-      activeCustomerFinishedBookings.filter(
-        (booking) => booking.id !== bookingId
-      )
+    setActiveBookings(
+      activeBookings.filter((booking) => booking.id !== bookingId)
     );
 
     setCartBookings((cartBookings) => ({
       bookings: [...cartBookings.bookings, bookingToMove],
     }));
   }
-
-  function reseCustomerData() {
-    // this will reset evrything makign you have to get new data only called when something new is searched for
+function sendBill(){
+  if(totalPrice>0){
+    console.log(totalPrice);
+    console.log(activeCustomer.id);
+    Adminservice.sendBill(totalPrice,activeCustomer.id)
+  }
+}
+  function reseCustomerData() {// resets all data for new search
     setTotalPrice(0);
     setActiveCustomer();
-    setActiveCustomerFinishedBookings();
+    setActiveBookings();
+    setCartBookings({ bookings: [] });
   }
 
-  function getBookingPrices(){
-
-  }
-
-  function getBookingPrice (bookingType) { // can get price from booking
-
-    const price = pricetest.filter((priceType) =>priceType.type === bookingType )
-    return price[0].price;
-
-  }
-  console.log(activeCustomerFinishedBookings)
-  console.log(activeBookings)
   return (
     <div className="mainWindow">
       <div className="test">
@@ -142,7 +94,7 @@ export default function CustomerBilling() {
           {activeCustomer ? (
             <div className="billTotal">
               <h3>Total</h3>
-              <button>
+              <button onClick={() => {sendBill()}}>
                 <p>{totalPrice}:-</p>
               </button>
             </div>
@@ -161,26 +113,28 @@ export default function CustomerBilling() {
           onChange={() => handleSearchInput()}
         />
 
-        
         {activeCustomer ? (
-          activeCustomerFinishedBookings.map((data) => {
-            return (
-              <div class="bookingCard">
-                <div className="cardInfo">
-                  <h2>{data.description}</h2>
-                  <p>
-                    {data.date} : {data.time}
-                  </p>
-                  
+          activeBookings ? (
+            activeBookings.map((data) => {
+              return (
+                <div class="bookingCard">
+                  <div className="cardInfo">
+                    <h2>{data.description}</h2>
+                    <p>
+                      {data.date} : {data.time}
+                    </p>
+                  </div>
+                  <div>
+                    <button onClick={() => addToCart(data.id)}>
+                      {data.priceList.price}:->
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <button onClick={() => addToCart(data.id)}>
-                    {}:->
-                  </button>
-                </div>
-              </div>
-            );
-          })
+              );
+            })
+          ) : (
+            <></>
+          )
         ) : (
           <div className="nameListWindow">
             {allCustomers
