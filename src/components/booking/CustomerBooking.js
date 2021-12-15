@@ -4,19 +4,13 @@ import "../../css/booking.css";
 import DateService from "../../services/DateService";
 
 export default function CustomerBooking(props) {
-  const [booking, setBooking] = useState()
   const [active, setActive] = useState();
 
   useEffect(() => {
-
-    if(active === undefined && booking) {
-      setActive(DateService.isDateNewer(booking.date, 24))
-    }}
-  , [booking, active]);
-
-  useEffect(() => {
-    setBooking(props.item)
-  }, [props]);
+   
+    //Needs to be atleast 24 hours for the customer to cancel booking
+    props.item && setActive(DateService.isDateNewer(props.item.date, 24));
+}, [props]);
 
   const deleteBooking = () => {
     BookingService.deleteBooking(props.item.id, props.role)
@@ -40,7 +34,7 @@ export default function CustomerBooking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
-      <button className="btn btn-primary" onClick={deleteBooking}>Delete booking</button>
+      {active && <button className="btn btn-primary" onClick={deleteBooking}>Delete booking</button>}
     </div>
   );
 }

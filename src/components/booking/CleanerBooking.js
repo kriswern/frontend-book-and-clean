@@ -3,20 +3,12 @@ import "../../css/booking.css";
 import DateService from "../../services/DateService";
 
 export default function CleanerBooking(props) {
-  const [booking, setBooking] = useState()
   const [active, setActive] = useState();
 
   useEffect(() => {
-
-    if(active === undefined && booking) {
-      setActive(DateService.isDateNewer(booking.date, 24))
-    }}
-  , [booking, active]);
-
-  useEffect(() => {
-    setBooking(props.item)
-  }, [props]);
-  
+   
+    props.item && setActive(DateService.isDateNewer(props.item.date, 12));
+}, [props]);
 
   return (
     <div className="booking-container">

@@ -14,14 +14,15 @@ export default function AdminBooking(props) {
   const [cleaners, setCleaners] = useState();
   const [formData, setFormData] = useState(inititalState);
   const [cleanerName, setCleanerName] = useState("");
-  const [booking, setBooking] = useState();
-  const [active, setActive] = useState();
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
-    if (active === undefined && booking) {
-      setActive(DateService.isDateNewer(booking.date, 12));
-    }
-  }, [booking, active]);
+    props.item && setActive(DateService.isDateNewer(props.item.date, 12));
+  }, [props]);
+
+  useEffect(() => {
+    active && setFormData({bookingId: props.item.id})
+  }, [active, props]);
 
   useEffect(() => {
     Adminservice.getAllCleaners().then((response) => {
@@ -30,21 +31,19 @@ export default function AdminBooking(props) {
   }, []);
 
   useEffect(() => {
-    props.item.cleanerId &&
-      Adminservice.getCleanerName(props.item.cleanerId).then((response) => {
+    props.item.cleanerId && Adminservice.getCleanerName(props.item.cleanerId).then((response) => {
         setCleanerName(response.data);
       });
-    setBooking(props.item);
   }, [props]);
 
   useEffect(() => {
-    booking !== undefined &&
+    props.item &&
       formData.bookingId === "" &&
-      setFormData({ ...formData, bookingId: booking.id });
-  }, [booking, formData]);
+      setFormData({ ...formData, bookingId: props.item.id });
+  }, [props, formData]);
 
   const deleteBooking = () => {
-    BookingService.deleteBooking(booking.id, props.role);
+    BookingService.deleteBooking(props.item.id, props.role);
     props.updateBookings(true);
   };
 
@@ -57,10 +56,12 @@ export default function AdminBooking(props) {
     console.log("Formdata: ", formData);
     Adminservice.assignCleaner(formData);
     props.updateBookings(true);
+    setFormData(inititalState)
   };
 
   const removeCleaner = () => {
-    Adminservice.removeCleaner(booking.id);
+    setFormData(inititalState)
+    Adminservice.removeCleaner(props.item.id);
     props.updateBookings(true);
   };
 
@@ -104,7 +105,7 @@ export default function AdminBooking(props) {
         </form>
       ):(<div className="cleaner-name-container">
       <p>
-        <b>Cleaner:</b> {cleanerName}
+        <b>Cleaner:</b> {props.item.cleanerId && cleanerName}
       </p>
       {active && (
         <button className="btn-remove-cleaner" onClick={removeCleaner}>
