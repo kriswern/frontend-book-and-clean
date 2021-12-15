@@ -1,11 +1,22 @@
-import { useEffect, useState } from "react";
-import BookingService from "../../services/BookingService";
 import "../../css/booking.css";
+import CleanerService from "../../services/CleanerService";
 
-//We need to know what type of user (cleaner/admin/customer)
 
 export default function CleanerBooking(props) {
   console.log("item:" + props.item);
+
+  const handleStatusChange = (e) => {
+    console.log(e.target.value)
+    CleanerService.changeStatusToDone(e.target.value)
+    .then(response => {
+      if(response.status === 200){
+        props.updateBookings(true) 
+      }
+    })
+    .catch(error => {
+      console.log(error.response.data.error)
+    })
+  }
 
   return (
     <div className="booking-container">
@@ -24,6 +35,11 @@ export default function CleanerBooking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
+      <div>
+      {props.item.status === "Confirmed" &&
+      <button className="btn btn-primary" value={props.item.id} onClick={handleStatusChange}>
+        Done</button>}
+      </div>
       {props.item.staus === "pending" && (
         <button className="btn btn-primary">Accept booking</button>
       )}
