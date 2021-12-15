@@ -11,12 +11,27 @@ class BookingService {
       axios
         .post(`${BASE_URL}${role}/addbooking`, booking, header)
         .then((response) => {
-          if (response.status === 200) {
-            return true;
+          if (response.status === 201) {
+              alert(
+                  "The booking has been made!"
+              );
+              return true;
+          } else if (response.status === 208) {
+              alert(
+                  "No booking made! There already is a booking on this customer within 2 hours of this one!"
+              );
+              return false;
           }
-        });
+          else if (response.status === 500) {
+            alert(
+                "Something went wrong!"
+            );
+            return false;
+        }
+      });
+        }
     }
-  }
+  
 
   deleteBooking(id, role) {
     console.log(id);
