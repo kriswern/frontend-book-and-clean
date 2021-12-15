@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import BookingService from "../../services/BookingService";
 import "../../css/booking.css";
-
-//We need to know what type of user (cleaner/admin/customer)
+import DateService from "../../services/DateService";
 
 export default function CleanerBooking(props) {
-  console.log("item:" + props.item);
-  
+  const [active, setActive] = useState();
+
+  useEffect(() => {
+   
+    props.item && setActive(DateService.isDateNewer(props.item.date, 12));
+}, [props]);
 
   return (
     <div className="booking-container">
@@ -25,7 +27,7 @@ export default function CleanerBooking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
-      {props.item.status === "Confirmed" && (
+      {props.item.status === "Confirmed" && active && (
         <button className="btn btn-primary">Accept booking</button>
       )}
     </div>
