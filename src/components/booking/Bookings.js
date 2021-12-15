@@ -5,6 +5,7 @@ import AdminBooking from "./AdminBooking";
 import CleanerBooking from "./CleanerBooking";
 import CustomerBooking from "./CustomerBooking";
 import useGetBookings from "../hooks/useGetBookings";
+import DateService from "../../services/DateService";
 
 export default function Bookings() {
   const [bookings, setBookings] = useState();
@@ -24,7 +25,7 @@ export default function Bookings() {
   }, [role, bookings, getBookings]);
 
   useEffect(() => {
-    setBookings(response);
+    setBookings(response)
     console.log(response);
   }, [response]);
 

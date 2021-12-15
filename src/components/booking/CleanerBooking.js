@@ -9,7 +9,7 @@ export default function CleanerBooking(props) {
   useEffect(() => {
 
     if(active === undefined && booking) {
-      setActive(DateService.isDateNewer(booking.date))
+      setActive(DateService.isDateNewer(booking.date, 24))
     }}
   , [booking, active]);
 

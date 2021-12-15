@@ -19,7 +19,7 @@ export default function AdminBooking(props) {
 
   useEffect(() => {
     if (active === undefined && booking) {
-      setActive(DateService.isDateNewer(booking.date));
+      setActive(DateService.isDateNewer(booking.date, 12));
     }
   }, [booking, active]);
 
