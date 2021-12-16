@@ -18,6 +18,7 @@ export default function NewBooking() {
   const [formData, setFormData] = useState(initialState);
   const [role, setRole] = useState(""); //Hard-coded for now
   const [customers, setCustomers] = useState();
+  const [priceList, setPriceList] = useState(); 
 
   let now = new Date();
   now = date.addDays(now, 2)
@@ -41,6 +42,14 @@ export default function NewBooking() {
     }
   }, [role]);
 
+  useEffect(() => {
+    BookingService.getPriceList().then((response) =>{
+      setPriceList(response.data);
+      
+    })
+  }, []);
+
+console.log(priceList)
  useEffect(() => {
   if (role === "customer" && formData.customerId === "") {
     CustomerService.getMyID().then((response) => {
@@ -114,6 +123,27 @@ export default function NewBooking() {
             className="form-control datepicker"
             required
           />
+        </div>
+
+        <div className="form-group p-2">
+          <select
+            onChange={(e) => setFormData({ ...formData, priceListId: e.target.value })}
+            type="time"
+            id="time"
+            className="form-control datepicker"
+            required
+          >
+            <option value="">--Please choose a service--</option>
+            {priceList &&
+              
+                priceList.map((priceList) =>  (
+                  <option value={priceList.id}>{priceList.type}: {priceList.price}:-</option>
+                ))
+              
+              
+            }
+          
+          </select>
         </div>
 
         {role === "admin" && (

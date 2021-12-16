@@ -2,6 +2,7 @@ import axios from "axios";
 import TokenService from "../services/TokenService";
 
 const BASE_URL = "http://localhost:8080/api/";
+const GET_PRICE_LIST = "http://localhost:8080/api/admin/priceList";
 
 class BookingService {
   registerBooking(booking, role) {
@@ -31,6 +32,11 @@ class BookingService {
       });
         }
     }
+  
+  getPriceList() {
+    const header = TokenService.getTokenHeader()
+    return axios.get(GET_PRICE_LIST, header)
+  }
   
 
   deleteBooking(id, role) {

@@ -10,6 +10,7 @@ import Login from "./components/login/Login";
 import Layout from "./components/Layout";
 import UserNav from "./components/Pages/userNav";
 import RegisterForm from "./components/register/RegisterForm";
+import CustomerBilling from "./components/Pages/adminPage/customerBillingTab/CustomerBilling";
 
 export default function App() {
     const history = useHistory();
@@ -23,6 +24,7 @@ export default function App() {
                 { name: "Bookings", path: "/admin/bookings" },
                 { name: "New Booking", path: "/admin/newbooking" },
                 { name: "Register User", path: "/admin/register" },
+                {name: "Bill Customers", path: "/admin/customerBilling"}
             ],
         ],
         [
@@ -80,6 +82,8 @@ export default function App() {
                 <Route path="/admin/bookings" exact component={Bookings} />
                 <Route path="/admin/newbooking" component={NewBooking} />
                 <Route path="/admin/register" component={RegisterForm} />
+                <Route path="/admin/customerBilling" component={CustomerBilling} />
+
                 <Route path="/customer/bookings" component={Bookings} />
                 <Route path="/customer/newbooking" component={NewBooking} />
                 <Route path="/cleaner/bookings" component={Bookings} />
