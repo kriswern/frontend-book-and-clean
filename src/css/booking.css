@@ -24,7 +24,6 @@
 
 }
 
-
 /*BOOKINGS*/
 .bookings-container {
   display:flex;
@@ -84,4 +83,16 @@
   outline: none;
   width: 100%;
 }
+
+/*CUSTOMER BOOKING*/
+.approve-cleaning-container {
+  width: 100%;
+  display: flex;
+  gap: .25rem;
+}
+
+.btn-approve {
+  width: 100%;
+}
+
 
