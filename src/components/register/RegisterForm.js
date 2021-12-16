@@ -33,7 +33,7 @@ export default function RegisterForm() {
 
     return (
         <div>{role !=="admin" &&        
-        <button onClick={()=>history.push("/login")}> Back </button>
+        <button className="back_button" onClick={()=>history.push("/login")}> Back </button>
          }
         <div className="form-container">
             <form

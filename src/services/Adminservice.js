@@ -85,16 +85,15 @@ class AdminService {
     return axios.get(GET_PRICE_LIST, header)
   }
 
-  addBill(total,customerId) {
+  addBill(total,customerId,bookingIds) {
     const header = TokenService.getTokenHeader()
-
-    return axios.post(POST_BILL, {customerId: customerId, total: total}, header)
+    console.log(bookingIds);
+    return axios.post(POST_BILL, {customerId: customerId, total: total, bookingIds: bookingIds}, header)
 
   }
 
   updateBookingsBilledStatus(bookingsInCart){
     const header = TokenService.getTokenHeader();
-    console.log(bookingsInCart);
     return axios.put(PUT_BOOKING_BILL, bookingsInCart, header);
     
   }

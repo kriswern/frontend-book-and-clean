@@ -61,7 +61,10 @@ export default function CustomerBilling() {
   }
   function sendBill() {
     if (totalPrice > 0) {
-      Adminservice.addBill(totalPrice, activeCustomer.id).then((response) => {
+      const bookingIds = bookingsInCart.bookings.map((booking) => {
+        return(booking.id)
+      })
+      Adminservice.addBill(totalPrice, activeCustomer.id,bookingIds).then((response) => {
         if (response.data) {
           // maby send bill to email ? but either way update booking
           updateBookingBilledStatus();
@@ -107,8 +110,14 @@ export default function CustomerBilling() {
         )}
 
         <div className="test2">
-          <h2>Enter Customer</h2>
-          {activeCustomer ? <></> : <></>}
+          {
+            activeCustomer ? (
+              <h2>{activeCustomer.name}</h2>
+            ):(
+              <h2>Enter Customer</h2>
+            )
+          }
+         
         </div>
 
         <input

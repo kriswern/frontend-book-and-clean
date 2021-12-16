@@ -33,8 +33,9 @@ export default function Login(props) {
     });
   }
   return (  
-    <div class="login-form-container">
-      <div class="card w-25 align-self-center">
+   
+    <div class="login_form_container">
+      <div class="card">
         <div class="card-header text-center">Login</div>
         <form class="card-body">
           <div class="form-group">
@@ -59,19 +60,22 @@ export default function Login(props) {
               required
             />
           </div>
-          <button
-            class="
-          "
+          <div class= "login_button_box">
+          <button class="submit_button"
             onClick={(e) => handleSubmit(e)}
           >
             Submit
           </button>
-          <h5>OR</h5>          
+          <button class="register_button" onClick={()=>history.push("/register")}> Register </button>
+
+          </div>
+          
         </form>
         <div>
-        <button onClick={()=>history.push("/register")}> Register </button>
+        
         </div>
       </div>
     </div>   
+   
   );
 }
