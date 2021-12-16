@@ -2,9 +2,13 @@
     display: flex;
     align-items: center;
   justify-content: center;
+ 
   
 }
-.test{
+.searchWindow{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-top: 7%;
+    width: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,15 +16,22 @@
     
 }
 .test2{
-   
     display: flex;
     flex-direction: row;
 }
 .billTotal{
+    
     position: relative;
+    
     display: flex;
     flex-direction: column;
     left: 30%;
+}
+.billTotal button{
+    background-color: #FFD300;
+    
+    border-radius: 5px;
+   
 }
 .headerWindow{
     display: flex;
@@ -35,30 +46,43 @@
 }
 .nameListWindow{
     display: flex;
+    width: 100%;
     flex-direction: column;
     margin-top: 5%;
     min-height: 150px;
     max-height: 300px;
-    overflow: scroll;
+    overflow: hidden;
 }
 .nameListWindow button{
-    margin-top: 1%;
-    margin-left: 5%;
+    background-color: #FFD300;
+    border-radius: 5px;
+   
+    margin-top: 2%;
+    margin-left: 10%;
     margin-right: 10%;
 }
 
 .bookingCard{
     display: flex;
     flex-direction: row;
-    width: 350px;
-    margin-top: 2%;
-    box-shadow: 1px 2px;
+    width: 220px;
+    margin-top: 4%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     background-color: whitesmoke;
 }
 .bookingCard button{
-    margin-top: 40px
+    position: relative;
+    top: -20%;
+    
+    background-color: #FFD300;
+    border-radius: 5px;
+   
+    margin-top: 30px
 }
 .cardInfo{
     
     width: 80%;
+}
+.cardInfo h2{
+    font-size: 18px;
 }

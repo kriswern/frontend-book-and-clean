@@ -12,31 +12,32 @@ export default function CustomerBilling() {
   const [activeCustomer, setActiveCustomer] = useState();
   const [activeBookings, setActiveBookings] = useState();
 
-  
+  useEffect(() => {// fetches all customers
 
-  useEffect(() => { // fetches all customers
-   
     getAllCustomers();
   }, []);
 
-  useEffect(() => {// handles updating carts total price
-    
-      let total = 0;
-      bookingsInCart.bookings.map((booking) => {
-        total += booking.priceList.price;
-      });
-      setTotalPrice(total);
-    
+  useEffect(() => { // handles updating carts total price
+
+    let total = 0;
+    bookingsInCart.bookings.map((booking) => {
+      total += booking.priceList.price;
+    });
+    setTotalPrice(total);
   }, [bookingsInCart]);
 
-  useEffect(() => { // filters out customers bookings (id,status=done)
-    if (activeCustomer !== undefined) {
-      setActiveBookings(activeCustomer.bookings.filter((booking) => booking.status === "Approved"));
+  useEffect(() => {// filters out customers bookings (id,status=Approved)
+    if (activeCustomer !== undefined) { 
+      let filteredBookings = activeCustomer.bookings.filter((booking) => booking.status === "Approved");
+      (filteredBookings.length > 0 ) ?  setActiveBookings(filteredBookings) : setActiveBookings(undefined); 
+      
     }
   }, [activeCustomer]);
-  
-  function getAllCustomers(){
-    Adminservice.getAllCustomers().then((response) => {setAllCustomers(response.data);});
+
+  function getAllCustomers() {
+    Adminservice.getAllCustomers().then((response) => {
+      setAllCustomers(response.data);
+    });
   }
   function changeActiveCustomer(user) {
     setSearchInput(""); // resets input when customer is selected
@@ -44,77 +45,70 @@ export default function CustomerBilling() {
   }
   function handleSearchInput(e) {
     if (activeCustomer) reseCustomerData(); //resets to searching if customer has been picket
-
-   
     setSearchInput(e.target.value);
   }
 
   function addToCart(bookingId) {
-    const bookingToMove = activeBookings.find((booking) => {
-      return booking.id === bookingId;
-    });
+    
     setBookingsInCart((bookingsInCart) => ({
-      bookings: [...bookingsInCart.bookings, bookingToMove],
+      bookings: [...bookingsInCart.bookings,  activeBookings.find((booking) => {
+        return booking.id === bookingId;
+      })],
     }));
     setActiveBookings(
       activeBookings.filter((booking) => booking.id !== bookingId)
     );
-
-    
   }
-function sendBill(){
-  if(totalPrice>0){
-    console.log(totalPrice);
-    console.log(activeCustomer.id);
-    Adminservice.addBill(totalPrice,activeCustomer.id).then((response) =>{
-      if(response.data){
-        // maby send bill to email ? but either way update booking
-       updateBookingBilledStatus()
-      }
-    })
-    
+  function sendBill() {
+    if (totalPrice > 0) {
+      Adminservice.addBill(totalPrice, activeCustomer.id).then((response) => {
+        if (response.data) {
+          // maby send bill to email ? but either way update booking
+          updateBookingBilledStatus();
+        }
+      });
+    }
   }
-}
-function updateBookingBilledStatus() {
-  const bookingIds = [];
- 
-  bookingsInCart.bookings.forEach(booking => {
-    bookingIds.push(booking.id)
-  });
-  
-  Adminservice.updateBookingsBilledStatus(bookingIds).then(() =>{
+  function updateBookingBilledStatus() {
+    const bookingIds = [];
 
-    reseCustomerData()
-    getAllCustomers()
+    bookingsInCart.bookings.forEach((booking) => {
+      bookingIds.push(booking.id);
+    });
+
+    Adminservice.updateBookingsBilledStatus(bookingIds).then(() => {
+      reseCustomerData();
+      getAllCustomers();
+    });
+
+    //need to update all bookings in cart to billed here;
   }
- 
-
-  );
-  
-  //need to update all bookings in cart to billed here;
-}
-  function reseCustomerData() {// resets all data for new search
+  function reseCustomerData() {
+    // resets all data for new search
     setTotalPrice(0);
     setActiveCustomer();
     setActiveBookings();
     setBookingsInCart({ bookings: [] });
   }
-console.log(activeCustomer);
   return (
     <div className="mainWindow">
-      <div className="test">
+      <div className="searchWindow">
+        {activeCustomer && (
+          <div className="billTotal">
+            <h3>Total</h3>
+            <button
+              onClick={() => {
+                sendBill();
+              }}
+            >
+              <p>{totalPrice}:-</p>
+            </button>
+          </div>
+        )}
+
         <div className="test2">
           <h2>Enter Customer</h2>
-          {activeCustomer ? (
-            <div className="billTotal">
-              <h3>Total</h3>
-              <button onClick={() => {sendBill()}}>
-                <p>{totalPrice}:-</p>
-              </button>
-            </div>
-          ) : (
-            <></>
-          )}
+          {activeCustomer ? <></> : <></>}
         </div>
 
         <input
@@ -129,6 +123,7 @@ console.log(activeCustomer);
 
         {activeCustomer ? (
           activeBookings ? (
+          
             activeBookings.map((data) => {
               return (
                 <div class="bookingCard">
@@ -147,16 +142,17 @@ console.log(activeCustomer);
               );
             })
           ) : (
-            <></>
+            <div>
+            <br></br>
+            <h2>No bookings to bill</h2>
+            </div>
           )
         ) : (
-          <CustomerNameList 
+          <CustomerNameList
             allCustomers={allCustomers}
-            changeActiveCustomer = {changeActiveCustomer}
-            searchInput = {searchInput}>
-
-          </CustomerNameList>
-          
+            changeActiveCustomer={changeActiveCustomer}
+            searchInput={searchInput}
+          ></CustomerNameList>
         )}
       </div>
     </div>

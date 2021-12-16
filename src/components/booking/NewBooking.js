@@ -20,7 +20,8 @@ export default function NewBooking() {
   const [customers, setCustomers] = useState();
   const [priceList, setPriceList] = useState(); 
 
-  const now = new Date();
+  let now = new Date();
+  now = date.addDays(now, 2)
 
   useEffect(() => {
     const role = TokenService.getRoleFromToken();
@@ -49,6 +50,14 @@ export default function NewBooking() {
   }, []);
 
 console.log(priceList)
+ useEffect(() => {
+  if (role === "customer" && formData.customerId === "") {
+    CustomerService.getMyID().then((response) => {
+      setFormData({ ...formData, customerId: response.data })
+    });
+  }
+ }, [formData, role]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -56,6 +65,7 @@ console.log(priceList)
       alert("Booking made");
     }
     setFormData(initialState);
+    
   };
 
   return (
@@ -108,6 +118,8 @@ console.log(priceList)
             onChange={(e) => setFormData({ ...formData, time: e.target.value })}
             type="time"
             id="time"
+            min="07:00"
+            max="18:00"
             className="form-control datepicker"
             required
           />

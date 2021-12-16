@@ -1,11 +1,27 @@
+import CleanerService from "../../services/CleanerService";
 import { useEffect, useState } from "react";
-import BookingService from "../../services/BookingService";
 import "../../css/booking.css";
-
-//We need to know what type of user (cleaner/admin/customer)
+import DateService from "../../services/DateService";
 
 export default function CleanerBooking(props) {
-  console.log("item:" + props.item);
+  const [active, setActive] = useState();
+
+  useEffect(() => {
+    props.item && setActive(DateService.isDateNewer(props.item.date, 12));
+  }, [props]);
+
+  const handleStatusChange = (e) => {
+    console.log(e.target.value);
+    CleanerService.changeStatusToDone(e.target.value)
+      .then((response) => {
+        if (response.status === 200) {
+          props.updateBookings(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error.response.data.error);
+      });
+  };
 
   return (
     <div className="booking-container">
@@ -24,8 +40,23 @@ export default function CleanerBooking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
-      {props.item.staus === "pending" && (
-        <button className="btn btn-primary">Accept booking</button>
+      <div>
+        {props.item.status === "Booked" && (
+          <div className="d-grid gap-2">
+            <button
+              className="btn btn-primary btn-sm"
+              value={props.item.id}
+              onClick={handleStatusChange}
+            >
+              Done
+            </button>
+          </div>
+        )}
+      </div>
+      {props.item.status === "Confirmed" && active && (
+        <div className="d-grid gap-2">
+          <button className="btn btn-success btn-sm">Accept Booking</button>
+        </div>
       )}
     </div>
   );

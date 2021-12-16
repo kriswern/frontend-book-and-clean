@@ -2,17 +2,27 @@ import { useEffect, useState } from "react";
 import BookingService from "../../services/BookingService";
 import "../../css/booking.css";
 import Adminservice from "../../services/Adminservice";
-import {AiOutlineClose} from "react-icons/ai"
+import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
+import DateService from "../../services/DateService";
 
 export default function AdminBooking(props) {
   const inititalState = {
-    bookingId: props.item.id,
+    bookingId: "",
     cleanerId: "",
   };
 
   const [cleaners, setCleaners] = useState();
   const [formData, setFormData] = useState(inititalState);
-  const [cleanerName, setCleanerName] = useState("")
+  const [cleanerName, setCleanerName] = useState("");
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    props.item && setActive(DateService.isDateNewer(props.item.date, 12));
+  }, [props]);
+
+  useEffect(() => {
+    active && setFormData({bookingId: props.item.id})
+  }, [active, props]);
 
   useEffect(() => {
     Adminservice.getAllCleaners().then((response) => {
@@ -21,11 +31,16 @@ export default function AdminBooking(props) {
   }, []);
 
   useEffect(() => {
-    props.item.cleanerId &&
-    Adminservice.getCleanerName(props.item.cleanerId).then((response) => {
-      setCleanerName(response.data)
-    })
+    props.item.cleanerId && Adminservice.getCleanerName(props.item.cleanerId).then((response) => {
+        setCleanerName(response.data);
+      });
   }, [props]);
+
+  useEffect(() => {
+    props.item &&
+      formData.bookingId === "" &&
+      setFormData({ ...formData, bookingId: props.item.id });
+  }, [props, formData]);
 
   const deleteBooking = () => {
     BookingService.deleteBooking(props.item.id, props.role);
@@ -38,15 +53,17 @@ export default function AdminBooking(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log("Formdata: ", formData);
     Adminservice.assignCleaner(formData);
     props.updateBookings(true);
+    setFormData(inititalState)
   };
 
   const removeCleaner = () => {
+    setFormData(inititalState)
     Adminservice.removeCleaner(props.item.id);
-    props.updateBookings(true)
-  }
+    props.updateBookings(true);
+  };
 
   return (
     <div className="booking-container">
@@ -65,34 +82,45 @@ export default function AdminBooking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
-      {props.item.cleanerId === null ? (
+      {props.item.cleanerId === null && active ? (
         <form className="select-cleaner-container" onSubmit={handleSubmit}>
           <label>
             <b>Cleaner: </b>
           </label>
-          <div>
+          <div className="select-cleaner">
             <select onChange={handleChange} className="custom-select" required>
-              <option defaultValue=""></option>
+              <option ></option>
               {cleaners &&
                 cleaners.map((cleaner, index) => (
                   <option key={index} value={cleaner.id}>
-                    {cleaner.id + " " + cleaner.name}
+                    {cleaner.name}
                   </option>
                 ))}
             </select>
 
-            <button type="submit" className="btn-sm btn-primary">
-              Assign
+            <button type="submit" className="btn-add-cleaner">
+              <AiOutlinePlus/>
             </button>
           </div>
         </form>
-      ) : <div className="cleaner-name-container"><p>
-      <b>Cleaner:</b> {cleanerName}
-    </p><button className="btn-remove-cleaner" onClick={removeCleaner}><AiOutlineClose /></button></div>}
+      ):(<div className="cleaner-name-container">
+      <p>
+        <b>Cleaner:</b> {props.item.cleanerId && cleanerName}
+      </p>
+      {active && (
+        <button className="btn-remove-cleaner" onClick={removeCleaner}>
+          <AiOutlineClose />
+        </button>
+      )}
+    </div>)}
+      
 
-      <button className="btn btn-primary" onClick={deleteBooking}>
-        Delete booking
-      </button>
+      {active && (
+        <div className="d-grid gap-2">
+        <button className="btn btn-warning btn-sm" onClick={deleteBooking}>
+          Delete booking
+        </button></div>
+      )}
     </div>
   );
 }
