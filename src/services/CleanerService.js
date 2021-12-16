@@ -17,7 +17,7 @@ class CleanerService {
     }
   }
 
-  changeStatusToDone(id) {
+  changeStatus(id) {
     const header = TokenService.getTokenHeader()
 
     if(header !== undefined) {
