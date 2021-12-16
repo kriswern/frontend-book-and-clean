@@ -32,7 +32,7 @@ export default function Bookings() {
     if (update) {
       const timeOut = setTimeout(() => {
         getBookings(role);
-      }, 300);
+      });
       return () => {
         setUpdate(false);
         clearTimeout(timeOut);

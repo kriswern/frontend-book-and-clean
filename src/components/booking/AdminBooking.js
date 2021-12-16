@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import BookingService from "../../services/BookingService";
 import "../../css/booking.css";
 import Adminservice from "../../services/Adminservice";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
 import DateService from "../../services/DateService";
 
 export default function AdminBooking(props) {
@@ -87,19 +87,19 @@ export default function AdminBooking(props) {
           <label>
             <b>Cleaner: </b>
           </label>
-          <div>
+          <div className="select-cleaner">
             <select onChange={handleChange} className="custom-select" required>
-              <option defaultValue=""></option>
+              <option ></option>
               {cleaners &&
                 cleaners.map((cleaner, index) => (
                   <option key={index} value={cleaner.id}>
-                    {cleaner.id + " " + cleaner.name}
+                    {cleaner.name}
                   </option>
                 ))}
             </select>
 
-            <button type="submit" className="btn-sm btn-primary">
-              Assign
+            <button type="submit" className="btn-add-cleaner">
+              <AiOutlinePlus/>
             </button>
           </div>
         </form>
@@ -116,9 +116,10 @@ export default function AdminBooking(props) {
       
 
       {active && (
-        <button className="btn btn-primary" onClick={deleteBooking}>
+        <div className="d-grid gap-2">
+        <button className="btn btn-warning btn-sm" onClick={deleteBooking}>
           Delete booking
-        </button>
+        </button></div>
       )}
     </div>
   );
