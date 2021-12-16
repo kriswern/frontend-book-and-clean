@@ -2,53 +2,42 @@ import { useEffect, useState } from "react/cjs/react.development";
 
 import "../../../../css/customerBilling.css";
 import Adminservice from "../../../../services/Adminservice";
+import CustomerNameList from "../customerNameList";
 
 export default function CustomerBilling() {
   const [allCustomers, setAllCustomers] = useState([]);
-  const [pricetest, setPriceTest] = useState();
   const [searchInput, setSearchInput] = useState();
-  const [cartBookings, setCartBookings] = useState({ bookings: [] });
+  const [bookingsInCart, setBookingsInCart] = useState({ bookings: [] });
   const [totalPrice, setTotalPrice] = useState(0);
   const [activeCustomer, setActiveCustomer] = useState();
   const [activeBookings, setActiveBookings] = useState();
 
-  useEffect(() => { //fetches price lists
-    Adminservice.getPriceList()
-      .then((response) => {
-        setPriceTest(response.data);
-      })
-      .then(console.log(pricetest));
-  }, []);
+  
 
   useEffect(() => { // fetches all customers
    
-    Adminservice.getAllCustomers().then((response) => {setAllCustomers(response.data);});
+    getAllCustomers();
   }, []);
 
   useEffect(() => {// handles updating carts total price
-    if (cartBookings !== undefined) {
+    
       let total = 0;
-      cartBookings.bookings.map((booking) => {
+      bookingsInCart.bookings.map((booking) => {
         total += booking.priceList.price;
       });
-
       setTotalPrice(total);
-    }
-  }, [cartBookings]);
+    
+  }, [bookingsInCart]);
 
   useEffect(() => { // filters out customers bookings (id,status=done)
     if (activeCustomer !== undefined) {
-      Adminservice.getAllBookings().then((response) => {
-        let data = response.data;
-        data = data.filter(
-          (data) =>
-            data.customerId === activeCustomer.id && data.status === "done"
-        );
-        setActiveBookings(data);
-      });
+      setActiveBookings(activeCustomer.bookings.filter((booking) => booking.status === "done" && booking.billed === false));
     }
   }, [activeCustomer]);
   
+  function getAllCustomers(){
+    Adminservice.getAllCustomers().then((response) => {setAllCustomers(response.data);});
+  }
   function changeActiveCustomer(user) {
     setSearchInput(""); // resets input when customer is selected
     setActiveCustomer(user);
@@ -64,28 +53,53 @@ export default function CustomerBilling() {
     const bookingToMove = activeBookings.find((booking) => {
       return booking.id === bookingId;
     });
+    setBookingsInCart((bookingsInCart) => ({
+      bookings: [...bookingsInCart.bookings, bookingToMove],
+    }));
     setActiveBookings(
       activeBookings.filter((booking) => booking.id !== bookingId)
     );
 
-    setCartBookings((cartBookings) => ({
-      bookings: [...cartBookings.bookings, bookingToMove],
-    }));
+    
   }
 function sendBill(){
   if(totalPrice>0){
     console.log(totalPrice);
     console.log(activeCustomer.id);
-    Adminservice.sendBill(totalPrice,activeCustomer.id)
+    Adminservice.addBill(totalPrice,activeCustomer.id).then((response) =>{
+      if(response.data){
+        // maby send bill to email ? but either way update booking
+       updateBookingBilledStatus()
+      }
+    })
+    
   }
+}
+function updateBookingBilledStatus() {
+  const bookingIds = [];
+ 
+  bookingsInCart.bookings.forEach(booking => {
+    bookingIds.push(booking.id)
+  });
+  
+  Adminservice.updateBookingsBilledStatus(bookingIds).then(() =>{
+
+    reseCustomerData()
+    getAllCustomers()
+  }
+ 
+
+  );
+  
+  //need to update all bookings in cart to billed here;
 }
   function reseCustomerData() {// resets all data for new search
     setTotalPrice(0);
     setActiveCustomer();
     setActiveBookings();
-    setCartBookings({ bookings: [] });
+    setBookingsInCart({ bookings: [] });
   }
-
+console.log(activeCustomer);
   return (
     <div className="mainWindow">
       <div className="test">
@@ -136,17 +150,13 @@ function sendBill(){
             <></>
           )
         ) : (
-          <div className="nameListWindow">
-            {allCustomers
-              .filter((customer) => customer.name.includes(searchInput))
-              .map((customer) => {
-                return (
-                  <button onClick={() => changeActiveCustomer(customer)}>
-                    {customer.name}
-                  </button>
-                );
-              })}
-          </div>
+          <CustomerNameList 
+            allCustomers={allCustomers}
+            changeActiveCustomer = {changeActiveCustomer}
+            searchInput = {searchInput}>
+
+          </CustomerNameList>
+          
         )}
       </div>
     </div>
