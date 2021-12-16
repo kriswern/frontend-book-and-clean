@@ -142,8 +142,8 @@ console.log(priceList)
             <option value="">--Please choose a service--</option>
             {priceList &&
               
-                priceList.map((priceList) =>  (
-                  <option value={priceList.id}>{priceList.type}: {priceList.price}:-</option>
+                priceList.map((priceList, index) =>  (
+                  <option key={index} value={priceList.id}>{priceList.type}: {priceList.price}:-</option>
                 ))
               
               
