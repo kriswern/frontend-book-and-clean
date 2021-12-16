@@ -45,6 +45,7 @@ export default function CleanerBooking(props) {
 
   return (
     <div className="booking-container">
+      <h5 className="booking-header"><span>{props.item.priceList.type}</span><span className="booking-price">{props.item.priceList.price}:-</span></h5>
       <p>
         <b>Name:</b> {props.item.description}
       </p>
