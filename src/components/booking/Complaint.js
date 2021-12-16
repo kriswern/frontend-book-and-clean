@@ -21,8 +21,9 @@ export default function Complaint({id, updateBookings}) {
   const handleSubmit = (e) => {
     e.preventDefault()
     CustomerService.rejectCleaning(formData)
-    setFormData(initialState);
     updateBookings(true);
+    setFormData(initialState);
+
 
     console.log("Formdata: ", formData)
   }
