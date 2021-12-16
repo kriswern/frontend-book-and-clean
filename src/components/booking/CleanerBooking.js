@@ -1,3 +1,4 @@
+import CleanerService from "../../services/CleanerService";
 import { useEffect, useState } from "react";
 import "../../css/booking.css";
 import DateService from "../../services/DateService";
@@ -9,6 +10,19 @@ export default function CleanerBooking(props) {
    
     props.item && setActive(DateService.isDateNewer(props.item.date, 12));
 }, [props]);
+
+  const handleStatusChange = (e) => {
+    console.log(e.target.value)
+    CleanerService.changeStatusToDone(e.target.value)
+    .then(response => {
+      if(response.status === 200){
+        props.updateBookings(true) 
+      }
+    })
+    .catch(error => {
+      console.log(error.response.data.error)
+    })
+  }
 
   return (
     <div className="booking-container">
@@ -27,6 +41,11 @@ export default function CleanerBooking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
+      <div>
+      {props.item.status === "Booked" &&
+      <button className="btn btn-primary" value={props.item.id} onClick={handleStatusChange}>
+        Done</button>}
+      </div>
       {props.item.status === "Confirmed" && active && (
         <button className="btn btn-primary">Accept booking</button>
       )}
