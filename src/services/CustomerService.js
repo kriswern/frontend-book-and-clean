@@ -6,11 +6,11 @@ const GET_MY_BOOKINGS_REST_API_URL =
 
 const GET_MY_ID_REST_API_URL = "http://localhost:8080/api/customer/customerid";
 const GET_CUSTOMER_REST_API_URL = "http://localhost:8080/api/customer/email";
-
 const POST_APPROVE_CLEANING_REST_API_URL =
   "http://localhost:8080/api/customer/approve-cleaning";
 
   const POST_REJECT_CLEANING_REST_API_URL = "http://localhost:8080/api/customer/reject-cleaning"
+
 
 class CustomerService {
   getMyBookings() {
