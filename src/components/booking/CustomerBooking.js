@@ -3,9 +3,11 @@ import BookingService from "../../services/BookingService";
 import "../../css/booking.css";
 import DateService from "../../services/DateService";
 import CustomerService from "../../services/CustomerService";
+import Complaint from "./Complaint";
 
 export default function CustomerBooking(props) {
   const [active, setActive] = useState();
+  const [rejected, setRejected] = useState(false)
 
   useEffect(() => {
     //Needs to be atleast 24 hours for the customer to cancel booking
@@ -27,7 +29,7 @@ export default function CustomerBooking(props) {
         console.log(error.response.data.error);
       });
     } else {
-      alert("We are sorry to disappoint you :(")
+      setRejected(true)
     }
     
   };
@@ -37,8 +39,14 @@ export default function CustomerBooking(props) {
     props.updateBookings(true);
   };
 
-  return (
+  const update = (bool) => {
+    setRejected(false)
+    props.updateBookings(bool);
+  }
+
+  return rejected ? <Complaint id={props.item.id} updateBookings={update}/> : (<div>
     <div className="booking-container">
+    <h5 className="booking-header"><span>{props.item.priceList.type}</span><span className="booking-price">{props.item.priceList.price}:-</span></h5>
       <p>
         <b>Name:</b> {props.item.description}
       </p>
@@ -79,6 +87,9 @@ export default function CustomerBooking(props) {
           </button>
         </div>
       )}
+      </div>
+      
+      
     </div>
   );
 }

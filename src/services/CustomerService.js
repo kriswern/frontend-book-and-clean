@@ -9,6 +9,8 @@ const GET_MY_ID_REST_API_URL = "http://localhost:8080/api/customer/customerid";
 const POST_APPROVE_CLEANING_REST_API_URL =
   "http://localhost:8080/api/customer/approve-cleaning";
 
+  const POST_REJECT_CLEANING_REST_API_URL = "http://localhost:8080/api/customer/reject-cleaning"
+
 class CustomerService {
   getMyBookings() {
     const header = TokenService.getTokenHeader();
@@ -25,6 +27,14 @@ class CustomerService {
 
     if (header !== undefined) {
       return axios.post(POST_APPROVE_CLEANING_REST_API_URL, { id: id }, header);
+    }
+  }
+
+  rejectCleaning(formData) {
+    const header = TokenService.getTokenHeader();
+
+    if (header !== undefined) {
+      return axios.post(POST_REJECT_CLEANING_REST_API_URL, formData, header);
     }
   }
 

@@ -11,9 +11,9 @@ export default function CustomerNameList({allCustomers,changeActiveCustomer,sear
                 const searchInputUpper = searchInput.toUpperCase();
                 return(customerNameUpper.includes(searchInputUpper));})
                 
-              .map((customer) => {
+              .map((customer, index) => {
                 return (
-                  <button  onClick={() => changeActiveCustomer(customer)}>
+                  <button key={index} onClick={() => changeActiveCustomer(customer)}>
                     {customer.name}
                   </button>
                 );
@@ -22,9 +22,9 @@ export default function CustomerNameList({allCustomers,changeActiveCustomer,sear
 
             ):(
                 allCustomers
-                .map((customer) => {
+                .map((customer, index) => {
                   return (
-                    <button onClick={() => changeActiveCustomer(customer)}>
+                    <button key={index} onClick={() => changeActiveCustomer(customer)}>
                       {customer.name}
                     </button>)})
 
