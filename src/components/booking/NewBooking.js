@@ -60,9 +60,15 @@ console.log(priceList)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (BookingService.registerBooking(formData, role)) {
-      alert("Booking made");
+    const text = "Please confirm the provided information:\n\n"
+    + formData.name + "\n"
+    + formData.address + "\n\n"
+    + formData.date + "\n"
+    + formData.time + "\n"
+    if(window.confirm(text)){
+      if (BookingService.registerBooking(formData, role)) {
+        alert("Booking made");
+      }
     }
     setFormData(initialState);
     
