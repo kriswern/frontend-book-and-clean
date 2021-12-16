@@ -1,23 +1,15 @@
-import Header from './layout/Header';
-import Navbar from './layout/Navbar';
-import Footer from './layout/Footer';
-import '../css/Layout.css';
+import Header from "./layout/Header";
+import Footer from "./layout/Footer";
+import "../css/Layout.css";
 
-export default function Layout ({children}){// we can remove the currentheader if we want
-  
+export default function Layout({ children }) {
+  // we can remove the currentheader if we want
 
-   
-         
-    return(
-        <div className = "pageLayout container-fluid">
-            
-                <Header/>
-                <main className="p-2">
-                    {children}
-                </main>
-                <Footer/>
-           
-        </div>
-    );
-
+  return (
+    <div className="pageLayout container-fluid">
+      <Header />
+      <main className="p-2">{children}</main>
+      <Footer />
+    </div>
+  );
 }
