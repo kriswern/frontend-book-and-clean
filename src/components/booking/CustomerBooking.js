@@ -34,7 +34,12 @@ export default function CustomerBooking(props) {
       <p>
         <b>Status:</b> {props.item.status}
       </p>
-      {active && <button className="btn btn-primary" onClick={deleteBooking}>Delete booking</button>}
+      {active && (
+        <div className="d-grid gap-2">
+        <button className="btn btn-warning btn-sm" onClick={deleteBooking}>
+          Delete booking
+        </button></div>
+      )}
     </div>
   );
 }

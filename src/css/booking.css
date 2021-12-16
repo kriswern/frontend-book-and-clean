@@ -38,18 +38,20 @@
   background-color: white;
   border-radius: .5rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  min-width: 300px;
-  padding: 1rem;
+  min-width: 325px;
+  padding: 1.5rem;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
 .booking-container p {
-  margin-bottom: .5rem;
+  margin-bottom: .6rem;
 }
 
 /*ADMIN BOOKING*/
 .select-cleaner-container {
   display: flex;
-  justify-content: space-between;
+  width: 100%;
+  margin-bottom: .5rem;
 }
 
 .cleaner-name-container {
@@ -58,9 +60,28 @@
   align-items: baseline;
 }
 
+.select-cleaner {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
 .btn-remove-cleaner {
   border:none;
   outline: none;
   background: none;
+}
+.btn-add-cleaner {
+  border:none;
+  outline: none;
+  background: none;
+  padding: 0 .5rem;
+}
+
+.custom-select {
+  border:none;
+  outline: none;
+  width: 100%;
 }
 
