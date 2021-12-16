@@ -31,7 +31,7 @@ export default function CustomerBilling() {
 
   useEffect(() => { // filters out customers bookings (id,status=done)
     if (activeCustomer !== undefined) {
-      setActiveBookings(activeCustomer.bookings.filter((booking) => booking.status === "done" && booking.billed === false));
+      setActiveBookings(activeCustomer.bookings.filter((booking) => booking.status === "Approved"));
     }
   }, [activeCustomer]);
   
@@ -42,11 +42,11 @@ export default function CustomerBilling() {
     setSearchInput(""); // resets input when customer is selected
     setActiveCustomer(user);
   }
-  function handleSearchInput() {
+  function handleSearchInput(e) {
     if (activeCustomer) reseCustomerData(); //resets to searching if customer has been picket
 
-    const currentInputVal = document.getElementById("searchInput").value;
-    setSearchInput(currentInputVal);
+   
+    setSearchInput(e.target.value);
   }
 
   function addToCart(bookingId) {
@@ -124,7 +124,7 @@ console.log(activeCustomer);
           name="search"
           aria-label="Search through site content"
           value={searchInput}
-          onChange={() => handleSearchInput()}
+          onChange={(e) => handleSearchInput(e)}
         />
 
         {activeCustomer ? (
