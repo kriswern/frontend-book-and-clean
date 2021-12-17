@@ -21,13 +21,13 @@ export default function Bookings() {
   }, []);
 
   useEffect(() => {
-    role && !bookings && getBookings(role);
-  }, [role, bookings, getBookings]);
+    getBookings(role);
+    console.log("getBookings")
+  }, [role]);
 
   useEffect(() => {
     if(response && response.length > 0){
       response && setBookings(response)
-      console.log(response);
     }
   }, [response]);
 
@@ -35,6 +35,8 @@ export default function Bookings() {
     if (update) {
       const timeOut = setTimeout(() => {
         getBookings(role);
+        console.log("getBookings update")
+
       },100);
       return () => {
         setUpdate(false);
@@ -51,13 +53,11 @@ export default function Bookings() {
 
   return (
     <div className="p-2">
-      <h4 className="newbooking-header">Bookings</h4>
+      <h4 className="newbooking-header">{role && role.charAt(0).toUpperCase() + role.slice(1)} Bookings</h4>
 
       <div className="bookings-container p-2">
         {!bookings && <NothingHere />}
-        {bookings &&
-          role &&
-          !loading &&
+        {bookings && !loading &&
           bookings.map((booking, index) => {
             switch (role) {
               case "admin":
