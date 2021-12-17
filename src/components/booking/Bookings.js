@@ -5,6 +5,7 @@ import AdminBooking from "./AdminBooking";
 import CleanerBooking from "./CleanerBooking";
 import CustomerBooking from "./CustomerBooking";
 import useGetBookings from "../hooks/useGetBookings";
+import NothingHere from "../error/NothingHere"
 
 export default function Bookings() {
   const [bookings, setBookings] = useState();
@@ -25,7 +26,9 @@ export default function Bookings() {
   }, [role]);
 
   useEffect(() => {
-    response && setBookings(response)
+    if(response && response.length > 0){
+      response && setBookings(response)
+    }
   }, [response]);
 
   useEffect(() => {
@@ -46,11 +49,14 @@ export default function Bookings() {
     setUpdate(bool);
   };
 
+  
+
   return (
     <div className="p-2">
       <h4 className="newbooking-header">{role && role.charAt(0).toUpperCase() + role.slice(1)} Bookings</h4>
 
       <div className="bookings-container p-2">
+        {!bookings && <NothingHere />}
         {bookings && !loading &&
           bookings.map((booking, index) => {
             switch (role) {
