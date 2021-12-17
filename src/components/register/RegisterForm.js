@@ -188,16 +188,15 @@ export default function RegisterForm() {
                             </label>
                         </div>
                     )}
-                    <br />
+                    <br/>
                     <button type="submit" class="btn btn-primary">
                         Register
                     </button>
-                    <br />
+                    <br/>
                     <p class="text-center">
                         <Link to={"/gdpr"}>Privacy Policy(GDPR)</Link>
                     </p>
                 </form>
-
                 <CookieConsent
                     debug={true}
                     location="top"
