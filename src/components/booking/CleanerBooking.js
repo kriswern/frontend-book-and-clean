@@ -35,10 +35,9 @@ export default function CleanerBooking(props) {
 
     }else if(props.item.status === "Booked"){
       text = "\nPlease confirm to mark it as done.\n"
-    }
-
-    if(window.confirm(text)){
-      changeStatus()
+        if(window.confirm(text)){
+          changeStatus()
+        }
     }
   }
 
@@ -62,7 +61,7 @@ export default function CleanerBooking(props) {
         <b>Status:</b> {props.item.status}
       </p>
       <div>
-        {props.item.status === "Booked" && (
+        {props.item.status === "Booked" && active && (
           <div className="d-grid gap-2">
             <button
               className="btn btn-primary btn-sm"
