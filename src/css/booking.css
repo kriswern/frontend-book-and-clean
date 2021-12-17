@@ -1,3 +1,42 @@
+/* Filter*/
+.bookings-filter-window{
+  display:flex;
+  justify-content: space-around;
+  flex-direction: row;
+ 
+  margin-left: 5%;
+  margin-right: 5%;
+  
+  
+  
+}
+
+.filter-buttons-box{
+  
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.filter-buttons-box button{
+  background-color: #FFD300;
+    
+    border-radius: 5px;
+}
+
+@media screen and (min-width: 800px) {
+  .bookings-filter-window{
+    margin-left: 9%;
+  margin-right: 9%;
+  
+  }
+
+  .filter-buttons-box button{
+    font-size: 25px;
+  }
+}
+
+/*Filter*/
+
 /*NEWBOOKING*/
 .newbooking-form-container {
   display: flex;
@@ -14,6 +53,7 @@
 .newbooking-header {
   text-align: center;
 }
+
 
 .select-container {
 

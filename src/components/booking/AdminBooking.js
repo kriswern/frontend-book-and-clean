@@ -11,7 +11,7 @@ export default function AdminBooking(props) {
     bookingId: "",
     cleanerId: "",
   };
-
+  
   const [cleaners, setCleaners] = useState();
   const [formData, setFormData] = useState(inititalState);
   const [cleanerName, setCleanerName] = useState("");
@@ -70,10 +70,11 @@ export default function AdminBooking(props) {
   const showFeedback = () => {
     alert("Feedback: \n" + props.item.feedback)
   }
-
+  console.log(props);
   return (
     <div className="booking-container">
-      <h5 className="booking-header"><span>{props.item.priceList.type}</span><span className="booking-price">{props.item.priceList.price}:-</span></h5>
+      
+      <h5 className="booking-header"><span>{props && props.item.priceList.type}</span><span className="booking-price">{props && props.item.priceList.price}:-</span></h5>
       <p>
         <b>Name:</b> {props.item.description}
       </p>
