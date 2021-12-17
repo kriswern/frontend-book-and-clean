@@ -9,7 +9,8 @@
 
 Header {
   background-color: gray;
-  height: 12%;
+  height: fit-content;
+  padding-left: 1rem;
 }
 .bookIcon {
   height: 100%;
@@ -37,11 +38,13 @@ Header {
 
 main {
   flex: 1 1 auto;
+  padding-top: 2rem!important;
 }
 Footer {
   height: fit-content;
   background-color: gray;
   text-align: center;
+  padding-top: 1rem;
 }
 
 @media only screen and (max-width: 400px) {
