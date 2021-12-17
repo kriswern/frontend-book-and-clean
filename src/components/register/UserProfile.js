@@ -35,25 +35,19 @@ export default function UserProfile() {
             }
         }
         getUserByMail();
-    }, [role]);
-
-    console.log(user);
-    console.log(role);
-    console.log(email);
+    }, [role]); 
   
-
     return (
       <div class="container">      
         <div class="card bg-dark text-white text-left p-3 w-50" >
             <div class="header">Profile</div>
             <div class="card-body">
-                <h5 class="card-title">Name :      {   user.name}</h5><br/>
+                <h5 class="card-title">Name :      {user.name}</h5><br/>
                 <h5 class="card-title">Address :   {user.address}</h5><br/>
                 <h5 class="card-title">Email :     {email}</h5><br/>
                 <h5 class="card-title">User type : {role}</h5><br/>
             </div>
         </div>   
-        </div>     
-        
+        </div>             
     );
 }
