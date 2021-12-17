@@ -1,10 +1,9 @@
 import axios from "axios";
 import TokenService from "../services/TokenService"
 
-
 const GET_MY_BOOKINGS_REST_API_URL ="http://localhost:8080/api/cleaner/bookings";
 const UPDATE_BOOKING_STATUS = "http://localhost:8080/api/cleaner/bookings/update";
-const GET_CLEANER_REST_API_URL = "http://localhost:8080/api/cleaner/email";
+const GET_CLEANER_REST_API_URL = "http://localhost:8080/api/cleaner/email"; 
 
 class CleanerService {
   getMyBookings() {
