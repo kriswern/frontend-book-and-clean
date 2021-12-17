@@ -103,8 +103,8 @@ export default function Bookings() {
     <div className="p-2">
       <h4 className="newbooking-header">{role && role.charAt(0).toUpperCase() + role.slice(1)} Bookings</h4>
       <div className="bookings-filter-window">
+        {bookings && <BookingsFilterList changeFilter={checkFilter} setFilter={setFilter} />}
         
-        <BookingsFilterList changeFilter={checkFilter} setFilter={setFilter} />
       </div>
       <div className="bookings-container p-2">
         {!bookings && <NothingHere />}
