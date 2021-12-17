@@ -1,9 +1,9 @@
 import axios from "axios";
 import TokenService from "../services/TokenService"
 
-const GET_MY_BOOKINGS_REST_API_URL =
-  "http://localhost:8080/api/cleaner/bookings";
+const GET_MY_BOOKINGS_REST_API_URL ="http://localhost:8080/api/cleaner/bookings";
 const UPDATE_BOOKING_STATUS = "http://localhost:8080/api/cleaner/bookings/update";
+const GET_CLEANER_REST_API_URL = "http://localhost:8080/api/cleaner/email"; 
 
 class CleanerService {
   getMyBookings() {
@@ -24,6 +24,13 @@ class CleanerService {
       return axios.post(UPDATE_BOOKING_STATUS, { id: id }, header)
     }
   }
+
+  getUserByMail() {
+    const header = TokenService.getTokenHeader();
+    const email = TokenService.getNameFromToken();    
+    return axios.get(GET_CLEANER_REST_API_URL + `?email=${email}`, header);
+}
+
 }
 
 export default new CleanerService();

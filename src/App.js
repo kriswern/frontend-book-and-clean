@@ -11,6 +11,8 @@ import Layout from "./components/Layout";
 import UserNav from "./components/Pages/userNav";
 import RegisterForm from "./components/register/RegisterForm";
 import CustomerBilling from "./components/Pages/adminPage/customerBillingTab/CustomerBilling";
+import UserProfile from "./components/register/UserProfile";
+import GDPR from "./components/register/GDPR";
 
 export default function App() {
     const history = useHistory();
@@ -26,15 +28,22 @@ export default function App() {
                 { name: "Register User", path: "/admin/register" },
                 {name: "Bill Customers", path: "/admin/customerBilling"}
             ],
-        ],
+        ],        
         [
             "customer",
             [
                 { name: "Bookings", path: "/customer/bookings" },
                 { name: "New Booking", path: "/customer/newbooking" },
+                {name: "Profile", path: "/customer"},
             ],
         ],
-        ["cleaner", [{ name: "Bookings", path: "/cleaner/bookings" }]],
+        [
+            "cleaner",
+            [ 
+            { name: "Bookings", path: "/cleaner/bookings" },
+            { name: "Profile", path: "/cleaner" },
+            ]
+        ],
     ]);
 
     useEffect(() => {
@@ -63,10 +72,9 @@ export default function App() {
         setActiveUser();
         localStorage.removeItem("access_token");
         history.push("/login");
-    }
-
+    }    
     return (
-        <Layout>
+        <Layout>                
             {activeUser && (
                 <UserNav
                     routes={userRoutes.get(activeUser.type)}
@@ -78,15 +86,16 @@ export default function App() {
                     path="/login"
                     render={() => <Login handleUserChange={handleUserChange} />}
                 />
-                <Route path="/register" component={RegisterForm} />
+                <Route path="/register" component={RegisterForm} />                
                 <Route path="/admin/bookings" exact component={Bookings} />
                 <Route path="/admin/newbooking" component={NewBooking} />
                 <Route path="/admin/register" component={RegisterForm} />
-                <Route path="/admin/customerBilling" component={CustomerBilling} />
-
                 <Route path="/customer/bookings" component={Bookings} />
                 <Route path="/customer/newbooking" component={NewBooking} />
                 <Route path="/cleaner/bookings" component={Bookings} />
+                <Route path="/cleaner" component={UserProfile} />
+                <Route path="/customer" component={UserProfile} />
+                <Route path="/gdpr" component={GDPR} />
             </Switch>
         </Layout>
     );
