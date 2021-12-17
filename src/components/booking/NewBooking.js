@@ -12,16 +12,16 @@ export default function NewBooking() {
     address: "",
     date: "",
     time: "",
-    customerId: "", //Hard coded for now. Will be the id of the customer you send in or Admin selects
+    customerId: "", 
   };
 
   const [formData, setFormData] = useState(initialState);
-  const [role, setRole] = useState(""); //Hard-coded for now
+  const [role, setRole] = useState(""); 
   const [customers, setCustomers] = useState();
-  const [priceList, setPriceList] = useState(); 
+  const [priceList, setPriceList] = useState();
 
   let now = new Date();
-  now = date.addDays(now, 2)
+  now = date.addDays(now, 2);
 
   useEffect(() => {
     const role = TokenService.getRoleFromToken();
@@ -37,41 +37,44 @@ export default function NewBooking() {
       });
     } else if (role === "customer") {
       CustomerService.getMyID().then((response) => {
-        setFormData({ ...formData, customerId: response.data })
+        setFormData({ ...formData, customerId: response.data });
       });
     }
   }, [role]);
 
   useEffect(() => {
-    BookingService.getPriceList().then((response) =>{
+    BookingService.getPriceList().then((response) => {
       setPriceList(response.data);
-      
-    })
+    });
   }, []);
 
-console.log(priceList)
- useEffect(() => {
-  if (role === "customer" && formData.customerId === "") {
-    CustomerService.getMyID().then((response) => {
-      setFormData({ ...formData, customerId: response.data })
-    });
-  }
- }, [formData, role]);
+  console.log(priceList);
+  useEffect(() => {
+    if (role === "customer" && formData.customerId === "") {
+      CustomerService.getMyID().then((response) => {
+        setFormData({ ...formData, customerId: response.data });
+      });
+    }
+  }, [formData, role]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const text = "Please confirm the provided information:\n\n"
-    + formData.name + "\n"
-    + formData.address + "\n\n"
-    + formData.date + "\n"
-    + formData.time + "\n"
-    if(window.confirm(text)){
+    const text =
+      "Please confirm the provided information:\n\n" +
+      formData.name +
+      "\n" +
+      formData.address +
+      "\n\n" +
+      formData.date +
+      "\n" +
+      formData.time +
+      "\n";
+    if (window.confirm(text)) {
       if (BookingService.registerBooking(formData, role)) {
         alert("Booking made");
       }
     }
     setFormData(initialState);
-    
   };
 
   return (
@@ -133,37 +136,34 @@ console.log(priceList)
 
         <div className="form-group p-2">
           <select
-            onChange={(e) => setFormData({ ...formData, priceListId: e.target.value })}
-            type="time"
-            id="time"
+            onChange={(e) =>
+              setFormData({ ...formData, priceListId: e.target.value })
+            }
+      
             className="form-control datepicker"
             required
           >
             <option value="">--Please choose a service--</option>
             {priceList &&
-              
-                priceList.map((priceList) =>  (
-                  <option value={priceList.id}>{priceList.type}: {priceList.price}:-</option>
-                ))
-              
-              
-            }
-          
+              priceList.map((priceList, index) => (
+                <option key={index} value={priceList.id}>
+                  {priceList.type}: {priceList.price}:-
+                </option>
+              ))}
           </select>
         </div>
 
         {role === "admin" && (
-          <div className="select-container">
-            <label>Select customer:</label>
+          <div className="form-group p-2 select-container">
 
             <select
               onChange={(e) =>
                 setFormData({ ...formData, customerId: e.target.value })
               }
-              className="custom-select"
+              className="form-control "
               required
             >
-              <option defaultValue=""></option>
+              <option value="">Select customer</option>
               {customers &&
                 customers.map((customer, index) => (
                   <option key={index} value={customer.id}>

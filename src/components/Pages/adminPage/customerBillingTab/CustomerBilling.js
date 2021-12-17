@@ -20,7 +20,7 @@ export default function CustomerBilling() {
   useEffect(() => { // handles updating carts total price
 
     let total = 0;
-    bookingsInCart.bookings.map((booking) => {
+    bookingsInCart.bookings.forEach((booking) => {
       total += booking.priceList.price;
     });
     setTotalPrice(total);
@@ -133,9 +133,9 @@ export default function CustomerBilling() {
         {activeCustomer ? (
           activeBookings ? (
           
-            activeBookings.map((data) => {
+            activeBookings.map((data, index) => {
               return (
-                <div class="bookingCard">
+                <div class="bookingCard" key={index}>
                   <div className="cardInfo">
                     <h2>{data.description}</h2>
                     <p>
@@ -144,7 +144,7 @@ export default function CustomerBilling() {
                   </div>
                   <div>
                     <button onClick={() => addToCart(data.id)}>
-                      {data.priceList.price}:->
+                      {data.priceList.price}:-
                     </button>
                   </div>
                 </div>

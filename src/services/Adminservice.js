@@ -11,7 +11,7 @@ const PUT_ASSIGN_CLEANER_REST_API_URL =
   "http://localhost:8080/api/admin/assigncleaner";
 const GET_CLEANER_NAME_REST_API_URL = "http://localhost:8080/api/admin/cleanername";
 const PUT_REMOVE_CLEANER_REST_API_URL ="http://localhost:8080/api/admin/removecleaner";
-const GET_PRICE_LIST = "http://localhost:8080/api/admin/priceList";
+
 const POST_BILL = "http://localhost:8080/api/admin/addbill";
 const PUT_BOOKING_BILL = "http://localhost:8080/api/admin/updatebookingbill"
 class AdminService {
@@ -80,13 +80,10 @@ class AdminService {
       });
   }
   
-  getPriceList() {
-    const header = TokenService.getTokenHeader()
-    return axios.get(GET_PRICE_LIST, header)
-  }
 
   addBill(total,customerId,bookingIds) {
     const header = TokenService.getTokenHeader()
+
     console.log(bookingIds);
     return axios.post(POST_BILL, {customerId: customerId, total: total, bookingIds: bookingIds}, header)
 
@@ -99,7 +96,7 @@ class AdminService {
   }
 
 
-  
+
 }
 
 export default new AdminService();
