@@ -3,7 +3,6 @@ import RegisterService from "../../services/RegisterService";
 import "../../css/registerForm.css";
 import TokenService from "../../services/TokenService";
 import { Link, useHistory } from "react-router-dom";
-import CookieConsent from "react-cookie-consent";
 
 export default function RegisterForm() {
     const initialState = {
@@ -196,15 +195,7 @@ export default function RegisterForm() {
                     <p class="text-center">
                         <Link to={"/gdpr"}>Privacy Policy(GDPR)</Link>
                     </p>
-                </form>
-                <CookieConsent
-                    debug={true}
-                    location="top"
-                    buttonStyle={{ fontWeight: "bold" }}
-                >
-                    This site does not save cookies. See our{" "}
-                    <Link to={"/gdpr"}>Privacy Policy(GDPR)</Link> for more.{" "}
-                </CookieConsent>
+                </form>                 
             </div>
         </div>
     );
