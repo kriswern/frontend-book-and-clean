@@ -6,7 +6,7 @@
  
   margin-left: 5%;
   margin-right: 5%;
-  
+  margin-bottom: 4rem;
   
   
 }
@@ -52,6 +52,7 @@
 
 .newbooking-header {
   text-align: center;
+  padding-bottom: 1rem;
 }
 
 
@@ -69,6 +70,8 @@
   display:flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 5rem;
+
   gap: 1rem;
 }
 

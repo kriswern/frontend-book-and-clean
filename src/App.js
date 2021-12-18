@@ -90,6 +90,7 @@ export default function App() {
                 <Route path="/admin/bookings" exact component={Bookings} />
                 <Route path="/admin/newbooking" component={NewBooking} />
                 <Route path="/admin/register" component={RegisterForm} />
+                <Route path="/admin/customerBilling" component={CustomerBilling} />
                 <Route path="/customer/bookings" component={Bookings} />
                 <Route path="/customer/newbooking" component={NewBooking} />
                 <Route path="/cleaner/bookings" component={Bookings} />
