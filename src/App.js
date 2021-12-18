@@ -13,6 +13,7 @@ import RegisterForm from "./components/register/RegisterForm";
 import CustomerBilling from "./components/Pages/adminPage/customerBillingTab/CustomerBilling";
 import UserProfile from "./components/register/UserProfile";
 import GDPR from "./components/register/GDPR";
+import CookieConsent from "react-cookie-consent";
 
 export default function App() {
     const history = useHistory();
@@ -74,7 +75,15 @@ export default function App() {
         history.push("/login");
     }    
     return (
-        <Layout>                
+        <Layout>
+        <CookieConsent
+                    debug={true}
+                    location="top"
+                    buttonStyle={{ fontWeight: "bold" }}
+                >
+                    This site does not save cookies. See our{" "}
+                    <Link to={"/gdpr"}>Privacy Policy(GDPR)</Link> for more.{" "}
+                </CookieConsent>              
             {activeUser && (
                 <UserNav
                     routes={userRoutes.get(activeUser.type)}
