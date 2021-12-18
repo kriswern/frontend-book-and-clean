@@ -33,7 +33,8 @@ export default function Bookings() {
         checkFilter(response);
       });
     }
-    
+    console.log("response", response)
+    console.log("filter", filter)
   }, [response, filter]);
 
   useEffect(() => {
@@ -95,17 +96,18 @@ export default function Bookings() {
         arr = response;
       }
     }
-
+    console.log(filter)
+    console.log(arr)
     setBookings(arr);
   };
 
   return (
     <div className="p-2">
-      <h4 className="newbooking-header">{role && role.charAt(0).toUpperCase() + role.slice(1)} Bookings</h4>
       <div className="bookings-filter-window">
         {bookings && <BookingsFilterList changeFilter={checkFilter} setFilter={setFilter} />}
-        
       </div>
+      <h4 className="newbooking-header">{role && role.charAt(0).toUpperCase() + role.slice(1)} Bookings</h4>
+      
       <div className="bookings-container p-2">
         {!bookings && <NothingHere />}
         {bookings && !loading && role &&
