@@ -13,7 +13,7 @@ export default function Bookings() {
   const [role, setRole] = useState();
   const [update, setUpdate] = useState(false);
   const { response, loading, getBookings } = useGetBookings();
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState("closest");
 
   useEffect(() => {
     const role = TokenService.getRoleFromToken();
@@ -109,7 +109,7 @@ export default function Bookings() {
       <h4 className="newbooking-header">{role && role.charAt(0).toUpperCase() + role.slice(1)} Bookings</h4>
       
       <div className="bookings-container p-2">
-        {!bookings && <NothingHere />}
+        {!bookings && role && !loading && <NothingHere />}
         {bookings && !loading && role &&
           bookings.map((booking, index) => {
             switch (role) {
