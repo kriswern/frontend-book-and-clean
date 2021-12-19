@@ -1,4 +1,3 @@
-import UserService from "../../services/UserService";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import TokenService from "../../services/TokenService";
