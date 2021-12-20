@@ -2,6 +2,7 @@ import "../../css/login.css";
 import { useEffect, useState } from "react";
 import LoginService from "../../services/LoginService";
 import { useHistory } from "react-router-dom";
+
 export default function Login(props) {
   const [formData, setFormData] = useState();
   const [userData, setUserData] = useState();
@@ -14,9 +15,15 @@ export default function Login(props) {
     const password = document.getElementById("inputPassword").value;
     setFormData({ username: email, password: password });
   }
+  
   useEffect(() => {
     if (formData !== undefined) {
-      getLoginResponse();
+      LoginService.verifyLogin(formData).then((response) => {
+        setUserData(response.data);
+      }).catch(error => {
+        document.getElementById("inputEmail").value = ""
+        document.getElementById("inputPassword").value = ""
+      });
     }
   }, [formData]);
 
@@ -24,46 +31,42 @@ export default function Login(props) {
     if (userData !== undefined) {
       props.handleUserChange(userData);
     }
-  }, [userData]);
+  }, [userData, props]);
 
-  function getLoginResponse() {
-    LoginService.verifyLogin(formData).then((response) => {
-      setUserData(response.data);
-    });
-  }
   return (
-    <div class="login_form_container">
-      <div class="card">
-        <div class="card-header text-center">Login</div>
-        <form class="card-body">
-          <div class="form-group">
-            <label for="inputEmail">Email address</label>
+    <div className="login_form_container">
+      <div className="card">
+        <div className="card-header text-center">Login</div>
+        <form className="card-body">
+          <div className="form-group">
+            <label htmlFor="inputEmail">Email address</label>
             <input
               type="email"
-              class="form-control"
+              className="form-control"
               id="inputEmail"
+              placeholder="someone@example.com"
               aria-describedby="emailHelp"
             />
-            <small id="emailHelp" class="form-text text-muted">
+            <small id="emailHelp" className="form-text text-muted">
               We'll never share your email with anyone else.
             </small>
           </div>
-          <div class="form-group mt-2">
-            <label for="inputPassword">Password</label>
+          <div className="form-group mt-2">
+            <label htmlFor="inputPassword">Password</label>
             <input
               type="password"
-              class="form-control"
+              className="form-control"
               id="inputPassword"
               placeholder="Password"
               required
             />
           </div>
-          <div class="login_button_box">
-            <button class="submit_button" onClick={(e) => handleSubmit(e)}>
+          <div className="login_button_box">
+            <button className="submit_button" onClick={(e) => handleSubmit(e)}>
               Submit
             </button>
             <button
-              class="register_button"
+              className="register_button"
               onClick={() => history.push("/register")}
             >
               {" "}

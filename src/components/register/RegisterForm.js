@@ -44,11 +44,11 @@ export default function RegisterForm() {
           onSubmit={handleSubmit}
           className="register-form d-flex flex-column align-content-center"
         >
-          <div class="form-group-row">
-            <label for="validationTooltip01" class="col-sm-2 col-form-label">
+          <div className="form-group-row">
+            <label for="validationTooltip01" className="col-sm-2 col-form-label">
               Name
             </label>
-            <div class="col-sm-10">
+            <div className="col-sm-10">
               <input
                 value={formData.name}
                 onChange={(e) =>
@@ -58,18 +58,18 @@ export default function RegisterForm() {
                   })
                 }
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="validationTooltip01"
                 placeholder=""
                 required
               />
             </div>
           </div>
-          <div class="form-group-row">
-            <label for="inputEmail4" class="col-sm-2 col-form-label">
+          <div className="form-group-row">
+            <label for="inputEmail4" className="col-sm-2 col-form-label">
               Email
             </label>
-            <div class="col-sm-10">
+            <div className="col-sm-10">
               <input
                 value={formData.email}
                 onChange={(e) =>
@@ -79,18 +79,18 @@ export default function RegisterForm() {
                   })
                 }
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="inputEmail4"
                 placeholder=""
                 required
               />
             </div>
           </div>
-          <div class="form-group-row">
-            <label for="inputPassword4" class="col-sm-2 col-form-label ">
+          <div className="form-group-row">
+            <label for="inputPassword4" className="col-sm-2 col-form-label ">
               Password
             </label>
-            <div class="col-sm-10">
+            <div className="col-sm-10">
               <input
                 value={formData.password}
                 onChange={(e) =>
@@ -100,18 +100,18 @@ export default function RegisterForm() {
                   })
                 }
                 type="password"
-                class="form-control"
+                className="form-control"
                 id="inputPassword4"
                 placeholder=""
                 required
               />
             </div>
           </div>
-          <div class="form-group">
-            <label for="inputAddress" class="col-sm-2 col-form-label">
+          <div className="form-group">
+            <label for="inputAddress" className="col-sm-2 col-form-label">
               Address
             </label>
-            <div class="col-sm-10">
+            <div className="col-sm-10">
               <input
                 value={formData.address}
                 onChange={(e) =>
@@ -121,7 +121,7 @@ export default function RegisterForm() {
                   })
                 }
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="inputAddress"
                 placeholder=""
                 required
@@ -129,9 +129,9 @@ export default function RegisterForm() {
             </div>
           </div>
           <br />
-          <div class="form-check">
+          <div className="form-check">
             <input
-              class="form-check-input"
+              className="form-check-input"
               type="radio"
               name="exampleRadios"
               id="exampleRadios1"
@@ -144,14 +144,14 @@ export default function RegisterForm() {
               }
               required
             />
-            <label class="form-check-label" for="exampleRadios1">
+            <label className="form-check-label" for="exampleRadios1">
               Customer
             </label>
           </div>{" "}
           {role === "admin" && (
-            <div class="form-check">
+            <div className="form-check">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="radio"
                 name="exampleRadios"
                 id="exampleRadios2"
@@ -164,17 +164,17 @@ export default function RegisterForm() {
                 }
                 required
               />
-              <label class="form-check-label" for="exampleRadios2">
+              <label className="form-check-label" for="exampleRadios2">
                 Cleaner
               </label>
             </div>
           )}
           <br />
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             Register
           </button>
           <br />
-          <p class="text-center">
+          <p className="text-center">
             <Link to={"/gdpr"}>Privacy Policy(GDPR)</Link>
           </p>
         </form>

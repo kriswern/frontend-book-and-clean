@@ -1,8 +1,8 @@
 export default function GDPR() {
     return (
-        <div class="border mb-3">
-        <div class="m-4">
-            <h1 class="text-center">Privacy Policy</h1>
+        <div className="border mb-3">
+        <div className="m-4">
+            <h1 className="text-center">Privacy Policy</h1>
             <h4>1. About Städa Fint AB </h4>
             <p>
                 Städa Fint ABis a Swedish company provide the cleaning services
