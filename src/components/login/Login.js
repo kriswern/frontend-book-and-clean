@@ -32,38 +32,38 @@ export default function Login(props) {
     });
   }
   return (
-    <div class="login_form_container">
-      <div class="card">
-        <div class="card-header text-center">Login</div>
-        <form class="card-body">
-          <div class="form-group">
-            <label for="inputEmail">Email address</label>
+    <div className="login_form_container">
+      <div className="card">
+        <div className="card-header text-center">Login</div>
+        <form className="card-body">
+          <div className="form-group">
+            <label htmlFor="inputEmail">Email address</label>
             <input
               type="email"
-              class="form-control"
+              className="form-control"
               id="inputEmail"
               aria-describedby="emailHelp"
             />
-            <small id="emailHelp" class="form-text text-muted">
+            <small id="emailHelp" className="form-text text-muted">
               We'll never share your email with anyone else.
             </small>
           </div>
-          <div class="form-group mt-2">
-            <label for="inputPassword">Password</label>
+          <div className="form-group mt-2">
+            <label htmlFor="inputPassword">Password</label>
             <input
               type="password"
-              class="form-control"
+              className="form-control"
               id="inputPassword"
               placeholder="Password"
               required
             />
           </div>
-          <div class="login_button_box">
-            <button class="submit_button" onClick={(e) => handleSubmit(e)}>
+          <div className="login_button_box">
+            <button className="submit_button" onClick={(e) => handleSubmit(e)}>
               Submit
             </button>
             <button
-              class="register_button"
+              className="register_button"
               onClick={() => history.push("/register")}
             >
               {" "}

@@ -37,17 +37,17 @@ export default function UserProfile() {
   }, [role]);
 
   return (
-    <div class="container">
-      <div class="card bg-dark text-white text-left p-3 w-50">
-        <div class="header">Profile</div>
-        <div class="card-body">
-          <h5 class="card-title">Name : {user.name}</h5>
+    <div className="container">
+      <div className="card bg-dark text-white text-left p-3 w-50">
+        <div className="header">Profile</div>
+        <div className="card-body">
+          <h5 className="card-title">Name : {user.name}</h5>
           <br />
-          <h5 class="card-title">Address : {user.address}</h5>
+          <h5 className="card-title">Address : {user.address}</h5>
           <br />
-          <h5 class="card-title">Email : {email}</h5>
+          <h5 className="card-title">Email : {email}</h5>
           <br />
-          <h5 class="card-title">User type : {role}</h5>
+          <h5 className="card-title">User type : {role}</h5>
           <br />
         </div>
       </div>
