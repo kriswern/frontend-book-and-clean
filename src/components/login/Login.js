@@ -2,6 +2,7 @@ import "../../css/login.css";
 import { useEffect, useState } from "react";
 import LoginService from "../../services/LoginService";
 import { useHistory } from "react-router-dom";
+
 export default function Login(props) {
   const [formData, setFormData] = useState();
   const [userData, setUserData] = useState();
@@ -14,9 +15,15 @@ export default function Login(props) {
     const password = document.getElementById("inputPassword").value;
     setFormData({ username: email, password: password });
   }
+  
   useEffect(() => {
     if (formData !== undefined) {
-      getLoginResponse();
+      LoginService.verifyLogin(formData).then((response) => {
+        setUserData(response.data);
+      }).catch(error => {
+        document.getElementById("inputEmail").value = ""
+        document.getElementById("inputPassword").value = ""
+      });
     }
   }, [formData]);
 
@@ -24,13 +31,8 @@ export default function Login(props) {
     if (userData !== undefined) {
       props.handleUserChange(userData);
     }
-  }, [userData]);
+  }, [userData, props]);
 
-  function getLoginResponse() {
-    LoginService.verifyLogin(formData).then((response) => {
-      setUserData(response.data);
-    });
-  }
   return (
     <div className="login_form_container">
       <div className="card">
@@ -42,6 +44,7 @@ export default function Login(props) {
               type="email"
               className="form-control"
               id="inputEmail"
+              placeholder="someone@example.com"
               aria-describedby="emailHelp"
             />
             <small id="emailHelp" className="form-text text-muted">
