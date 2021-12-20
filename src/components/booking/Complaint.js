@@ -1,32 +1,28 @@
-import '../../css/complaint.css'
-import { useState, useEffect } from 'react';
-import CustomerService from '../../services/CustomerService';
+import "../../css/complaint.css";
+import { useState, useEffect } from "react";
+import CustomerService from "../../services/CustomerService";
 
 const initialState = {
   bookingId: "",
   feedback: "",
-}
+};
 
-
-export default function Complaint({id, updateBookings}) {
-
+export default function Complaint({ id, updateBookings }) {
   const [formData, setFormData] = useState(initialState);
 
   useEffect(() => {
-    formData.bookingId === "" &&
-    setFormData({...formData, bookingId: id})
-    console.log("id: ", id)
+    formData.bookingId === "" && setFormData({ ...formData, bookingId: id });
+    console.log("id: ", id);
   }, [id, formData]);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    CustomerService.rejectCleaning(formData)
+    e.preventDefault();
+    CustomerService.rejectCleaning(formData);
     updateBookings(true);
     setFormData(initialState);
 
-
-    console.log("Formdata: ", formData)
-  }
+    console.log("Formdata: ", formData);
+  };
 
   return (
     <div className="complaint-container">
@@ -36,10 +32,10 @@ export default function Complaint({id, updateBookings}) {
             What went wrong?
           </label>
           <textarea
-          value={formData.feedback}
-          onChange={(e) =>
-            setFormData({ ...formData, feedback: e.target.value })
-          }
+            value={formData.feedback}
+            onChange={(e) =>
+              setFormData({ ...formData, feedback: e.target.value })
+            }
             className="form-control"
             id="exampleFormControlTextarea1"
             rows="3"

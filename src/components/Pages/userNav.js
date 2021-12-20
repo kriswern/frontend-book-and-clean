@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../../css/userNav.css"
+import "../../css/userNav.css";
 
 export default function UserNav({ routes, logout }) {
-  
   const [navOpen, setNavOpen] = useState(false);
- 
+
   function openOrCloseNav() {
     navOpen === false ? setNavOpen(true) : setNavOpen(false);
   }
 
   const logoutButton = () => {
-    openOrCloseNav()
-    logout()
-  }
+    openOrCloseNav();
+    logout();
+  };
 
   if (navOpen) {
     return (
@@ -26,12 +25,23 @@ export default function UserNav({ routes, logout }) {
           -
         </button>
         <ul className="customerNavList">
-          {routes && routes.map((route, index) => (
-            <Link key={index} to={route.path} className="list-item"><button className="menu-button list-item" onClick={() => openOrCloseNav()}>{route.name}</button></Link>
-            
-          ))}
-          <br/>
-          <li className="list-item"><button className="menu-button list-item" onClick={logoutButton}>Logout</button></li>
+          {routes &&
+            routes.map((route, index) => (
+              <Link key={index} to={route.path} className="list-item">
+                <button
+                  className="menu-button list-item"
+                  onClick={() => openOrCloseNav()}
+                >
+                  {route.name}
+                </button>
+              </Link>
+            ))}
+          <br />
+          <li className="list-item">
+            <button className="menu-button list-item" onClick={logoutButton}>
+              Logout
+            </button>
+          </li>
         </ul>
       </aside>
     );

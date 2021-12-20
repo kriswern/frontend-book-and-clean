@@ -5,7 +5,7 @@ import AdminBooking from "./AdminBooking";
 import CleanerBooking from "./CleanerBooking";
 import CustomerBooking from "./CustomerBooking";
 import useGetBookings from "../hooks/useGetBookings";
-import NothingHere from "../error/NothingHere"
+import NothingHere from "../error/NothingHere";
 import BookingsFilterList from "./BookingsFilterList";
 
 export default function Bookings() {
@@ -27,23 +27,22 @@ export default function Bookings() {
   }, [role]);
 
   useEffect(() => {
-    if(response && response.length > 0){
+    if (response && response.length > 0) {
       response &&
-      setBookings(() => {
-        checkFilter(response);
-      });
+        setBookings(() => {
+          checkFilter(response);
+        });
     }
-    console.log("response", response)
-    console.log("filter", filter)
+    console.log("response", response);
+    console.log("filter", filter);
   }, [response, filter]);
 
   useEffect(() => {
     if (update) {
       const timeOut = setTimeout(() => {
         getBookings(role);
-        console.log("getBookings update")
-
-      },100);
+        console.log("getBookings update");
+      }, 100);
       return () => {
         setUpdate(false);
         clearTimeout(timeOut);
@@ -96,21 +95,30 @@ export default function Bookings() {
         arr = response;
       }
     }
-    console.log(filter)
-    console.log(arr)
+    console.log(filter);
+    console.log(arr);
     setBookings(arr);
   };
 
   return (
     <div className="p-2">
       <div className="bookings-filter-window">
-        {bookings && <BookingsFilterList changeFilter={checkFilter} setFilter={setFilter} />}
+        {bookings && (
+          <BookingsFilterList
+            changeFilter={checkFilter}
+            setFilter={setFilter}
+          />
+        )}
       </div>
-      <h4 className="newbooking-header">{role && role.charAt(0).toUpperCase() + role.slice(1)} Bookings</h4>
-      
+      <h4 className="newbooking-header">
+        {role && role.charAt(0).toUpperCase() + role.slice(1)} Bookings
+      </h4>
+
       <div className="bookings-container p-2">
         {!bookings && role && !loading && <NothingHere />}
-        {bookings && !loading && role &&
+        {bookings &&
+          !loading &&
+          role &&
           bookings.map((booking, index) => {
             switch (role) {
               case "admin":

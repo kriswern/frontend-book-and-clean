@@ -9,11 +9,13 @@ const GET_ALL_CLEANERS_REST_API_URL =
   "http://localhost:8080/api/admin/cleaners";
 const PUT_ASSIGN_CLEANER_REST_API_URL =
   "http://localhost:8080/api/admin/assigncleaner";
-const GET_CLEANER_NAME_REST_API_URL = "http://localhost:8080/api/admin/cleanername";
-const PUT_REMOVE_CLEANER_REST_API_URL ="http://localhost:8080/api/admin/removecleaner";
+const GET_CLEANER_NAME_REST_API_URL =
+  "http://localhost:8080/api/admin/cleanername";
+const PUT_REMOVE_CLEANER_REST_API_URL =
+  "http://localhost:8080/api/admin/removecleaner";
 
 const POST_BILL = "http://localhost:8080/api/admin/addbill";
-const PUT_BOOKING_BILL = "http://localhost:8080/api/admin/updatebookingbill"
+const PUT_BOOKING_BILL = "http://localhost:8080/api/admin/updatebookingbill";
 class AdminService {
   getAllBookings() {
     const header = TokenService.getTokenHeader();
@@ -48,7 +50,6 @@ class AdminService {
       .put(PUT_ASSIGN_CLEANER_REST_API_URL, formData, header)
       .then((response) => {
         if (response.status === 201) {
-          
           return true;
         } else if (response.status === 208) {
           alert(
@@ -79,24 +80,22 @@ class AdminService {
         console.log(error.response.data.error);
       });
   }
-  
 
-  addBill(total,customerId,bookingIds) {
-    const header = TokenService.getTokenHeader()
+  addBill(total, customerId, bookingIds) {
+    const header = TokenService.getTokenHeader();
 
     console.log(bookingIds);
-    return axios.post(POST_BILL, {customerId: customerId, total: total, bookingIds: bookingIds}, header)
-
+    return axios.post(
+      POST_BILL,
+      { customerId: customerId, total: total, bookingIds: bookingIds },
+      header
+    );
   }
 
-  updateBookingsBilledStatus(bookingsInCart){
+  updateBookingsBilledStatus(bookingsInCart) {
     const header = TokenService.getTokenHeader();
     return axios.put(PUT_BOOKING_BILL, bookingsInCart, header);
-    
   }
-
-
-
 }
 
 export default new AdminService();
