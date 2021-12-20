@@ -1,13 +1,13 @@
 import "../../css/login.css";
 import { useEffect, useState } from "react";
 import LoginService from "../../services/LoginService";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 export default function Login(props) {
   const [formData, setFormData] = useState();
   const [userData, setUserData] = useState();
 
   const history = useHistory();
- 
+
   function handleSubmit(e) {
     e.preventDefault();
     const email = document.getElementById("inputEmail").value;
@@ -20,7 +20,6 @@ export default function Login(props) {
     }
   }, [formData]);
 
- 
   useEffect(() => {
     if (userData !== undefined) {
       props.handleUserChange(userData);
@@ -32,8 +31,7 @@ export default function Login(props) {
       setUserData(response.data);
     });
   }
-  return (  
-   
+  return (
     <div class="login_form_container">
       <div class="card">
         <div class="card-header text-center">Login</div>
@@ -60,22 +58,21 @@ export default function Login(props) {
               required
             />
           </div>
-          <div class= "login_button_box">
-          <button class="submit_button"
-            onClick={(e) => handleSubmit(e)}
-          >
-            Submit
-          </button>
-          <button class="register_button" onClick={()=>history.push("/register")}> Register </button>
-
+          <div class="login_button_box">
+            <button class="submit_button" onClick={(e) => handleSubmit(e)}>
+              Submit
+            </button>
+            <button
+              class="register_button"
+              onClick={() => history.push("/register")}
+            >
+              {" "}
+              Register{" "}
+            </button>
           </div>
-          
         </form>
-        <div>
-        
-        </div>
+        <div></div>
       </div>
-    </div>   
-   
+    </div>
   );
 }

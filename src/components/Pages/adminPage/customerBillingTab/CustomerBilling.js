@@ -12,12 +12,14 @@ export default function CustomerBilling() {
   const [activeCustomer, setActiveCustomer] = useState();
   const [activeBookings, setActiveBookings] = useState();
 
-  useEffect(() => {// fetches all customers
+  useEffect(() => {
+    // fetches all customers
 
     getAllCustomers();
   }, []);
 
-  useEffect(() => { // handles updating carts total price
+  useEffect(() => {
+    // handles updating carts total price
 
     let total = 0;
     bookingsInCart.bookings.forEach((booking) => {
@@ -26,11 +28,15 @@ export default function CustomerBilling() {
     setTotalPrice(total);
   }, [bookingsInCart]);
 
-  useEffect(() => {// filters out customers bookings (id,status=Approved)
-    if (activeCustomer !== undefined) { 
-      let filteredBookings = activeCustomer.bookings.filter((booking) => booking.status === "Approved");
-      (filteredBookings.length > 0 ) ?  setActiveBookings(filteredBookings) : setActiveBookings(undefined); 
-      
+  useEffect(() => {
+    // filters out customers bookings (id,status=Approved)
+    if (activeCustomer !== undefined) {
+      let filteredBookings = activeCustomer.bookings.filter(
+        (booking) => booking.status === "Approved"
+      );
+      filteredBookings.length > 0
+        ? setActiveBookings(filteredBookings)
+        : setActiveBookings(undefined);
     }
   }, [activeCustomer]);
 
@@ -49,11 +55,13 @@ export default function CustomerBilling() {
   }
 
   function addToCart(bookingId) {
-    
     setBookingsInCart((bookingsInCart) => ({
-      bookings: [...bookingsInCart.bookings,  activeBookings.find((booking) => {
-        return booking.id === bookingId;
-      })],
+      bookings: [
+        ...bookingsInCart.bookings,
+        activeBookings.find((booking) => {
+          return booking.id === bookingId;
+        }),
+      ],
     }));
     setActiveBookings(
       activeBookings.filter((booking) => booking.id !== bookingId)
@@ -62,14 +70,16 @@ export default function CustomerBilling() {
   function sendBill() {
     if (totalPrice > 0) {
       const bookingIds = bookingsInCart.bookings.map((booking) => {
-        return(booking.id)
-      })
-      Adminservice.addBill(totalPrice, activeCustomer.id,bookingIds).then((response) => {
-        if (response.data) {
-          // maby send bill to email ? but either way update booking
-          updateBookingBilledStatus();
-        }
+        return booking.id;
       });
+      Adminservice.addBill(totalPrice, activeCustomer.id, bookingIds).then(
+        (response) => {
+          if (response.data) {
+            // maby send bill to email ? but either way update booking
+            updateBookingBilledStatus();
+          }
+        }
+      );
     }
   }
   function updateBookingBilledStatus() {
@@ -110,14 +120,11 @@ export default function CustomerBilling() {
         )}
 
         <div className="test2">
-          {
-            activeCustomer ? (
-              <h2>{activeCustomer.name}</h2>
-            ):(
-              <h2>Enter Customer</h2>
-            )
-          }
-         
+          {activeCustomer ? (
+            <h2>{activeCustomer.name}</h2>
+          ) : (
+            <h2>Enter Customer</h2>
+          )}
         </div>
 
         <input
@@ -132,7 +139,6 @@ export default function CustomerBilling() {
 
         {activeCustomer ? (
           activeBookings ? (
-          
             activeBookings.map((data, index) => {
               return (
                 <div class="bookingCard" key={index}>
@@ -152,8 +158,8 @@ export default function CustomerBilling() {
             })
           ) : (
             <div>
-            <br></br>
-            <h2>No bookings to bill</h2>
+              <br></br>
+              <h2>No bookings to bill</h2>
             </div>
           )
         ) : (

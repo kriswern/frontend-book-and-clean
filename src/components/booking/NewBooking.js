@@ -12,11 +12,11 @@ export default function NewBooking() {
     address: "",
     date: "",
     time: "",
-    customerId: "", 
+    customerId: "",
   };
 
   const [formData, setFormData] = useState(initialState);
-  const [role, setRole] = useState(""); 
+  const [role, setRole] = useState("");
   const [customers, setCustomers] = useState();
   const [priceList, setPriceList] = useState();
 
@@ -139,7 +139,6 @@ export default function NewBooking() {
             onChange={(e) =>
               setFormData({ ...formData, priceListId: e.target.value })
             }
-      
             className="form-control datepicker"
             required
           >
@@ -155,7 +154,6 @@ export default function NewBooking() {
 
         {role === "admin" && (
           <div className="form-group p-2 select-container">
-
             <select
               onChange={(e) =>
                 setFormData({ ...formData, customerId: e.target.value })
