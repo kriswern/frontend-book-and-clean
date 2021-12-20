@@ -7,6 +7,7 @@ import CustomerBooking from "./CustomerBooking";
 import useGetBookings from "../hooks/useGetBookings";
 import NothingHere from "../error/NothingHere";
 import BookingsFilterList from "./BookingsFilterList";
+import _ from "lodash";
 
 export default function Bookings() {
   const [bookings, setBookings] = useState();
@@ -59,24 +60,28 @@ export default function Bookings() {
 
     switch (filter) {
       case "name": {
-        arr = response.sort((a, b) => {
-          return a.description.localeCompare(b.description);
-        });
+        arr = _.sortBy(
+          response,
+          [(booking) => _.get(booking, "description").toLowerCase(), "id"],
+          ["asc", "asc"]
+        );
         break;
       }
       case "status": {
-        arr = response.sort((a, b) => {
-          return a.status.localeCompare(b.status);
-        });
-
+        arr = _.sortBy(
+          response,
+          [(booking) => _.get(booking, "status").toLowerCase(), "id"],
+          ["asc", "asc"]
+        );
         break;
       }
 
       case "adress": {
-        arr = response.sort((a, b) => {
-          return a.address.localeCompare(b.address);
-        });
-
+        arr = _.sortBy(
+          response,
+          [(booking) => _.get(booking, "address").toLowerCase(), "id"],
+          ["asc", "asc"]
+        );
         break;
       }
 
