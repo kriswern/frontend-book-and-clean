@@ -91,34 +91,19 @@ export default function App() {
         <Route path="/login">
           <Login handleUserChange={handleUserChange} />
         </Route>
-        <Route path="/register">
+        <Route path={["/register", "/admin/register"]}>
           <RegisterForm />
         </Route>
-        <Route path="/admin/bookings">
-          <Bookings />
+        <Route path={["/admin/bookings", "/customer/bookings", "/cleaner/bookings"]}>
+          <Bookings logout={logout} />
         </Route>
-        <Route path="/admin/newbooking">
+        <Route path={["/admin/newbooking", "/customer/newbooking"]}>
           <NewBooking />
-        </Route>
-        <Route path="/admin/register">
-          <RegisterForm />
         </Route>
         <Route path="/admin/customerBilling">
           <CustomerBilling />
         </Route>
-        <Route path="/customer/bookings">
-          <Bookings />
-        </Route>
-        <Route path="/customer/newbooking">
-          <NewBooking />
-        </Route>
-        <Route path="/cleaner/bookings">
-          <Bookings />
-        </Route>
-        <Route path="/cleaner">
-          <UserProfile />
-        </Route>
-        <Route path="/customer">
+        <Route path={["/cleaner", "/customer"]}>
           <UserProfile />
         </Route>
         <Route path="/gdpr">

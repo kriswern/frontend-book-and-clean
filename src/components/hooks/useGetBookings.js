@@ -6,6 +6,7 @@ import CustomerService from "../../services/CustomerService";
 const useGetBookings = () => {
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const getBookings = (role) => {
     switch (role) {
@@ -17,6 +18,7 @@ const useGetBookings = () => {
           .catch((error) => {
             if (error.toJSON().status > 400) {
               console.log("Access denied, error code: ", error.toJSON().status);
+              setError(true);
             }
           })
           .finally(() => {
@@ -31,6 +33,7 @@ const useGetBookings = () => {
           .catch((error) => {
             if (error.toJSON().status > 400) {
               console.log("Access denied, error code: ", error.toJSON().status);
+              setError(true);
             }
           })
           .finally(() => {
@@ -45,6 +48,7 @@ const useGetBookings = () => {
           .catch((error) => {
             if (error.toJSON().status > 400) {
               console.log("Access denied, error code: ", error.toJSON().status);
+              setError(true);
             }
           })
           .finally(() => {
@@ -61,7 +65,7 @@ const useGetBookings = () => {
     getBookings();
   }, []);
 
-  return { response, getBookings, loading };
+  return { response, getBookings, loading, error };
 };
 
 export default useGetBookings;

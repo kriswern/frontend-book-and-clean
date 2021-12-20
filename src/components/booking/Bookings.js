@@ -8,11 +8,11 @@ import useGetBookings from "../hooks/useGetBookings";
 import NothingHere from "../error/NothingHere";
 import BookingsFilterList from "./BookingsFilterList";
 
-export default function Bookings() {
+export default function Bookings(props) {
   const [bookings, setBookings] = useState();
   const [role, setRole] = useState();
   const [update, setUpdate] = useState(false);
-  const { response, loading, getBookings } = useGetBookings();
+  const { response, loading, error, getBookings } = useGetBookings();
   const [filter, setFilter] = useState("closest");
 
   useEffect(() => {
@@ -20,11 +20,19 @@ export default function Bookings() {
     if (role !== undefined) {
       setRole(role);
     }
+    console.log("Error: ", error)
   }, []);
 
   useEffect(() => {
     getBookings(role);
   }, [role]);
+
+  useEffect(() => {
+    if(error){
+      window.alert("You have been logged out, please log in again.")
+      props.logout()
+    }
+  }, [error, props])
 
   useEffect(() => {
     if (response && response.length > 0) {
@@ -33,8 +41,6 @@ export default function Bookings() {
           checkFilter(response);
         });
     }
-    console.log("response", response);
-    console.log("filter", filter);
   }, [response, filter]);
 
   useEffect(() => {
@@ -95,8 +101,6 @@ export default function Bookings() {
         arr = response;
       }
     }
-    console.log(filter);
-    console.log(arr);
     setBookings(arr);
   };
 
