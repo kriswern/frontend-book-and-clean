@@ -20,7 +20,6 @@ export default function Bookings(props) {
     if (role !== undefined) {
       setRole(role);
     }
-    console.log("Error: ", error)
   }, []);
 
   useEffect(() => {
@@ -29,8 +28,8 @@ export default function Bookings(props) {
 
   useEffect(() => {
     if(error){
-      window.alert("You have been logged out, please log in again.")
-      props.logout()
+      setBookings()
+      props.logout(true)
     }
   }, [error, props])
 

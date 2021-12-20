@@ -69,7 +69,10 @@ export default function App() {
     setActiveUser({ type: decodedToken.roles[0] });
   }
 
-  function logout() {
+  function logout(error) {
+      if(error){
+        window.alert("You have been logged out, please log in again.")
+      }
     setActiveUser();
     localStorage.removeItem("access_token");
     history.push("/login");
@@ -92,19 +95,19 @@ export default function App() {
           <Login handleUserChange={handleUserChange} />
         </Route>
         <Route path={["/register", "/admin/register"]}>
-          <RegisterForm />
+          <RegisterForm role={activeUser && activeUser.type} />
         </Route>
         <Route path={["/admin/bookings", "/customer/bookings", "/cleaner/bookings"]}>
           <Bookings logout={logout} />
         </Route>
         <Route path={["/admin/newbooking", "/customer/newbooking"]}>
-          <NewBooking />
+          <NewBooking logout={logout} />
         </Route>
         <Route path="/admin/customerBilling">
-          <CustomerBilling />
+          <CustomerBilling logout={logout} />
         </Route>
         <Route path={["/cleaner", "/customer"]}>
-          <UserProfile />
+          <UserProfile logout={logout} />
         </Route>
         <Route path="/gdpr">
           <GDPR />

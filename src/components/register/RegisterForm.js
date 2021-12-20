@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import RegisterService from "../../services/RegisterService";
 import "../../css/registerForm.css";
-import TokenService from "../../services/TokenService";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function RegisterForm() {
+export default function RegisterForm({ role }) {
   const initialState = {
     name: "",
     email: "",
@@ -14,15 +13,6 @@ export default function RegisterForm() {
   };
 
   const [formData, setFormData] = useState(initialState);
-  const [role, setRole] = useState();
-  const history = useHistory();
-
-  useEffect(() => {
-    const role = TokenService.getRoleFromToken();
-    if (role !== undefined) {
-      setRole(role);
-    }
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,11 +23,12 @@ export default function RegisterForm() {
 
   return (
     <div>
-      {role === "admin" && (
-        <button className="back_button" onClick={() => history.push("/login")}>
-          {" "}
-          Back{" "}
-        </button>
+      {role !== "admin" && (
+        <Link to="/login" className="back_button">
+          <button className="back_button">
+            {" "}
+            Back{" "}
+          </button></Link> 
       )}
       <div className="form-container">
         <form
