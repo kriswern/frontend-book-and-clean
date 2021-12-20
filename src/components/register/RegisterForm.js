@@ -33,7 +33,7 @@ export default function RegisterForm() {
 
   return (
     <div>
-      {role !== "admin" && (
+      {role === "admin" && (
         <button className="back_button" onClick={() => history.push("/login")}>
           {" "}
           Back{" "}
@@ -45,7 +45,7 @@ export default function RegisterForm() {
           className="register-form d-flex flex-column align-content-center"
         >
           <div className="form-group-row">
-            <label for="validationTooltip01" className="col-sm-2 col-form-label">
+            <label htmlFor="validationTooltip01" className="col-sm-2 col-form-label">
               Name
             </label>
             <div className="col-sm-10">
@@ -66,7 +66,7 @@ export default function RegisterForm() {
             </div>
           </div>
           <div className="form-group-row">
-            <label for="inputEmail4" className="col-sm-2 col-form-label">
+            <label htmlFor="inputEmail4" className="col-sm-2 col-form-label">
               Email
             </label>
             <div className="col-sm-10">
@@ -87,7 +87,7 @@ export default function RegisterForm() {
             </div>
           </div>
           <div className="form-group-row">
-            <label for="inputPassword4" className="col-sm-2 col-form-label ">
+            <label htmlFor="inputPassword4" className="col-sm-2 col-form-label ">
               Password
             </label>
             <div className="col-sm-10">
@@ -108,7 +108,7 @@ export default function RegisterForm() {
             </div>
           </div>
           <div className="form-group">
-            <label for="inputAddress" className="col-sm-2 col-form-label">
+            <label htmlFor="inputAddress" className="col-sm-2 col-form-label">
               Address
             </label>
             <div className="col-sm-10">
