@@ -9,11 +9,11 @@ import NothingHere from "../error/NothingHere";
 import BookingsFilterList from "./BookingsFilterList";
 import _ from "lodash";
 
-export default function Bookings() {
+export default function Bookings(props) {
   const [bookings, setBookings] = useState();
   const [role, setRole] = useState();
   const [update, setUpdate] = useState(false);
-  const { response, loading, getBookings } = useGetBookings();
+  const { response, loading, error, getBookings } = useGetBookings();
   const [filter, setFilter] = useState("closest");
 
   useEffect(() => {
@@ -28,14 +28,19 @@ export default function Bookings() {
   }, [role]);
 
   useEffect(() => {
+    if(error){
+      setBookings()
+      props.logout(true)
+    }
+  }, [error, props])
+
+  useEffect(() => {
     if (response && response.length > 0) {
       response &&
         setBookings(() => {
           checkFilter(response);
         });
     }
-    console.log("response", response);
-    console.log("filter", filter);
   }, [response, filter]);
 
   useEffect(() => {
@@ -100,8 +105,6 @@ export default function Bookings() {
         arr = response;
       }
     }
-    console.log(filter);
-    console.log(arr);
     setBookings(arr);
   };
 

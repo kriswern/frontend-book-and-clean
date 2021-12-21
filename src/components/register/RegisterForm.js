@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import RegisterService from "../../services/RegisterService";
 import "../../css/registerForm.css";
-import TokenService from "../../services/TokenService";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function RegisterForm() {
+export default function RegisterForm({ role }) {
   const initialState = {
     name: "",
     email: "",
@@ -14,15 +13,6 @@ export default function RegisterForm() {
   };
 
   const [formData, setFormData] = useState(initialState);
-  const [role, setRole] = useState();
-  const history = useHistory();
-
-  useEffect(() => {
-    const role = TokenService.getRoleFromToken();
-    if (role !== undefined) {
-      setRole(role);
-    }
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,10 +24,11 @@ export default function RegisterForm() {
   return (
     <div>
       {role !== "admin" && (
-        <button className="back_button" onClick={() => history.push("/login")}>
-          {" "}
-          Back{" "}
-        </button>
+        <Link to="/login" className="back_button">
+          <button className="back_button">
+            {" "}
+            Back{" "}
+          </button></Link> 
       )}
       <div className="form-container">
         <form
@@ -45,7 +36,7 @@ export default function RegisterForm() {
           className="register-form d-flex flex-column align-content-center"
         >
           <div className="form-group-row">
-            <label for="validationTooltip01" className="col-sm-2 col-form-label">
+            <label htmlFor="validationTooltip01" className="col-sm-2 col-form-label">
               Name
             </label>
             <div className="col-sm-10">
@@ -66,7 +57,7 @@ export default function RegisterForm() {
             </div>
           </div>
           <div className="form-group-row">
-            <label for="inputEmail4" className="col-sm-2 col-form-label">
+            <label htmlFor="inputEmail4" className="col-sm-2 col-form-label">
               Email
             </label>
             <div className="col-sm-10">
@@ -87,7 +78,7 @@ export default function RegisterForm() {
             </div>
           </div>
           <div className="form-group-row">
-            <label for="inputPassword4" className="col-sm-2 col-form-label ">
+            <label htmlFor="inputPassword4" className="col-sm-2 col-form-label ">
               Password
             </label>
             <div className="col-sm-10">
@@ -108,7 +99,7 @@ export default function RegisterForm() {
             </div>
           </div>
           <div className="form-group">
-            <label for="inputAddress" className="col-sm-2 col-form-label">
+            <label htmlFor="inputAddress" className="col-sm-2 col-form-label">
               Address
             </label>
             <div className="col-sm-10">

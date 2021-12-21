@@ -5,7 +5,7 @@ import CustomerService from "../../services/CustomerService";
 import CleanerService from "../../services/CleanerService";
 import "../../css/userProfile.css";
 
-export default function UserProfile() {
+export default function UserProfile({ logout }) {
   const [user, setUser] = useState({});
   const [role, setRole] = useState();
   const [email, setEmail] = useState();
@@ -25,16 +25,16 @@ export default function UserProfile() {
         CustomerService.getUserByMail().then((res) => {
           console.log(res.data);
           setUser(res.data);
-        });
+        }).catch(error => logout(true));
       } else if (role === "cleaner") {
         CleanerService.getUserByMail().then((res) => {
           console.log(res.data);
           setUser(res.data);
-        });
+        }).catch(error => logout(true));
       }
     }
     getUserByMail();
-  }, [role]);
+  }, [role, logout]);
 
   return (
     <div className="container">

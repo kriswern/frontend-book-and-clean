@@ -6,7 +6,7 @@ import Adminservice from "../../services/Adminservice";
 import TokenService from "../../services/TokenService";
 import CustomerService from "../../services/CustomerService";
 
-export default function NewBooking() {
+export default function NewBooking({ logout }) {
   const initialState = {
     name: "",
     address: "",
@@ -34,28 +34,27 @@ export default function NewBooking() {
     if (role === "admin") {
       Adminservice.getAllCustomers().then((response) => {
         setCustomers(response.data);
-      });
+      }).catch(error => logout(true));
     } else if (role === "customer") {
       CustomerService.getMyID().then((response) => {
         setFormData({ ...formData, customerId: response.data });
-      });
+      }).catch(error => logout(true));
     }
   }, [role]);
 
   useEffect(() => {
     BookingService.getPriceList().then((response) => {
       setPriceList(response.data);
-    });
+    }).catch(error => logout(true));
   }, []);
 
-  console.log(priceList);
   useEffect(() => {
     if (role === "customer" && formData.customerId === "") {
       CustomerService.getMyID().then((response) => {
         setFormData({ ...formData, customerId: response.data });
-      });
+      }).catch(error => logout(true));
     }
-  }, [formData, role]);
+  }, [formData, role, logout]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

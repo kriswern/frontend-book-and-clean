@@ -4,7 +4,7 @@ import "../../../../css/customerBilling.css";
 import Adminservice from "../../../../services/Adminservice";
 import CustomerNameList from "../customerNameList";
 
-export default function CustomerBilling() {
+export default function CustomerBilling({ logout }) {
   const [allCustomers, setAllCustomers] = useState([]);
   const [searchInput, setSearchInput] = useState();
   const [bookingsInCart, setBookingsInCart] = useState({ bookings: [] });
@@ -43,7 +43,7 @@ export default function CustomerBilling() {
   function getAllCustomers() {
     Adminservice.getAllCustomers().then((response) => {
       setAllCustomers(response.data);
-    });
+    }).catch(error => logout(true));
   }
   function changeActiveCustomer(user) {
     setSearchInput(""); // resets input when customer is selected
@@ -79,7 +79,7 @@ export default function CustomerBilling() {
             updateBookingBilledStatus();
           }
         }
-      );
+      ).catch(error => logout(true));
     }
   }
   function updateBookingBilledStatus() {
@@ -92,7 +92,7 @@ export default function CustomerBilling() {
     Adminservice.updateBookingsBilledStatus(bookingIds).then(() => {
       reseCustomerData();
       getAllCustomers();
-    });
+    }).catch(error => logout(true));
 
     //need to update all bookings in cart to billed here;
   }
