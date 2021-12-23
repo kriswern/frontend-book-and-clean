@@ -12,6 +12,13 @@ const POST_APPROVE_CLEANING_REST_API_URL =
 const POST_REJECT_CLEANING_REST_API_URL =
   "http://localhost:8080/api/customer/reject-cleaning";
 
+const GET_CUSTOMER_BILLS_REST_API_URL =
+  "http://localhost:8080/api/customer/bills";
+const GET_BOOKINGS_FROM_BILL_REST_API_URL =
+  "http://localhost:8080/api/customer/bookings-from-bill";
+const POST_PAY_FOR_BILL_REST_API_URL =
+  "http://localhost:8080/api/customer/pay-for-bill";
+
 class CustomerService {
   getMyBookings() {
     const header = TokenService.getTokenHeader();
@@ -53,6 +60,34 @@ class CustomerService {
     const header = TokenService.getTokenHeader();
     const email = TokenService.getNameFromToken();
     return axios.get(GET_CUSTOMER_REST_API_URL + `?email=${email}`, header);
+  }
+
+  getMyBills() {
+    const header = TokenService.getTokenHeader();
+    const email = TokenService.getNameFromToken();
+
+    return axios.get(
+      GET_CUSTOMER_BILLS_REST_API_URL + `?email=${email}`,
+      header
+    );
+  }
+
+  getBookingsFromBill(ids) {
+    const header = TokenService.getTokenHeader();
+
+    return axios.post(
+      GET_BOOKINGS_FROM_BILL_REST_API_URL,
+      { bookingIds: ids },
+      header
+    );
+  }
+
+  payForBill(billId, bookingIds) {
+    const header = TokenService.getTokenHeader();
+    console.log(billId)
+    console.log(bookingIds)
+
+    return axios.post(POST_PAY_FOR_BILL_REST_API_URL, {billId: billId, bookingIds: bookingIds}, header)
   }
 }
 

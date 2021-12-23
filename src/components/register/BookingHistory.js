@@ -33,7 +33,7 @@ export default function BookingHistory() {
                 bookings.map((booking) => {
                     if (
                         booking.status === "Rejected" ||
-                        booking.status === "Billed"
+                        booking.status === "Payed"
                     ) {
                         return (
                             <div class="card bg-dark text-white p-3 w-25 container">

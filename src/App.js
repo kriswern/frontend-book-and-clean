@@ -14,6 +14,7 @@ import CustomerBilling from "./components/Pages/adminPage/customerBillingTab/Cus
 import UserProfile from "./components/register/UserProfile";
 import GDPR from "./components/register/GDPR";
 import CookieConsent from "react-cookie-consent";
+import MyBills from "./components/Pages/customerPage/MyBills";
 
 export default function App() {
   const history = useHistory();
@@ -35,6 +36,7 @@ export default function App() {
       [
         { name: "Bookings", path: "/customer/bookings" },
         { name: "New Booking", path: "/customer/newbooking" },
+        { name: "My bills", path: "/customer/bills" },
         { name: "Profile", path: "/customer" },
       ],
     ],
@@ -70,9 +72,9 @@ export default function App() {
   }
 
   function logout(error) {
-      if(error){
-        window.alert("You have been logged out, please log in again.")
-      }
+    if (error) {
+      window.alert("You have been logged out, please log in again.");
+    }
     setActiveUser();
     localStorage.removeItem("access_token");
     history.push("/login");
@@ -97,7 +99,9 @@ export default function App() {
         <Route path={["/register", "/admin/register"]}>
           <RegisterForm role={activeUser && activeUser.type} />
         </Route>
-        <Route path={["/admin/bookings", "/customer/bookings", "/cleaner/bookings"]}>
+        <Route
+          path={["/admin/bookings", "/customer/bookings", "/cleaner/bookings"]}
+        >
           <Bookings logout={logout} />
         </Route>
         <Route path={["/admin/newbooking", "/customer/newbooking"]}>
@@ -106,12 +110,17 @@ export default function App() {
         <Route path="/admin/customerBilling">
           <CustomerBilling logout={logout} />
         </Route>
+        <Route path="/customer/bills">
+          <MyBills logout={logout} />
+        </Route>
+        
         <Route path={["/cleaner", "/customer"]}>
           <UserProfile logout={logout} />
         </Route>
         <Route path="/gdpr">
           <GDPR />
         </Route>
+        
       </Switch>
     </Layout>
   );
