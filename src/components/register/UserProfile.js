@@ -4,6 +4,7 @@ import TokenService from "../../services/TokenService";
 import CustomerService from "../../services/CustomerService";
 import CleanerService from "../../services/CleanerService";
 import "../../css/userProfile.css";
+import BookingHistory from "./BookingHistory";
 
 export default function UserProfile({ logout }) {
   const [user, setUser] = useState({});
@@ -37,6 +38,7 @@ export default function UserProfile({ logout }) {
   }, [role, logout]);
 
   return (
+    <div>
     <div className="container">
       <div className="card bg-dark text-white text-left p-3 w-50">
         <div className="header">Profile</div>
@@ -51,6 +53,8 @@ export default function UserProfile({ logout }) {
           <br />
         </div>
       </div>
+      </div>
+      <BookingHistory/>
     </div>
   );
 }
