@@ -14,8 +14,6 @@ const POST_REJECT_CLEANING_REST_API_URL =
 
 const GET_CUSTOMER_BILLS_REST_API_URL =
   "http://localhost:8080/api/customer/bills";
-const GET_BOOKINGS_FROM_BILL_REST_API_URL =
-  "http://localhost:8080/api/customer/bookings-from-bill";
 const POST_PAY_FOR_BILL_REST_API_URL =
   "http://localhost:8080/api/customer/pay-for-bill";
 
@@ -72,22 +70,16 @@ class CustomerService {
     );
   }
 
-  getBookingsFromBill(ids) {
-    const header = TokenService.getTokenHeader();
-
-    return axios.post(
-      GET_BOOKINGS_FROM_BILL_REST_API_URL,
-      { bookingIds: ids },
-      header
-    );
-  }
-
   payForBill(billId, bookingIds) {
     const header = TokenService.getTokenHeader();
-    console.log(billId)
-    console.log(bookingIds)
+    console.log(billId);
+    console.log(bookingIds);
 
-    return axios.post(POST_PAY_FOR_BILL_REST_API_URL, {billId: billId, bookingIds: bookingIds}, header)
+    return axios.post(
+      POST_PAY_FOR_BILL_REST_API_URL,
+      { billId: billId, bookingIds: bookingIds },
+      header
+    );
   }
 }
 
