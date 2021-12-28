@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import CustomerService from "../../../services/CustomerService";
+import CustomerService from "../../services/CustomerService";
 
 export default function Bill({ item, payBill }) {
   

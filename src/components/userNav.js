@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../../css/userNav.css";
+import "../css/userNav.css";
 
 export default function UserNav({ routes, logout }) {
   const [navOpen, setNavOpen] = useState(false);

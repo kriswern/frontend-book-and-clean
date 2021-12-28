@@ -135,7 +135,7 @@ export default function RegisterForm({ role }) {
               }
               required
             />
-            <label className="form-check-label" for="exampleRadios1">
+            <label className="form-check-label" htmlFor="exampleRadios1">
               Customer
             </label>
           </div>{" "}
@@ -155,7 +155,7 @@ export default function RegisterForm({ role }) {
                 }
                 required
               />
-              <label className="form-check-label" for="exampleRadios2">
+              <label className="form-check-label" htmlFor="exampleRadios2">
                 Cleaner
               </label>
             </div>

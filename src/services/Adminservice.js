@@ -56,7 +56,7 @@ class AdminService {
             "The cleaner can´t be added! There already is a booking on this cleaner within 2 hours of this one!"
           );
           return false;
-        } else if (response.status === 500) {
+        } else if (response.status >= 400) {
           alert("Something went wrong!");
           return false;
         }
@@ -71,11 +71,6 @@ class AdminService {
 
     axios
       .put(PUT_REMOVE_CLEANER_REST_API_URL, { id: bookingId }, header)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(response.data);
-        }
-      })
       .catch((error) => {
         console.log(error.response.data.error);
       });

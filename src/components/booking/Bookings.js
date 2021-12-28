@@ -47,7 +47,6 @@ export default function Bookings(props) {
     if (update) {
       const timeOut = setTimeout(() => {
         getBookings(role);
-        console.log("getBookings update");
       }, 100);
       return () => {
         setUpdate(false);
