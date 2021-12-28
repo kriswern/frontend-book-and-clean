@@ -6,7 +6,6 @@ const GET_PRICE_LIST = "http://localhost:8080/api/";
 
 class BookingService {
   registerBooking(booking, role) {
-    console.log(booking);
     const header = TokenService.getTokenHeader();
     if (header !== undefined) {
       axios
@@ -20,7 +19,7 @@ class BookingService {
               "No booking made! There already is a booking on this customer within 2 hours of this one!"
             );
             return false;
-          } else if (response.status === 500) {
+          } else if (response.status >= 400) {
             alert("Something went wrong!");
             return false;
           }
@@ -36,7 +35,6 @@ class BookingService {
   }
 
   deleteBooking(id, role) {
-    console.log(id);
     const header = TokenService.getTokenHeader();
     if (header !== undefined) {
       axios

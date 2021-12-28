@@ -55,7 +55,6 @@ export default function AdminBooking(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Formdata: ", formData);
     Adminservice.assignCleaner(formData);
     props.updateBookings(true);
     setFormData(inititalState);

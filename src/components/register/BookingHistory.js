@@ -30,13 +30,13 @@ export default function BookingHistory() {
             <h3>Booking History</h3>
             {bookings &&
                 role &&
-                bookings.map((booking) => {
+                bookings.map((booking, index) => {
                     if (
                         booking.status === "Rejected" ||
                         booking.status === "Payed"
                     ) {
                         return (
-                            <div class="card bg-dark text-white p-3 w-25 container">
+                            <div className="card bg-dark text-white p-3 w-25 container" key={index}>
                                 <h5 className="container">
                                     <span>{booking.priceList.type}</span>
                                     <span className="booking-price">

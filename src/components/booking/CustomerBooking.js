@@ -16,7 +16,6 @@ export default function CustomerBooking(props) {
 
   const approveOrRejectCleaning = (e) => {
     const approved = e.target.value;
-    console.log(approved);
 
     if (approved === "true") {
       CustomerService.approveCleaning(props.item.id)

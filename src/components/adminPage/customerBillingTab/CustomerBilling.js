@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react/cjs/react.development";
 
-import "../../../../css/customerBilling.css";
-import Adminservice from "../../../../services/Adminservice";
+import "../../../css/customerBilling.css";
+import Adminservice from "../../../services/Adminservice";
 import CustomerNameList from "../customerNameList";
 
 export default function CustomerBilling({ logout }) {
@@ -36,7 +36,7 @@ export default function CustomerBilling({ logout }) {
       );
       filteredBookings.length > 0
         ? setActiveBookings(filteredBookings)
-        : setActiveBookings(undefined);
+        : setActiveBookings();
     }
   }, [activeCustomer]);
 
@@ -141,7 +141,7 @@ export default function CustomerBilling({ logout }) {
           activeBookings ? (
             activeBookings.map((data, index) => {
               return (
-                <div class="bookingCard" key={index}>
+                <div className="bookingCard" key={index}>
                   <div className="cardInfo">
                     <h2>{data.description}</h2>
                     <p>

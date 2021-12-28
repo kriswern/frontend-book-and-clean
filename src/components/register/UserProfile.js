@@ -24,12 +24,10 @@ export default function UserProfile({ logout }) {
     function getUserByMail() {
       if (role === "customer") {
         CustomerService.getUserByMail().then((res) => {
-          console.log(res.data);
           setUser(res.data);
         }).catch(error => logout(true));
       } else if (role === "cleaner") {
         CleanerService.getUserByMail().then((res) => {
-          console.log(res.data);
           setUser(res.data);
         }).catch(error => logout(true));
       }

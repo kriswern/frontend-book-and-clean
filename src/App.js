@@ -8,13 +8,13 @@ import Bookings from "./components/booking/Bookings";
 import NewBooking from "./components/booking/NewBooking";
 import Login from "./components/login/Login";
 import Layout from "./components/Layout";
-import UserNav from "./components/Pages/userNav";
+import UserNav from "./components/userNav";
 import RegisterForm from "./components/register/RegisterForm";
-import CustomerBilling from "./components/Pages/adminPage/customerBillingTab/CustomerBilling";
+import CustomerBilling from "./components/adminPage/customerBillingTab/CustomerBilling";
 import UserProfile from "./components/register/UserProfile";
 import GDPR from "./components/register/GDPR";
 import CookieConsent from "react-cookie-consent";
-import MyBills from "./components/Pages/customerPage/MyBills";
+import MyBills from "./components/customerPage/MyBills";
 
 export default function App() {
   const history = useHistory();

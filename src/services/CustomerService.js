@@ -72,8 +72,6 @@ class CustomerService {
 
   payForBill(billId, bookingIds) {
     const header = TokenService.getTokenHeader();
-    console.log(billId);
-    console.log(bookingIds);
 
     return axios.post(
       POST_PAY_FOR_BILL_REST_API_URL,

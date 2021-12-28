@@ -9,7 +9,6 @@ const GET_CLEANER_REST_API_URL = "http://localhost:8080/api/cleaner/email";
 
 class CleanerService {
   getMyBookings() {
-    console.log("in cleaner service");
     const header = TokenService.getTokenHeader();
 
     if (header !== undefined) {

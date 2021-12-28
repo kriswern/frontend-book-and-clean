@@ -6,7 +6,6 @@ const USER_REGISTER_REST_API_URL = "http://localhost:8080/register";
 class RegisterService {
   registerUser(registerForm) {
     const token = TokenService.getToken();
-    console.log(registerForm);
     if (token == null) {
       axios.post(USER_REGISTER_REST_API_URL, registerForm).then((response) => {
         if (response.status === 201) {
@@ -23,7 +22,6 @@ class RegisterService {
       });
     } else {
       const header = TokenService.getTokenHeader();
-      console.log(registerForm);
       axios
         .post(USER_REGISTER_REST_API_URL, registerForm, header)
         .then((response) => {

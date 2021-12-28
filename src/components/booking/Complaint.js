@@ -12,7 +12,6 @@ export default function Complaint({ id, updateBookings }) {
 
   useEffect(() => {
     formData.bookingId === "" && setFormData({ ...formData, bookingId: id });
-    console.log("id: ", id);
   }, [id, formData]);
 
   const handleSubmit = (e) => {
@@ -20,15 +19,13 @@ export default function Complaint({ id, updateBookings }) {
     CustomerService.rejectCleaning(formData);
     updateBookings(true);
     setFormData(initialState);
-
-    console.log("Formdata: ", formData);
   };
 
   return (
     <div className="complaint-container">
       <form className="complaint-form" onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label for="exampleFormControlTextarea1" className="form-label">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">
             What went wrong?
           </label>
           <textarea

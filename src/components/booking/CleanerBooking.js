@@ -11,8 +11,6 @@ export default function CleanerBooking(props) {
   }, [props]);
 
   const changeStatus = () => {
-    console.log("id :", props.item.id);
-    console.log("status :", props.item.status);
     CleanerService.changeStatus(props.item.id)
       .then((response) => {
         if (response.status === 200) {
