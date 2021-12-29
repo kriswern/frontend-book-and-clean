@@ -1,0 +1,40 @@
+.customerNav {
+  height: fit-content;
+  position: absolute;
+  max-width: 150px;
+}
+
+.customerNavList {
+  padding-left: 0;
+  display: flex;
+z-index: 2000;  height: 100%;
+  flex-direction: column;
+  list-style: none;
+}
+
+.custNavButton {
+    background: none;
+  border: none;
+  font-weight: bold;
+
+}
+
+.menu-button {
+  position: relative;
+  color: white;
+  font-weight: bold;
+  border: none;
+  background-color: #333431;
+  width: 100%;
+
+  box-shadow: 1px 1px 0px gray;
+  margin-bottom: 0.5rem;
+  border-radius: 0.2rem;
+  padding: 0.35rem;
+}
+
+@media only screen and (max-width: 736px) {
+  .customerNav {
+    width: 50%;
+  }
+}

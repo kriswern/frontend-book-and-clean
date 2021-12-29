@@ -1,25 +1,127 @@
-import logo from './logo.svg';
-import './App.css';
+import "./css/Layout.css";
+import TokenService from "./services/TokenService";
+import { useEffect, useState } from "react/cjs/react.development";
+import jwt from "jwt-decode";
+import { useHistory } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
+import Bookings from "./components/booking/Bookings";
+import NewBooking from "./components/booking/NewBooking";
+import Login from "./components/login/Login";
+import Layout from "./components/Layout";
+import UserNav from "./components/userNav";
+import RegisterForm from "./components/register/RegisterForm";
+import CustomerBilling from "./components/adminPage/customerBillingTab/CustomerBilling";
+import UserProfile from "./components/register/UserProfile";
+import GDPR from "./components/register/GDPR";
+import CookieConsent from "react-cookie-consent";
+import MyBills from "./components/customerPage/MyBills";
 
-function App() {
+export default function App() {
+  const history = useHistory();
+
+  const [activeUser, setActiveUser] = useState();
+
+  const userRoutes = new Map([
+    [
+      "admin",
+      [
+        { name: "Bookings", path: "/admin/bookings" },
+        { name: "New Booking", path: "/admin/newbooking" },
+        { name: "Register User", path: "/admin/register" },
+        { name: "Bill Customers", path: "/admin/customerBilling" },
+      ],
+    ],
+    [
+      "customer",
+      [
+        { name: "Bookings", path: "/customer/bookings" },
+        { name: "New Booking", path: "/customer/newbooking" },
+        { name: "My bills", path: "/customer/bills" },
+        { name: "Profile", path: "/customer" },
+      ],
+    ],
+    [
+      "cleaner",
+      [
+        { name: "Bookings", path: "/cleaner/bookings" },
+        { name: "Profile", path: "/cleaner" },
+      ],
+    ],
+  ]);
+
+  useEffect(() => {
+    const role = TokenService.getRoleFromToken();
+    if (role !== undefined) {
+      setActiveUser({ type: role });
+    } else {
+      history.push("/login");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeUser !== undefined) {
+      history.push("/" + activeUser.type + "/bookings");
+    }
+  }, [activeUser]);
+
+  function handleUserChange(userData) {
+    const token = userData.jwt;
+    localStorage.setItem("access_token", token);
+    const decodedToken = jwt(token);
+    setActiveUser({ type: decodedToken.roles[0] });
+  }
+
+  function logout(error) {
+    if (error) {
+      window.alert("You have been logged out, please log in again.");
+    }
+    setActiveUser();
+    localStorage.removeItem("access_token");
+    history.push("/login");
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Layout>
+      <CookieConsent
+        debug={true}
+        location="top"
+        buttonStyle={{ fontWeight: "bold" }}
+      >
+        This site does not save cookies. See our{" "}
+        <Link to={"/gdpr"}>Privacy Policy(GDPR)</Link> for more.{" "}
+      </CookieConsent>
+      {activeUser && (
+        <UserNav routes={userRoutes.get(activeUser.type)} logout={logout} />
+      )}
+      <Switch>
+        <Route path="/login">
+          <Login handleUserChange={handleUserChange} />
+        </Route>
+        <Route path={["/register", "/admin/register"]}>
+          <RegisterForm role={activeUser && activeUser.type} />
+        </Route>
+        <Route
+          path={["/admin/bookings", "/customer/bookings", "/cleaner/bookings"]}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Bookings logout={logout} />
+        </Route>
+        <Route path={["/admin/newbooking", "/customer/newbooking"]}>
+          <NewBooking logout={logout} />
+        </Route>
+        <Route path="/admin/customerBilling">
+          <CustomerBilling logout={logout} />
+        </Route>
+        <Route path="/customer/bills">
+          <MyBills logout={logout} />
+        </Route>
+        
+        <Route path={["/cleaner", "/customer"]}>
+          <UserProfile logout={logout} />
+        </Route>
+        <Route path="/gdpr">
+          <GDPR />
+        </Route>
+        
+      </Switch>
+    </Layout>
   );
 }
-
-export default App;

@@ -1,0 +1,66 @@
+/* MyBills */
+.bills-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.bills-list {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  min-width: 350px;
+}
+
+/* bill*/
+
+.bill-container {
+  padding: .8rem;
+  background: white;
+  margin-bottom: 1rem;
+  border-radius: .3rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.bill-container:hover {
+  background: rgb(252, 252, 252);
+}
+
+.bill-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.bill-info-container:nth-child(even) {
+  background: whitesmoke;
+}
+
+.bill-info {
+  display: flex;
+  justify-content: space-between;
+  padding: .4rem;
+}
+
+.bill-list {
+  padding: 0;
+}
+
+.bill-total {
+  border-top: 1px solid darkgray;
+  margin-top: .5rem;
+  display: flex;
+  justify-content: flex-end;
+  font-weight: 600;
+  padding: .2rem;
+  padding-top: .5rem;
+
+}
+
+.bill-btn-container {
+  margin-top: .5rem;
+}
